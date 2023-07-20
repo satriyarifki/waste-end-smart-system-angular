@@ -1,0 +1,70 @@
+<body class="bg-gray-50 dark:bg-slate-900">
+  <!-- ========== MAIN CONTENT ========== -->
+
+  <!-- Content -->
+  <div class="w-full pt-4 px-4 sm:px-6 md:px-8 lg:pl-72">
+    <!-- Page Heading -->
+    <header>
+      <h1
+        class="block text-2xl font-bold text-gray-800 sm:text-3xl dark:text-white"
+      >
+        Dashboard
+      </h1>
+      <p class="mb-1 text-sm font-semibold text-blue-600">
+        Starter Pages & Examples
+      </p>
+      <!-- <p class="mt-2 text-lg text-gray-800 dark:text-gray-400">This is a simple application layout with sidebar and header examples using Tailwind CSS.</p> -->
+      <div class="mt-4 flex flex-wrap justify-center gap-5">
+        <div
+          class="w-full sm:w-1/5 h-20 inline-flex justify-center items-center gap-x-3 text-center bg-violet-500 hover:bg-violet-700 border border-transparent text-white text-sm font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white transition py-3 px-4 dark:focus:ring-offset-gray-800"
+        >
+          <!-- <h1 class="text-4xl">20</h1> -->
+          Stock Barang
+        </div>
+        <div
+          class="w-full sm:w-1/5 h-20 inline-flex justify-center items-center gap-x-3 text-center bg-violet-500 hover:bg-violet-700 border border-transparent text-white text-sm font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white transition py-3 px-4 dark:focus:ring-offset-gray-800"
+        >
+          <!-- <h1 class="text-4xl">20</h1> -->
+          Transaksi Masuk
+        </div>
+        <div
+          class="w-full sm:w-1/5 h-20 inline-flex justify-center items-center gap-x-3 text-center bg-violet-500 hover:bg-violet-700 border border-transparent text-white text-sm font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white transition py-3 px-4 dark:focus:ring-offset-gray-800"
+        >
+          <!-- <h1 class="text-4xl">20</h1> -->
+          Transaksi Keluar
+        </div>
+        <div
+          class="w-full sm:w-1/5 h-20 inline-flex justify-center items-center gap-x-3 text-center bg-violet-500 hover:bg-violet-700 border border-transparent text-white text-sm font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white transition py-3 px-4 dark:focus:ring-offset-gray-800"
+        >
+          <!-- <h1 class="text-4xl">20</h1> -->
+          Total Sales
+        </div>
+        <!-- <a class="w-full sm:w-auto inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold text-blue-500 hover:text-blue-700 focus:outline-none focus:ring-2 ring-offset-gray-50 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm py-3 px-4 dark:ring-offset-slate-900" href="../examples.html">
+            <svg class="w-2.5 h-2.5" width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M11.2792 1.64001L5.63273 7.28646C5.43747 7.48172 5.43747 7.79831 5.63273 7.99357L11.2792 13.64" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            Back to examples
+          </a> -->
+      </div>
+    </header>
+    <div class=" px-10 py-11">
+      <div class="shadow-md drop-shadow-lg rounded-lg p-2">
+        <apx-chart
+          [series]="chartOptions?.series"
+          [chart]="chartOptions?.chart"
+          [dataLabels]="chartOptions?.dataLabels"
+          [plotOptions]="chartOptions?.plotOptions"
+          [yaxis]="chartOptions?.yaxis"
+          [legend]="chartOptions?.legend"
+          [fill]="chartOptions?.fill"
+          [stroke]="chartOptions?.stroke"
+          [tooltip]="chartOptions?.tooltip"
+          [xaxis]="chartOptions?.xaxis"
+        ></apx-chart>
+      </div>
+    </div>
+    <!-- End Page Heading -->
+  </div>
+  <!-- End Content -->
+  <!-- ========== END MAIN CONTENT ========== -->
+</body>
