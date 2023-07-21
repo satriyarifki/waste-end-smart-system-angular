@@ -141,8 +141,10 @@
       </li>
       <li>
         <a
+          [routerLink]="['/transaction-in']"
+          routerLinkActive="router-link-active"
           [ngClass]="
-            this.router.url == '/transaksi-masuk'
+            this.router.url == '/transaction-in'
               ? 'bg-gradient-to-r from-gray-600 to-gray-800  text-white'
               : 'text-gray-300'
           "
@@ -150,7 +152,7 @@
         >
           <svg
             [ngClass]="
-              this.router.url == '/transaksi-masuk'
+              this.router.url == '/transaction-in'
                 ? 'fill-white'
                 : 'fill-gray-200'
             "
@@ -169,7 +171,7 @@
       <li>
         <a
           [ngClass]="
-            this.router.url == '/transaksi-keluar'
+            this.router.url == '/transaction-out'
               ? 'bg-gradient-to-r from-gray-600 to-gray-800  text-white'
               : 'text-gray-300'
           "
@@ -177,7 +179,7 @@
         >
           <svg
             [ngClass]="
-              this.router.url == '/transaksi-keluar'
+              this.router.url == '/transaction-out'
                 ? 'fill-white'
                 : 'fill-gray-200'
             "

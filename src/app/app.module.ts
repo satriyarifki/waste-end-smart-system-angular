@@ -12,6 +12,8 @@ import { NavbarComponent } from './layouts/navbar/navbar.component';
 import { StockBarangComponent } from './stock-barang/stock-barang.component';
 import { CustomFilterPipe } from './pipe/custom-filter.pipe';
 import {NgxPaginationModule} from 'ngx-pagination';
+import { TransactionInComponent } from './transaction-in/transaction-in.component';
+import { TransactionOutComponent } from './transaction-out/transaction-out.component';
 
 
 @NgModule({
@@ -23,6 +25,8 @@ import {NgxPaginationModule} from 'ngx-pagination';
     NavbarComponent,
     StockBarangComponent,
     CustomFilterPipe,
+    TransactionInComponent,
+    TransactionOutComponent,
 
   ],
   imports: [
