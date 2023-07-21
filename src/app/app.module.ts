@@ -10,6 +10,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { NavbarComponent } from './layouts/navbar/navbar.component';
 import { StockBarangComponent } from './stock-barang/stock-barang.component';
+import { CustomFilterPipe } from './pipe/custom-filter.pipe';
+import {NgxPaginationModule} from 'ngx-pagination';
+
 
 @NgModule({
   declarations: [
@@ -18,14 +21,17 @@ import { StockBarangComponent } from './stock-barang/stock-barang.component';
     LoginComponent,
     DashboardComponent,
     NavbarComponent,
-    StockBarangComponent
+    StockBarangComponent,
+    CustomFilterPipe,
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    NgApexchartsModule
+    NgApexchartsModule,
+    NgxPaginationModule
   ],
   providers: [],
   bootstrap: [AppComponent]
