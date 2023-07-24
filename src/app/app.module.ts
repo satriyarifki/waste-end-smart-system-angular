@@ -14,6 +14,9 @@ import { CustomFilterPipe } from './pipe/custom-filter.pipe';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { TransactionInComponent } from './transaction-in/transaction-in.component';
 import { TransactionOutComponent } from './transaction-out/transaction-out.component';
+import { CreateTransactionInComponent } from './create/create-transaction-in/create-transaction-in.component';
+import { CreateTransactionOutComponent } from './create/create-transaction-out/create-transaction-out.component';
+import { PrintTransactionInComponent } from './print/print-transaction-in/print-transaction-in.component';
 
 
 @NgModule({
@@ -27,6 +30,9 @@ import { TransactionOutComponent } from './transaction-out/transaction-out.compo
     CustomFilterPipe,
     TransactionInComponent,
     TransactionOutComponent,
+    CreateTransactionInComponent,
+    CreateTransactionOutComponent,
+    PrintTransactionInComponent,
 
   ],
   imports: [

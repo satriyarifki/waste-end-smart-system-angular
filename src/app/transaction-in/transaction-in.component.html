@@ -1,4 +1,4 @@
-<body class="bg-gray-50 dark:bg-slate-900">
+<body class="bg-gray-50 ">
   <!-- ========== MAIN CONTENT ========== -->
 
   <!-- Content -->
@@ -14,9 +14,12 @@
         <p class="mb-1 text-sm font-semibold text-blue-600">Pages</p>
       </div>
       <div>
-        <a href="" class="px-7 py-4 font-medium bg-blue-50 hover:bg-blue-100 hover:text-blue-600 text-blue-500 rounded-lg text-sm">
-            Tambah Transaksi
-            </a>
+        <a
+          [routerLink]="['/transaction-in/create']"
+          class="px-7 py-4 font-medium bg-blue-50 hover:bg-blue-100 hover:text-blue-600 text-blue-500 rounded-lg text-sm"
+        >
+          Tambah Transaksi
+        </a>
       </div>
     </header>
     <div class="px-10 py-6">
@@ -393,7 +396,7 @@
                   <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
                     <tr
                       *ngFor="
-                        let item of stock
+                        let item of transactions
                           | customFilter : searchInput
                           | paginate : config
                       "
@@ -467,7 +470,7 @@
                         </h1>
                       </td>
                       <td class="h-px w-px whitespace-nowrap">
-                        <h1 class="text-sm">Cetak</h1>
+                        <a [routerLink]="['/transaction-in/print/', item.id]"  class="text-sm cursor-pointer px-4 py-2 bg-lime-500 hover:bg-lime-600 text-white rounded-lg font-medium">Cetak</a>
                       </td>
                     </tr>
                   </tbody>

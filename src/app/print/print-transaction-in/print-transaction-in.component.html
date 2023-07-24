@@ -1,0 +1,142 @@
+<div class="w-full ">
+  <div class="bg-slate-100">
+    <div class="text-center">
+      <h1 class="text-3xl font-medium">Rekap Penjualan ......</h1>
+      <h1 class="text-2xl font-medium">CV ...... Tahun</h1>
+    </div>
+    <div class="">
+      <h1 class="text-xl">Pelaksanaan</h1>
+      <div class="flex">
+        <h1 class="text-xl w-1/2">Hari</h1>
+        <h1 class="text-xl">: Hari</h1>
+      </div>
+      <div class="flex">
+        <h1 class="text-xl w-1/2">Tanggal</h1>
+        <h1 class="text-xl">: Tanggal</h1>
+      </div>
+    </div>
+
+    <div class="py-5">
+      <div class="flex flex-col">
+        <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+          <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
+            <div class="overflow-hidden">
+              <table
+                class="min-w-full border text-center text-sm font-light dark:border-neutral-500"
+              >
+                <thead class="border border-black font-medium dark:border-neutral-500">
+                  <tr>
+                    <th
+                      scope="col"
+                      class="border-r px-6 py-4 border-neutral-500"
+                    >
+                      No
+                    </th>
+                    <th
+                      scope="col"
+                      class="border-r px-6 py-4 border-neutral-500"
+                    >
+                      Nama Barang
+                    </th>
+                    <th
+                      scope="col"
+                      class="border-r px-6 py-4 border-neutral-500"
+                    >
+                      Jumlah
+                    </th>
+                    <th
+                      scope="col"
+                      class="border-r px-6 py-4 border-neutral-500"
+                    >
+                      Satuan
+                    </th>
+                    <th
+                      scope="col"
+                      class="border-r px-6 py-4 border-neutral-500"
+                    >
+                      Harga
+                    </th>
+                    <th scope="col" class="px-6 py-4">Jumlah (Rp)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    *ngFor="let item of dataRekap; index as i"
+                    class=" border border-black dark:border-neutral-500"
+                  >
+                    <td
+                      class="whitespace-nowrap border-r px-6 py-4 font-medium border-neutral-500"
+                    >
+                      {{ i + 1 }}
+                    </td>
+                    <td
+                      class="whitespace-nowrap border-r font-medium px-6 py-4 border-neutral-500"
+                    >
+                      {{ item.nama }}
+                    </td>
+                    <td
+                      class="whitespace-nowrap border-r px-6 py-4 border-neutral-500"
+                    >
+                      {{ item.qty }}
+                    </td>
+                    <td
+                      class="whitespace-nowrap border-r px-6 py-4 border-neutral-500"
+                    >
+                      {{ item.satuan }}
+                    </td>
+                    <td
+                      class="whitespace-nowrap border-r px-6 py-4 border-neutral-500"
+                    >
+                      {{ item.harga }}
+                    </td>
+                    <td class="whitespace-nowrap px-6 py-4"> Rp{{(item.harga * item.qty).toLocaleString("en-US")}} </td>
+                  </tr>
+                  <tr class="border border-black ">
+                    <td
+                    colspan="5"
+                      class="whitespace-nowrap border-black px-6 py-4 font-medium border-neutral-500"
+                    >
+                      DDP
+                    </td>
+                    <td
+                      class="whitespace-nowrap border border-black font-medium px-6 py-4 border-neutral-500"
+                    >
+                      -
+                    
+                  </tr>
+                  <tr class="border border-black ">
+                    <td
+                    colspan="5"
+                      class="whitespace-nowrap border-black px-6 py-4 font-medium border-neutral-500"
+                    >
+                      PPN
+                    </td>
+                    <td
+                      class="whitespace-nowrap border border-black font-medium px-6 py-4 border-neutral-500"
+                    >
+                      -
+                    
+                  </tr>
+                  <tr class="border border-black ">
+                    <td
+                    colspan="5"
+                      class="whitespace-nowrap border-black px-6 py-4 font-medium border-neutral-500"
+                    >
+                      Total
+                    </td>
+                    <td
+                      class="whitespace-nowrap border border-black font-medium px-6 py-4 border-neutral-500"
+                    >
+                      -
+                    
+                  </tr>
+                  
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

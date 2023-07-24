@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { PaginationControlsDirective } from 'ngx-pagination';
 
-const stockBarang = [
+const transactionBarang = [
   {
     id: 1,
     date: '17/07/2023',
@@ -146,12 +146,12 @@ export class TransactionInComponent {
 
   searchInput: any;
   p: any;
-  stock = stockBarang;
+  transactions = transactionBarang;
   config = {
     id: 'custom',
     itemsPerPage: 7,
     currentPage: 1,
-    totalItems: this.stock.length,
+    totalItems: this.transactions.length,
   };
 
   onPageChange(event: any) {
