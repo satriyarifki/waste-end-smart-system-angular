@@ -1,4 +1,4 @@
-<div class="w-full ">
+<div class="w-full">
   <div class="bg-slate-100">
     <div class="text-center">
       <h1 class="text-3xl font-medium">Rekap Penjualan ......</h1>
@@ -24,7 +24,9 @@
               <table
                 class="min-w-full border text-center text-sm font-light dark:border-neutral-500"
               >
-                <thead class="border border-black font-medium dark:border-neutral-500">
+                <thead
+                  class="border border-black font-medium dark:border-neutral-500"
+                >
                   <tr>
                     <th
                       scope="col"
@@ -62,7 +64,7 @@
                 <tbody>
                   <tr
                     *ngFor="let item of dataRekap; index as i"
-                    class=" border border-black dark:border-neutral-500"
+                    class="border border-black dark:border-neutral-500"
                   >
                     <td
                       class="whitespace-nowrap border-r px-6 py-4 font-medium border-neutral-500"
@@ -89,48 +91,51 @@
                     >
                       {{ item.harga }}
                     </td>
-                    <td class="whitespace-nowrap px-6 py-4"> Rp{{(item.harga * item.qty).toLocaleString("en-US")}} </td>
+                    <td class="whitespace-nowrap px-6 py-4">
+                      Rp{{ (item.harga * item.qty).toLocaleString("en-US") }}
+                    </td>
                   </tr>
-                  <tr class="border border-black ">
+                  <tr class="border border-black">
                     <td
-                    colspan="5"
-                      class="whitespace-nowrap border-black px-6 py-4 font-medium border-neutral-500"
+                      colspan="5"
+                      class="whitespace-nowrap border-black px-6 py-4 font-medium "
                     >
                       DDP
                     </td>
                     <td
-                      class="whitespace-nowrap border border-black font-medium px-6 py-4 border-neutral-500"
+                      class="whitespace-nowrap border border-black font-medium px-6 py-4 "
                     >
                       -
-                    
+                    </td>
                   </tr>
-                  <tr class="border border-black ">
+
+                  <tr class="border border-black">
                     <td
-                    colspan="5"
-                      class="whitespace-nowrap border-black px-6 py-4 font-medium border-neutral-500"
+                      colspan="5"
+                      class="whitespace-nowrap border-black px-6 py-4 font-medium "
                     >
                       PPN
                     </td>
                     <td
-                      class="whitespace-nowrap border border-black font-medium px-6 py-4 border-neutral-500"
+                      class="whitespace-nowrap border border-black font-medium px-6 py-4 "
                     >
                       -
-                    
+                    </td>
                   </tr>
-                  <tr class="border border-black ">
+
+                  <tr class="border border-black">
                     <td
-                    colspan="5"
-                      class="whitespace-nowrap border-black px-6 py-4 font-medium border-neutral-500"
+                      colspan="5"
+                      class="whitespace-nowrap border-black px-6 py-4 font-medium "
                     >
                       Total
                     </td>
                     <td
-                      class="whitespace-nowrap border border-black font-medium px-6 py-4 border-neutral-500"
+                      class="whitespace-nowrap border border-black font-medium px-6 py-4 "
                     >
                       -
-                    
+                    </td>
                   </tr>
-                  
                 </tbody>
               </table>
             </div>

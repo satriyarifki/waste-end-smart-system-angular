@@ -17,6 +17,7 @@ import { TransactionOutComponent } from './transaction-out/transaction-out.compo
 import { CreateTransactionInComponent } from './create/create-transaction-in/create-transaction-in.component';
 import { CreateTransactionOutComponent } from './create/create-transaction-out/create-transaction-out.component';
 import { PrintTransactionInComponent } from './print/print-transaction-in/print-transaction-in.component';
+import { ExportAsModule } from 'ngx-export-as';
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import { PrintTransactionInComponent } from './print/print-transaction-in/print-
     ReactiveFormsModule,
     FormsModule,
     NgApexchartsModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    ExportAsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

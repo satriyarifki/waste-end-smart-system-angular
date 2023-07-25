@@ -96,6 +96,7 @@
                         class="hs-dropdown relative inline-block [--placement:bottom-right]"
                       >
                         <button
+                          (click)="exportDropdown()"
                           id="hs-as-table-table-export-dropdown"
                           type="button"
                           class="py-2 px-3 inline-flex justify-center items-center gap-2 rounded-md border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm dark:bg-slate-900 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800"
@@ -118,10 +119,10 @@
                           Export
                         </button>
                         <div
-                          class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden divide-y divide-gray-200 min-w-[12rem] z-10 bg-white shadow-md rounded-lg p-2 mt-2 dark:divide-gray-700 dark:bg-gray-800 dark:border dark:border-gray-700"
-                          aria-labelledby="hs-as-table-table-export-dropdown"
+                          [ngClass]="exportBool ? '' : 'hidden'"
+                          class="absolute transition-[opacity,margin] duration divide-y divide-gray-200 min-w-[12rem] z-10 bg-white shadow-md rounded-lg p-2 mt-2 right-0 dark:divide-gray-700 dark:bg-gray-800 dark:border dark:border-gray-700"
                         >
-                          <div class="py-2 first:pt-0 last:pb-0">
+                          <!-- <div class="py-2 first:pt-0 last:pb-0">
                             <span
                               class="block py-2 px-3 text-xs font-medium uppercase text-gray-400 dark:text-gray-600"
                             >
@@ -169,7 +170,7 @@
                               </svg>
                               Print
                             </a>
-                          </div>
+                          </div> -->
                           <div class="py-2 first:pt-0 last:pb-0">
                             <span
                               class="block py-2 px-3 text-xs font-medium uppercase text-gray-400 dark:text-gray-600"
@@ -177,8 +178,8 @@
                               Download options
                             </span>
                             <a
+                              (click)="export('xlsx')"
                               class="flex items-center gap-x-3 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
-                              href="#"
                             >
                               <svg
                                 class="w-4 h-4"
@@ -198,8 +199,8 @@
                               Excel
                             </a>
                             <a
+                              (click)="export('csv')"
                               class="flex items-center gap-x-3 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
-                              href="#"
                             >
                               <svg
                                 class="w-4 h-4"
@@ -217,8 +218,8 @@
                               .CSV
                             </a>
                             <a
+                              (click)="export('pdf')"
                               class="flex items-center gap-x-3 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
-                              href="#"
                             >
                               <svg
                                 class="w-4 h-4"
@@ -329,6 +330,7 @@
 
                 <!-- Table -->
                 <table
+                  id="stockTable"
                   class="min-w-full divide-y divide-gray-200 dark:divide-gray-700"
                 >
                   <thead class="bg-gray-50 dark:bg-slate-800 text-center">
@@ -448,7 +450,7 @@
 
                 <!-- Footer -->
                 <div
-                  class="px-6 py-2.5 grid gap-3 md:flex justify-center md:items-center border-t border-gray-200 dark:border-gray-700"
+                  class="px-6 py-2.5 grid gap-3 md:flex justify-around md:items-center border-t border-gray-200 dark:border-gray-700"
                 >
                   <pagination-template
                     #p="paginationApi"
@@ -534,20 +536,28 @@
                       </div>
                     </div>
                   </pagination-template>
-                  <!-- <div class="max-w-sm space-y-3">
-                    <select
-                      class="py-2 px-3 pr-9 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400"
+                  <div class="flex gap-x-2 items-center">
+                    <label for="" class="text-xs font-medium"
+                      >Show Per Page</label
                     >
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                      <option>4</option>
-                      <option selected>5</option>
-                      <option>6</option>
+                    <select
+                      #selectItemPerPage
+                      id="selectItemPerPage"
+                      (change)="
+                        changeItemPerPageSelect(selectItemPerPage.value)
+                      "
+                      class="py-1.5 px-3 pr-5 block border border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400"
+                    >
+                      <option>5</option>
+                      <option selected>7</option>
+                      <option>9</option>
+                      <option>11</option>
+                      <option>13</option>
+                      <option>15</option>
                     </select>
                   </div>
 
-                  <div>
+                  <!-- <div>
                     <div class="inline-flex gap-x-2">
                       <button
                         type="button"
