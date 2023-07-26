@@ -5,6 +5,7 @@ import { CreateTransactionInComponent } from './create/create-transaction-in/cre
 import { CreateTransactionOutComponent } from './create/create-transaction-out/create-transaction-out.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PrintTransactionInComponent } from './print/print-transaction-in/print-transaction-in.component';
+import { ScalesPassboxComponent } from './scales-passbox/scales-passbox.component';
 import { StockBarangComponent } from './stock-barang/stock-barang.component';
 import { TransactionInComponent } from './transaction-in/transaction-in.component';
 import { TransactionOutComponent } from './transaction-out/transaction-out.component';
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'transaction-in/create', component: CreateTransactionInComponent },
   { path: 'transaction-out/create', component: CreateTransactionOutComponent },
   { path: 'transaction-in/print/:id', component: PrintTransactionInComponent },
+  { path: 'scales-passbox', component: ScalesPassboxComponent },
 ];
 
 @NgModule({

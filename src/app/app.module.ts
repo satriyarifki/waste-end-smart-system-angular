@@ -18,6 +18,8 @@ import { CreateTransactionInComponent } from './create/create-transaction-in/cre
 import { CreateTransactionOutComponent } from './create/create-transaction-out/create-transaction-out.component';
 import { PrintTransactionInComponent } from './print/print-transaction-in/print-transaction-in.component';
 import { ExportAsModule } from 'ngx-export-as';
+import { ScalesPassboxComponent } from './scales-passbox/scales-passbox.component';
+import { ScalesTpsComponent } from './scales-tps/scales-tps.component';
 
 
 @NgModule({
@@ -34,6 +36,8 @@ import { ExportAsModule } from 'ngx-export-as';
     CreateTransactionInComponent,
     CreateTransactionOutComponent,
     PrintTransactionInComponent,
+    ScalesPassboxComponent,
+    ScalesTpsComponent,
 
   ],
   imports: [

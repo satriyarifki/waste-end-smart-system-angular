@@ -7,7 +7,17 @@ import { Router } from '@angular/router';
   styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent {
+  //Tools
+  scalesBool=false
+  transactionBool=false
+
 constructor(public router: Router){
 
+}
+changeScales(){
+  this.scalesBool = !this.scalesBool
+}
+changeTransaction(){
+  this.transactionBool = !this.transactionBool
 }
 }
