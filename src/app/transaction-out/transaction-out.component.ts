@@ -147,6 +147,9 @@ export class TransactionOutComponent {
   searchInput: any;
   p: any;
   transactions = transactionBarang;
+  exportAsConfig: any;
+  exportAsService: any;
+  exportBool: boolean = false;
   config = {
     id: 'custom',
     itemsPerPage: 7,
@@ -157,5 +160,24 @@ export class TransactionOutComponent {
   onPageChange(event: any) {
     console.log(event);
     this.config.currentPage = event;
+  }
+
+  export(type: any) {
+    this.exportAsConfig.type = type;
+
+    // download the file using old school javascript method
+    this.exportAsService
+      .save(this.exportAsConfig, 'Stock Table')
+      .subscribe(() => {
+        // save started
+        console.log('Success');
+      });
+    // get the data as base64 or json object for json type - this will be helpful in ionic or SSR
+    // this.exportAsService.get(this.exportAsConfig).subscribe((content: any) => {
+    //   console.log(content);
+    // });
+  }
+  exportDropdown() {
+    this.exportBool = !this.exportBool;
   }
 }
