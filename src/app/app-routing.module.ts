@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './auth/login/login.component';
 import { CreateTransactionInComponent } from './create/create-transaction-in/create-transaction-in.component';
 import { CreateTransactionOutComponent } from './create/create-transaction-out/create-transaction-out.component';
+import { DashboardSalesComponent } from './dashboard-sales/dashboard-sales.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PrintTransactionInComponent } from './print/print-transaction-in/print-transaction-in.component';
 import { ScalesPassboxComponent } from './scales-passbox/scales-passbox.component';
@@ -12,6 +13,7 @@ import { TransactionOutComponent } from './transaction-out/transaction-out.compo
 
 const routes: Routes = [
   { path: '', component: DashboardComponent },
+  { path: 'dashboard-sales', component: DashboardSalesComponent },
   { path: 'login', component: LoginComponent },
   { path: 'stock-barang', component: StockBarangComponent },
   { path: 'transaction-in', component: TransactionInComponent },

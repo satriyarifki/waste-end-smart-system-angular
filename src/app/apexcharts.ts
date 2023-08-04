@@ -9,7 +9,9 @@ import {
     ApexStroke,
     ApexXAxis,
     ApexFill,
-    ApexTooltip
+    ApexTooltip,
+    ApexNonAxisChartSeries,
+    ApexResponsive, ApexAnnotations
   } from "ng-apexcharts";
   
   export type ChartOptions = {
@@ -22,5 +24,33 @@ import {
     fill: ApexFill;
     tooltip: ApexTooltip;
     stroke: ApexStroke;
+    legend: ApexLegend;
+  };
+  export type ChartSalesCategoryYTD = {
+    series: ApexAxisChartSeries;
+    chart: ApexChart;
+    dataLabels: ApexDataLabels;
+    plotOptions: ApexPlotOptions;
+    xaxis: ApexXAxis;
+    stroke: ApexStroke;
+    tootlip: ApexTooltip
+  };
+  export type ChartBigFiveSales = {
+    series: ApexNonAxisChartSeries;
+    chart: ApexChart;
+    responsive: ApexResponsive[];
+    labels: any;
+  };
+  export type ChartSalesPerformance = {
+    annotations: ApexAnnotations
+    series: ApexAxisChartSeries;
+    chart: ApexChart;
+    dataLabels: ApexDataLabels;
+    plotOptions: ApexPlotOptions;
+    stroke: ApexStroke;
+    xaxis: ApexXAxis;
+    yaxis: ApexYAxis;
+    colors: string[];
+    fill: ApexFill;
     legend: ApexLegend;
   };
