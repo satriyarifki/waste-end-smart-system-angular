@@ -1,11 +1,12 @@
 <!-- Sidebar Toggle -->
 <div
-  class="sticky top-0 inset-x-0 z-20 bg-white border-y px-4 sm:px-6 md:px-8 lg:hidden dark:bg-gray-800 dark:border-gray-700"
+  class="sticky top-0 inset-x-0 z-20 flex justify-between bg-white border-y px-4 sm:px-6 md:px-8 lg:hidden dark:bg-gray-800 dark:border-gray-700"
 >
   <div class="flex items-center py-4">
     <!-- Navigation Toggle -->
     <button
       type="button"
+      (click)="changeToggleSidebar()"
       class="text-gray-500 hover:text-gray-600"
       data-hs-overlay="#application-sidebar-dark"
       aria-controls="application-sidebar-dark"
@@ -59,13 +60,29 @@
     </ol>
     <!-- End Breadcrumb -->
   </div>
+  <div class="px-2 py-2">
+    <button
+      class="inline-block rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]"
+      type="button"
+      data-te-ripple-init
+      data-te-ripple-color="light"
+      style="background: linear-gradient(to right, #2496ee, #b636dd)"
+    >
+      Log in
+    </button>
+  </div>
 </div>
 <!-- End Sidebar Toggle -->
 
 <!-- Sidebar -->
 <div
   id="application-sidebar-dark"
-  class="hs-overlay hs-overlay-open:translate-x-0 -translate-x-full transition-all duration-300 transform hidden fixed top-0 left-0 bottom-0 z-[60] w-64 bg-slate-900 border-r border-gray-800 pt-7 pb-10 overflow-y-auto scrollbar-y lg:block lg:translate-x-0 lg:right-auto lg:bottom-0"
+  [ngClass]="
+    toggleSidebar
+      ? ''
+      : '-translate-x-full lg:block lg:translate-x-0 lg:right-auto lg:bottom-0 w-52 lg:w-64'
+  "
+  class="transition-all duration-300 transform fixed top-0 left-0 bottom-0 z-[60]  bg-slate-900 border-r border-gray-800 pt-7 pb-10 overflow-y-auto scrollbar-y"
 >
   <div class="px-6">
     <a
@@ -75,6 +92,22 @@
       >WESS</a
     >
   </div>
+  <a
+    class="lg:hidden cursor-pointer absolute right-2 top-2"
+    (click)="changeToggleSidebar()"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      height="30"
+      viewBox="0 -960 960 960"
+      width="30"
+      fill="white"
+    >
+      <path
+        d="m249-207-42-42 231-231-231-231 42-42 231 231 231-231 42 42-231 231 231 231-42 42-231-231-231 231Z"
+      />
+    </svg>
+  </a>
 
   <nav
     class="hs-accordion-group p-6 w-full flex flex-col flex-wrap"
@@ -108,6 +141,35 @@
             />
           </svg>
           Dashboard
+        </a>
+      </li>
+      <li>
+        <a
+          [routerLink]="['/']"
+          [ngClass]="
+            this.router.url == '/dashboard-sales'
+              ? 'bg-gradient-to-r from-gray-600 to-gray-800  text-white'
+              : 'text-gray-300'
+          "
+          class="flex items-center gap-x-3 py-2 px-2.5 cursor-pointer text-sm rounded-md"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            fill="currentColor"
+            viewBox="0 0 16 16"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"
+            />
+            <path
+              fill-rule="evenodd"
+              d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"
+            />
+          </svg>
+          Dashboard Sales
         </a>
       </li>
       <li>
@@ -331,6 +393,7 @@
               <span> Form TPS </span>
             </a>
           </li>
+          m
         </ul>
       </li>
       <li>

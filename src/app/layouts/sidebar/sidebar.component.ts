@@ -10,6 +10,7 @@ export class SidebarComponent {
   //Tools
   scalesBool=false
   transactionBool=false
+  toggleSidebar=false
 
 constructor(public router: Router){
 
@@ -19,5 +20,10 @@ changeScales(){
 }
 changeTransaction(){
   this.transactionBool = !this.transactionBool
+}
+changeToggleSidebar(){
+  this.toggleSidebar = !this.toggleSidebar
+  console.log(this.toggleSidebar);
+  
 }
 }

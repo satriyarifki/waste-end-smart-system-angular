@@ -20,6 +20,7 @@ import { PrintTransactionInComponent } from './print/print-transaction-in/print-
 import { ExportAsModule } from 'ngx-export-as';
 import { ScalesPassboxComponent } from './scales-passbox/scales-passbox.component';
 import { ScalesTpsComponent } from './scales-tps/scales-tps.component';
+import { DashboardSalesComponent } from './dashboard-sales/dashboard-sales.component';
 
 
 @NgModule({
@@ -38,6 +39,7 @@ import { ScalesTpsComponent } from './scales-tps/scales-tps.component';
     PrintTransactionInComponent,
     ScalesPassboxComponent,
     ScalesTpsComponent,
+    DashboardSalesComponent,
 
   ],
   imports: [
