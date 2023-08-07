@@ -398,8 +398,9 @@
       </li>
       <li>
         <a
+          [routerLink]="['/system-flow']"
           [ngClass]="
-            this.router.url == '/transaction-outn'
+            this.router.url == '/system-flow'
               ? 'bg-gradient-to-r from-gray-600 to-gray-800  text-white'
               : 'text-gray-300'
           "
@@ -407,9 +408,7 @@
         >
           <svg
             [ngClass]="
-              this.router.url == '/transaction-outn'
-                ? 'fill-white'
-                : 'fill-gray-200'
+              this.router.url == '/system-flow' ? 'fill-white' : 'fill-gray-200'
             "
             xmlns="http://www.w3.org/2000/svg"
             height="20"
