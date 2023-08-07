@@ -38,6 +38,7 @@ import {
   export type ChartBigFiveSales = {
     series: ApexNonAxisChartSeries;
     chart: ApexChart;
+    plotOptions: ApexPlotOptions;
     responsive: ApexResponsive[];
     labels: any;
   };

@@ -21,8 +21,8 @@
       </div>
       <div class="gap-y-2 px-5 py-3 bg-white shadow-md rounded-lg">
         <div>
-            <h1 class="font-medium">SELISIH ACT Vs SYSTEM YTD 2023</h1>
-          </div>
+          <h1 class="font-medium">SELISIH ACT Vs SYSTEM YTD 2023</h1>
+        </div>
         <apx-chart
           [series]="chartSalesCategoryYTD.series2"
           [chart]="chartSalesCategoryYTD.chart2"
@@ -34,21 +34,24 @@
       </div>
     </div>
     <div class="w-3/5 flex-col space-y-2.5">
-      <div class="gap-y-2 xl:px-20 py-5 px-4 bg-white shadow-md rounded-lg">
+      <div class="gap-y-2 py-5 px-4 bg-white shadow-md rounded-lg">
         <div class="py-1.5">
-            <h1 class="font-medium">BIG 5 SALES YTD CONTRIBUTION</h1>
-          </div>
-        <apx-chart
-          [series]="chartBigFiveSales.series"
-          [chart]="chartBigFiveSales.chart"
-          [labels]="chartBigFiveSales.labels"
-          [responsive]="chartBigFiveSales.responsive"
-        ></apx-chart>
+          <h1 class="font-medium">BIG 5 SALES YTD CONTRIBUTION</h1>
+        </div>
+        <div class="xl:px-16">
+          <apx-chart
+            [series]="chartBigFiveSales.series"
+            [chart]="chartBigFiveSales.chart"
+            [plotOptions]="chartBigFiveSales.plotOptions"
+            [labels]="chartBigFiveSales.labels"
+            [responsive]="chartBigFiveSales.responsive"
+          ></apx-chart>
+        </div>
       </div>
       <div class="gap-y-2 px-5 py-3 bg-white shadow-md rounded-lg">
         <div class="py-1.5">
-            <h1 class="font-medium">SALES PERFORMANCE</h1>
-          </div>
+          <h1 class="font-medium">SALES PERFORMANCE</h1>
+        </div>
         <apx-chart
           [annotations]="chartSalesPerformance.annotations"
           [series]="chartSalesPerformance.series"

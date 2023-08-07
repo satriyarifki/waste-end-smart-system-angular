@@ -51,8 +51,8 @@ export class DashboardSalesComponent {
       chart2: {
         type: 'bar',
         toolbar: {
-          show: false
-        }
+          show: false,
+        },
       },
       plotOptions: {
         bar: {
@@ -106,16 +106,50 @@ export class DashboardSalesComponent {
       xaxis2: {
         categories: [['Ytd Actual ', ' Sales'], 'Ytd System'],
       },
-      tooltip:{
+      tooltip: {
         enabled: false,
-      }
+      },
     };
   }
   bigFiveSalesChart() {
     this.chartBigFiveSales = {
-      series: [44, 55, 13, 43, 22],
+      series: [440000000, 550000000, 130000000, 430000000, 220000000],
       chart: {
         type: 'donut',
+      },
+      plotOptions: {
+        pie: {
+          donut: {
+            labels: {
+              show: true,
+              value: {
+                show: true,
+
+                formatter: function (val: any) {
+                  return val / 1000000 + ' Mio';
+                },
+              },
+              total: {
+                show: true,
+                showAlways: false,
+                label: 'Total',
+                fontSize: '22px',
+                fontFamily: 'Helvetica, Arial, sans-serif',
+                fontWeight: 600,
+                color: '#373d3f',
+                formatter: function (w: any) {
+                  return (
+                    w.globals.seriesTotals.reduce((a: any, b: any) => {
+                      return a + b;
+                    }, 0) /
+                      1000000000 +
+                    ' Bio'
+                  );
+                },
+              },
+            },
+          },
+        },
       },
       labels: ['Preform', 'Bottle', 'Carton', 'Balok', 'Rak Kecil'],
       responsive: [
@@ -140,12 +174,12 @@ export class DashboardSalesComponent {
         {
           name: 'Last Year',
           group: 'budget',
-          data: [4400000000, 5500000000],
+          data: [640000000, 3500000000],
         },
         {
           name: 'This Year',
           group: 'actual',
-          data: [4800000000, 5000000000],
+          data: [780000000, 4000000000],
         },
         // {
         //   name: 'Q2 Budget',
@@ -179,6 +213,7 @@ export class DashboardSalesComponent {
           horizontal: false,
         },
       },
+
       annotations: {
         // texts: [{
         //   x: 'YTD',
@@ -186,29 +221,26 @@ export class DashboardSalesComponent {
         //   text: 'Test',
         //   textAnchor: 'start',
         // }],
-        images: [
-          {
-            path: 'assets/img/grunge.jpg',
-            x: 'YTD',
-            y: 50000,
-            width: 50,
-            height: 50,
-            appendTo: '.apexcharts-annotations',
-          },
-        ],
         points: [
           {
-            x: 'MTD',
-            y: '50000',
+            x: 'YTD',
+            y: '5000000000',
             seriesIndex: 0,
             label: {
-              borderColor: '#775DD0',
+              borderWidth: 0,
               offsetY: 0,
               style: {
-                color: '#fff',
-                background: '#775DD0',
+                color: '#55019B',
+                fontSize: '13px',
+                background: '#E9CEFF',
+                padding: {
+                  left: 5,
+                  right: 5,
+                  top: 5,
+                  bottom: 5,
+                },
               },
-              text: 'Bananas are good',
+              text: [146 + '%', 'Ach from YTD this year vs Last year'],
             },
           },
         ],

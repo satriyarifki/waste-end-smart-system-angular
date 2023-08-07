@@ -21,6 +21,7 @@ import { ExportAsModule } from 'ngx-export-as';
 import { ScalesPassboxComponent } from './scales-passbox/scales-passbox.component';
 import { ScalesTpsComponent } from './scales-tps/scales-tps.component';
 import { DashboardSalesComponent } from './dashboard-sales/dashboard-sales.component';
+import { SystemFlowComponent } from './system-flow/system-flow.component';
 
 
 @NgModule({
@@ -40,6 +41,7 @@ import { DashboardSalesComponent } from './dashboard-sales/dashboard-sales.compo
     ScalesPassboxComponent,
     ScalesTpsComponent,
     DashboardSalesComponent,
+    SystemFlowComponent,
 
   ],
   imports: [
