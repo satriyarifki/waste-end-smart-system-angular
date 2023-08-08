@@ -6,6 +6,8 @@ import { CreateTransactionOutComponent } from './create/create-transaction-out/c
 import { DashboardSalesComponent } from './dashboard-sales/dashboard-sales.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PrintTransactionInComponent } from './print/print-transaction-in/print-transaction-in.component';
+import { ScalesPassboxOc1Component } from './scales-passbox-oc1/scales-passbox-oc1.component';
+import { ScalesPassboxOc2Component } from './scales-passbox-oc2/scales-passbox-oc2.component';
 import { ScalesPassboxComponent } from './scales-passbox/scales-passbox.component';
 import { StockBarangComponent } from './stock-barang/stock-barang.component';
 import { SystemFlowComponent } from './system-flow/system-flow.component';
@@ -22,7 +24,9 @@ const routes: Routes = [
   { path: 'transaction-in/create', component: CreateTransactionInComponent },
   { path: 'transaction-out/create', component: CreateTransactionOutComponent },
   { path: 'transaction-in/print/:id', component: PrintTransactionInComponent },
-  { path: 'scales-passbox', component: ScalesPassboxComponent },
+  // { path: 'scales-passbox', component: ScalesPassboxComponent },
+  { path: 'scales-passbox/oc1', component: ScalesPassboxOc1Component },
+  { path: 'scales-passbox/oc2', component: ScalesPassboxOc2Component},
   { path: 'system-flow', component: SystemFlowComponent },
 ];
 

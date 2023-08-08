@@ -11,7 +11,7 @@ import { NgApexchartsModule } from 'ng-apexcharts';
 import { NavbarComponent } from './layouts/navbar/navbar.component';
 import { StockBarangComponent } from './stock-barang/stock-barang.component';
 import { CustomFilterPipe } from './pipe/custom-filter.pipe';
-import {NgxPaginationModule} from 'ngx-pagination';
+import { NgxPaginationModule } from 'ngx-pagination';
 import { TransactionInComponent } from './transaction-in/transaction-in.component';
 import { TransactionOutComponent } from './transaction-out/transaction-out.component';
 import { CreateTransactionInComponent } from './create/create-transaction-in/create-transaction-in.component';
@@ -22,7 +22,9 @@ import { ScalesPassboxComponent } from './scales-passbox/scales-passbox.componen
 import { ScalesTpsComponent } from './scales-tps/scales-tps.component';
 import { DashboardSalesComponent } from './dashboard-sales/dashboard-sales.component';
 import { SystemFlowComponent } from './system-flow/system-flow.component';
-
+import { ScalesPassboxOc1Component } from './scales-passbox-oc1/scales-passbox-oc1.component';
+import { ScalesPassboxOc2Component } from './scales-passbox-oc2/scales-passbox-oc2.component';
+import { TooltipDirective } from './directive/tooltip.directive';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,9 @@ import { SystemFlowComponent } from './system-flow/system-flow.component';
     ScalesTpsComponent,
     DashboardSalesComponent,
     SystemFlowComponent,
-
+    ScalesPassboxOc1Component,
+    ScalesPassboxOc2Component,
+    TooltipDirective,
   ],
   imports: [
     BrowserModule,
@@ -51,9 +55,9 @@ import { SystemFlowComponent } from './system-flow/system-flow.component';
     FormsModule,
     NgApexchartsModule,
     NgxPaginationModule,
-    ExportAsModule
+    ExportAsModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
