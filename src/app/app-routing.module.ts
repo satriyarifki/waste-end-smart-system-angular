@@ -9,6 +9,8 @@ import { PrintTransactionInComponent } from './print/print-transaction-in/print-
 import { ScalesPassboxOc1Component } from './scales-passbox-oc1/scales-passbox-oc1.component';
 import { ScalesPassboxOc2Component } from './scales-passbox-oc2/scales-passbox-oc2.component';
 import { ScalesPassboxComponent } from './scales-passbox/scales-passbox.component';
+import { ScalesTpsViewComponent } from './scales-tps/scales-tps-view/scales-tps-view.component';
+import { ScalesTpsComponent } from './scales-tps/scales-tps.component';
 import { StockBarangComponent } from './stock-barang/stock-barang.component';
 import { SystemFlowComponent } from './system-flow/system-flow.component';
 import { TransactionInComponent } from './transaction-in/transaction-in.component';
@@ -26,7 +28,9 @@ const routes: Routes = [
   { path: 'transaction-in/print/:id', component: PrintTransactionInComponent },
   // { path: 'scales-passbox', component: ScalesPassboxComponent },
   { path: 'scales-passbox/oc1', component: ScalesPassboxOc1Component },
-  { path: 'scales-passbox/oc2', component: ScalesPassboxOc2Component},
+  { path: 'scales-passbox/oc2', component: ScalesPassboxOc2Component },
+  { path: 'scales-tps', component: ScalesTpsComponent },
+  { path: 'scales-tps/view', component: ScalesTpsViewComponent },
   { path: 'system-flow', component: SystemFlowComponent },
 ];
 

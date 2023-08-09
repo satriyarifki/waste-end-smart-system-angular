@@ -25,6 +25,8 @@ import { SystemFlowComponent } from './system-flow/system-flow.component';
 import { ScalesPassboxOc1Component } from './scales-passbox-oc1/scales-passbox-oc1.component';
 import { ScalesPassboxOc2Component } from './scales-passbox-oc2/scales-passbox-oc2.component';
 import { TooltipDirective } from './directive/tooltip.directive';
+import { HttpClientModule } from '@angular/common/http';
+import { ScalesTpsViewComponent } from './scales-tps/scales-tps-view/scales-tps-view.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +49,7 @@ import { TooltipDirective } from './directive/tooltip.directive';
     ScalesPassboxOc1Component,
     ScalesPassboxOc2Component,
     TooltipDirective,
+    ScalesTpsViewComponent,
   ],
   imports: [
     BrowserModule,
@@ -56,6 +59,7 @@ import { TooltipDirective } from './directive/tooltip.directive';
     NgApexchartsModule,
     NgxPaginationModule,
     ExportAsModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

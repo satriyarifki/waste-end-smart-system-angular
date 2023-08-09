@@ -71,13 +71,16 @@ export class TooltipDirective {
   }
 
   hide() {
-    this.renderer.removeClass(this.tooltip, 'ng-tooltip-show');
-    this.renderer.addClass(this.tooltip, 'transition');
-    this.renderer.removeClass(this.tooltip, 'opacity-100');
-    window.setTimeout(() => {
-      this.renderer.removeChild(document.body, this.tooltip);
-      this.tooltip = null;
-    });
+    if (this.tooltip != undefined) {
+      this.renderer.removeClass(this.tooltip, 'ng-tooltip-show');
+      this.renderer.addClass(this.tooltip, 'transition');
+      this.renderer.removeClass(this.tooltip, 'opacity-100');
+
+      window.setTimeout(() => {
+        this.renderer.removeChild(document.body, this.tooltip);
+        this.tooltip = null;
+      });
+    }
   }
 
   create() {

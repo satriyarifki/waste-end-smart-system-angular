@@ -110,8 +110,7 @@
   </a>
 
   <nav
-    class="hs-accordion-group p-6 w-full flex flex-col flex-wrap"
-    data-hs-accordion-always-open
+    class=" p-6 w-full flex flex-col flex-wrap" 
   >
     <ul class="space-y-1.5">
       <li>
@@ -396,6 +395,7 @@
           </li>
           <li>
             <a
+            [routerLink]="['/scales-tps']"
               [ngClass]="
                 this.router.url == '/transaction-outn'
                   ? 'bg-gradient-to-r from-gray-600 to-gray-800  text-white'
@@ -467,7 +467,7 @@
           </a>
 
           <div id="users-accordion-child" class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300 hidden">
-            <ul class="hs-accordion-group pl-3 pt-2" data-hs-accordion-always-open>
+            <ul class=" pl-3 pt-2" >
               <li class="hs-accordion" id="users-accordion-sub-1">
                 <a class="hs-accordion-toggle flex items-center gap-x-3.5 py-2 px-2.5 hs-accordion-active:text-white hs-accordion-active:hover:bg-transparent text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white" >
                   Sub Menu 1

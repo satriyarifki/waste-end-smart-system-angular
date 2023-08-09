@@ -1,15 +1,17 @@
 import { Component, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
 import { PaginationControlsDirective } from 'ngx-pagination';
 import { forkJoin } from 'rxjs';
-import { ApiService } from '../services/api.service';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
-  selector: 'app-scales-tps',
-  templateUrl: './scales-tps.component.html',
-  styleUrls: ['./scales-tps.component.css']
+  selector: 'app-scales-tps-view',
+  templateUrl: './scales-tps-view.component.html',
+  styleUrls: ['./scales-tps-view.component.css'],
 })
-export class ScalesTpsComponent {
+export class ScalesTpsViewComponent {
+  dataParams: any = this.actRouter.snapshot.queryParamMap;
   exportAsConfig: ExportAsConfig = {
     type: 'csv', // the type you want to download
     elementIdOrContent: 'stockTable', // the id of html/table element
@@ -34,13 +36,15 @@ export class ScalesTpsComponent {
   };
   constructor(
     private exportAsService: ExportAsService,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private actRouter: ActivatedRoute
   ) {
-    forkJoin(apiService.groupPassboxOc2Get()).subscribe((data) => {
+    forkJoin(apiService.passboxOc2ByLotGet(this.dataParams.get('lot'))).subscribe((data) => {
       this.passboxApi = data[0];
       this.config.totalItems = this.passboxApi.length;
-      console.log(this.passboxApi[0]);
+      console.log(this.passboxApi);
     });
+    console.log(this.dataParams);
   }
 
   export(type: any) {
