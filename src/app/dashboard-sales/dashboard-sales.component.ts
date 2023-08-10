@@ -30,7 +30,7 @@ export class DashboardSalesComponent {
         // {
         //   name: "serie2",
 
-        //   data: [53, 32, 33, 52, 13, 44, 32]
+        //   data: [5, 3, 3, 5, 1, 4, 3]
         // }
       ],
       series2: [
@@ -66,13 +66,14 @@ export class DashboardSalesComponent {
       },
       dataLabels: {
         enabled: true,
+        // offsetY:-10,
         offsetX: 32,
         style: {
           fontSize: '12px',
           colors: ['#0b82ce'],
         },
         formatter: (val: any) => {
-          return Number(val) + ' Bio';
+          return [Number(val) + ' Bio',] ;
         },
       },
       dataLabels2: {
@@ -97,7 +98,7 @@ export class DashboardSalesComponent {
           'Bottle',
           'Carton',
           'Balok',
-          'Rak Kecil',
+          'Sak Kecil',
           'Resin',
           'Palet Plastik',
           'Palet Kayu',
@@ -151,7 +152,7 @@ export class DashboardSalesComponent {
           },
         },
       },
-      labels: ['Preform', 'Bottle', 'Carton', 'Balok', 'Rak Kecil'],
+      labels: ['Preform', 'Bottle', 'Carton', 'Balok', 'Sak Kecil'],
       responsive: [
         {
           breakpoint: 480,

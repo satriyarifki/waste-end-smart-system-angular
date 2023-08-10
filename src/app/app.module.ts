@@ -27,6 +27,8 @@ import { ScalesPassboxOc2Component } from './scales-passbox-oc2/scales-passbox-o
 import { TooltipDirective } from './directive/tooltip.directive';
 import { HttpClientModule } from '@angular/common/http';
 import { ScalesTpsViewComponent } from './scales-tps/scales-tps-view/scales-tps-view.component';
+import { CreatePassboxOc1Component } from './create/create-passbox-oc1/create-passbox-oc1.component';
+import { CreatePassboxComponent } from './create/create-passbox/create-passbox.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +52,8 @@ import { ScalesTpsViewComponent } from './scales-tps/scales-tps-view/scales-tps-
     ScalesPassboxOc2Component,
     TooltipDirective,
     ScalesTpsViewComponent,
+    CreatePassboxOc1Component,
+    CreatePassboxComponent,
   ],
   imports: [
     BrowserModule,

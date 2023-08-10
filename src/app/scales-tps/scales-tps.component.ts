@@ -7,7 +7,7 @@ import { ApiService } from '../services/api.service';
 @Component({
   selector: 'app-scales-tps',
   templateUrl: './scales-tps.component.html',
-  styleUrls: ['./scales-tps.component.css']
+  styleUrls: ['./scales-tps.component.css'],
 })
 export class ScalesTpsComponent {
   exportAsConfig: ExportAsConfig = {
@@ -38,8 +38,11 @@ export class ScalesTpsComponent {
   ) {
     forkJoin(apiService.groupPassboxOc2Get()).subscribe((data) => {
       this.passboxApi = data[0];
+      this.passboxApi = this.passboxApi.sort((b, a) => {
+        return new Date(a.created_at).valueOf() - new Date(b.created_at).valueOf();
+      });
       this.config.totalItems = this.passboxApi.length;
-      console.log(this.passboxApi[0]);
+      console.log(this.passboxApi);
     });
   }
 

@@ -24,6 +24,7 @@ export class ScalesTpsViewComponent {
 
   // Api
   passboxApi: any[] = [];
+  tpsApi: any[] = [];
 
   // Boolean
   exportBool: Boolean = false;
@@ -39,12 +40,19 @@ export class ScalesTpsViewComponent {
     private apiService: ApiService,
     private actRouter: ActivatedRoute
   ) {
-    forkJoin(apiService.passboxOc2ByLotGet(this.dataParams.get('lot'))).subscribe((data) => {
-      this.passboxApi = data[0];
+    forkJoin(
+      apiService.passboxOc2ByLotGet(this.dataParams.get('lot')),
+      apiService.tpsByLotLineGet(
+        this.dataParams.get('line'),
+        this.dataParams.get('lot')
+      )
+    ).subscribe(([passboxOc2, tpsFilter]) => {
+      this.passboxApi = passboxOc2;
+      this.tpsApi = tpsFilter;
       this.config.totalItems = this.passboxApi.length;
-      console.log(this.passboxApi);
+      console.log(tpsFilter);
+      console.log(this.filterTpsByBag('bag3'));
     });
-    console.log(this.dataParams);
   }
 
   export(type: any) {
@@ -61,6 +69,10 @@ export class ScalesTpsViewComponent {
     // this.exportAsService.get(this.exportAsConfig).subscribe((content: any) => {
     //   console.log(content);
     // });
+  }
+
+  filterTpsByBag(bag: any) {
+    return this.tpsApi.filter((value: any) => value.global_variable_2 == bag);
   }
 
   changeItemPerPageSelect(value: any) {

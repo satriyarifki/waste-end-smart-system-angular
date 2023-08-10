@@ -13,7 +13,7 @@
       </div>
       <div>
         <a
-          [routerLink]="['/transaction-in/create']"
+          [routerLink]="['/scales-passbox/create']"
           class="px-7 py-4 font-medium bg-blue-50 hover:bg-blue-100 hover:text-blue-600 text-blue-500 rounded-lg text-sm"
         >
           Tambah Timbangan
@@ -305,6 +305,127 @@
 
                 <!-- Table -->
 
+                <!-- <table id="stockTable" class="w-full divide-y divide-gray-200">
+                  <thead class="bg-gray-50 text-center">
+                    <tr class="">
+                      <th scope="col" class="px-6 py-3 text-left">
+                        <div class="flex items-center justify-center gap-x-2">
+                          <span
+                            class="text-xs font-semibold uppercase tracking-wide text-gray-800"
+                          >
+                            Tanggal Timbang
+                          </span>
+                        </div>
+                      </th>
+
+                      <th scope="col" class="px-6 py-3 text-left">
+                        <div class="flex items-center justify-center gap-x-2">
+                          <span
+                            class="text-xs font-semibold uppercase tracking-wide text-gray-800"
+                          >
+                            Line
+                          </span>
+                        </div>
+                      </th>
+
+                      <th scope="col" class="px-6 py-3 text-left">
+                        <div class="flex items-center justify-center gap-x-2">
+                          <span
+                            class="text-xs font-semibold uppercase tracking-wide text-gray-800"
+                          >
+                            Lot Number
+                          </span>
+                        </div>
+                      </th>
+
+                      <th scope="col" class="px-6 py-3 text-left">
+                        <div class="flex items-center justify-center gap-x-2">
+                          <span
+                            class="text-xs font-semibold uppercase tracking-wide text-gray-800"
+                          >
+                            Nama Barang
+                          </span>
+                        </div>
+                      </th>
+                      <th scope="col" class="px-6 py-3 text-left">
+                        <div class="flex items-center justify-center gap-x-2">
+                          <span
+                            class="text-xs font-semibold uppercase tracking-wide text-gray-800"
+                          >
+                            No Bag
+                          </span>
+                        </div>
+                      </th>
+
+                      <th scope="col" class="px-6 py-3 text-left">
+                        <div class="flex items-center justify-center gap-x-2">
+                          <span
+                            class="text-xs font-semibold uppercase tracking-wide text-gray-800"
+                          >
+                            Qty
+                          </span>
+                        </div>
+                      </th>
+                      <th scope="col" class="px-6 py-3 text-left">
+                        <div class="flex items-center justify-center gap-x-2">
+                          <span
+                            class="text-xs font-semibold uppercase tracking-wide text-gray-800"
+                          >
+                            Satuan
+                          </span>
+                        </div>
+                      </th>
+                      <th scope="col" class="px-6 py-3 text-left">
+                        <div class="flex items-center justify-center gap-x-2">
+                          <span
+                            class="text-xs font-semibold uppercase tracking-wide text-gray-800"
+                          >
+                            PIC
+                          </span>
+                        </div>
+                      </th>
+                    </tr>
+                  </thead>
+
+                  <tbody class="divide-y divide-gray-200 h-[20vh] w-full">
+                    <tr
+                      *ngFor="
+                        let item of dataPassbox
+                          | customFilter : searchInput
+                          | paginate : config
+                      "
+                      class="bg-white hover:bg-gray-50 text-center"
+                    >
+                      <td class="h-px w-px whitespace-nowrap py-2.5">
+                        <h1 class="text-sm">{{ item.date }}</h1>
+                      </td>
+                      <td class="h-px w-px whitespace-nowrap">
+                        <h1 class="text-sm">{{ item.line }}</h1>
+                      </td>
+                      <td class="h-px w-px whitespace-nowrap">
+                        <h1 class="text-sm">{{ item.lot }}</h1>
+                      </td>
+                      <td class="h-px w-px whitespace-nowrap">
+                        <h1 class="text-sm">
+                          {{ item.name }}
+                        </h1>
+                      </td>
+                      <td class="h-px w-px whitespace-nowrap">
+                        <h1 class="text-sm">{{ item.noBag }}</h1>
+                      </td>
+                      <td class="h-px w-px whitespace-nowrap">
+                        <h1 class="text-sm">{{ item.qty }}</h1>
+                      </td>
+                      <td class="h-px w-px whitespace-nowrap">
+                        <h1 class="text-sm">{{ item.satuan }}</h1>
+                      </td>
+                      <td class="h-px w-px whitespace-nowrap">
+                        <h1 class="text-sm">{{ item.pic }}</h1>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table> -->
+
                 <table
                   id="stockTable"
                   class="min-w-full divide-y divide-gray-200"
@@ -390,45 +511,48 @@
                     </tr>
                   </thead>
 
-                  <tbody class="divide-y divide-gray-200 h-[20vh] ">
+                  <tbody class="divide-y divide-gray-200">
                     <tr
                       *ngFor="
-                        let item of dataPassbox
+                        let item of passboxApi
                           | customFilter : searchInput
                           | paginate : config
                       "
                       class="bg-white hover:bg-gray-50 text-center"
                     >
                       <td class="h-px w-px whitespace-nowrap py-2.5">
-                        <h1 class="text-sm">{{ item.date }}</h1>
-                      </td>
-                      <td class="h-px w-px whitespace-nowrap">
-                        <h1 class="text-sm">{{ item.line }}</h1>
-                      </td>
-                      <td class="h-px w-px whitespace-nowrap">
-                        <h1 class="text-sm">{{ item.lot }}</h1>
-                      </td>
-                      <td class="h-px w-px whitespace-nowrap">
                         <h1 class="text-sm">
-                          {{ item.name }}
+                          {{ item.created_at | date : "mediumDate" }}
                         </h1>
                       </td>
                       <td class="h-px w-px whitespace-nowrap">
-                        <h1 class="text-sm">{{ item.noBag }}</h1>
+                        <h1 class="text-sm">
+                          {{ item.line_name }}
+                        </h1>
                       </td>
                       <td class="h-px w-px whitespace-nowrap">
-                        <h1 class="text-sm">{{ item.qty }}</h1>
+                        <h1 class="text-sm">{{ item.global_variable_1 }}</h1>
                       </td>
                       <td class="h-px w-px whitespace-nowrap">
-                        <h1 class="text-sm">{{ item.satuan }}</h1>
+                        <h1 class="text-sm">
+                          {{ item.product_name }}
+                        </h1>
                       </td>
                       <td class="h-px w-px whitespace-nowrap">
-                        <h1 class="text-sm">{{ item.pic }}</h1>
+                        <h1 class="text-sm">{{ item.global_variable_2 }}</h1>
+                      </td>
+                      <td class="h-px w-px whitespace-nowrap">
+                        <h1 class="text-sm">{{ item.netto }}</h1>
+                      </td>
+                      <td class="h-px w-px whitespace-nowrap">
+                        <h1 class="text-sm">{{ item.unit }}</h1>
+                      </td>
+                      <td class="h-px w-px whitespace-nowrap">
+                        <h1 class="text-sm">{{ item.customer_name }}</h1>
                       </td>
                     </tr>
                   </tbody>
                 </table>
-
                 <!-- End Table -->
 
                 <!-- Footer -->

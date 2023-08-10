@@ -1,6 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
 import { PaginationControlsDirective } from 'ngx-pagination';
+import { forkJoin } from 'rxjs';
+import { ApiService } from '../services/api.service';
 
 const stockBarang = [
   { name: 'Preform OC1', qty: 20, satuan: 'kg', hargaSatuan: 7300, ppn: 11 },
@@ -49,6 +51,7 @@ export class ScalesPassboxOc1Component {
   // Api
   stock = stockBarang;
   dataPassbox = passbox;
+  passboxApi: any[] = [];
 
   // Boolean
   exportBool: Boolean = false;
@@ -59,7 +62,16 @@ export class ScalesPassboxOc1Component {
     currentPage: 1,
     totalItems: this.stock.length,
   };
-  constructor(private exportAsService: ExportAsService) {}
+  constructor(
+    private exportAsService: ExportAsService,
+    private apiService: ApiService
+  ) {
+    forkJoin(apiService.passboxOc1Get()).subscribe((data) => {
+      this.passboxApi = data[0];
+      this.config.totalItems = this.passboxApi.length;
+      console.log(this.passboxApi[0]);
+    });
+  }
 
   export(type: any) {
     this.exportAsConfig.type = type;

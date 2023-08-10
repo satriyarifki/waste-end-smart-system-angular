@@ -1,4 +1,4 @@
-<body class="bg-gray-50 pt-16 space-y-5">
+<body class="bg-gray-50 lg:pt-16 space-y-5">
   <!-- ========== MAIN CONTENT ========== -->
 
   <!-- Content -->
@@ -312,7 +312,7 @@
                   class="min-w-full divide-y divide-gray-200"
                 >
                   <thead class="bg-gray-50 text-center">
-                    <tr >
+                    <tr>
                       <!-- <th scope="col" class="px-6 py-3 text-left">
                         <div class="flex items-center justify-center gap-x-2">
                           <span
@@ -412,7 +412,7 @@
                           <span
                             class="text-center text-xs font-semibold uppercase tracking-wide text-gray-800"
                           >
-                            Status
+                            Note
                           </span>
                         </div>
                       </th>
@@ -453,10 +453,27 @@
                         <h1 class="text-sm">{{ item.netto }}</h1>
                       </td>
                       <td class="h-px w-px whitespace-nowrap">
-                        <h1 class="text-sm">{{ item.gross }}</h1>
+                        <h1 class="text-sm">
+                          {{ filterTpsByBag(item.global_variable_2)[0]?.netto }}
+                        </h1>
                       </td>
                       <td class="h-px w-px whitespace-nowrap">
-                        <h1 class="text-sm" [ngClass]="(item.netto - item.gross) < 0? 'text-red-500' : 'text-green-500'">{{ item.netto - item.gross }}</h1>
+                        <h1
+                          class="text-sm"
+                          [ngClass]="
+                            item.netto -
+                              filterTpsByBag(item.global_variable_2)[0]
+                                ?.netto !=
+                            0
+                              ? 'text-red-500'
+                              : 'text-green-500'
+                          "
+                        >
+                          {{
+                            filterTpsByBag(item.global_variable_2)[0]?.netto -
+                              item.netto | number
+                          }}
+                        </h1>
                       </td>
                       <td class="h-px w-px whitespace-nowrap">
                         <h1 class="text-sm">{{ item.unit }}</h1>
@@ -465,7 +482,12 @@
                         <h1 class="text-sm">{{ item.customer_name }}</h1>
                       </td>
                       <td class="h-px w-px whitespace-nowrap">
-                        <h1 class="text-sm">{{ item.customer_name }}</h1>
+                        <h1 class="text-sm">
+                          {{
+                            filterTpsByBag(item.global_variable_2)[0]
+                              ?.customer_remark
+                          }}
+                        </h1>
                       </td>
                     </tr>
                   </tbody>

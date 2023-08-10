@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './auth/login/login.component';
+import { CreatePassboxComponent } from './create/create-passbox/create-passbox.component';
 import { CreateTransactionInComponent } from './create/create-transaction-in/create-transaction-in.component';
 import { CreateTransactionOutComponent } from './create/create-transaction-out/create-transaction-out.component';
 import { DashboardSalesComponent } from './dashboard-sales/dashboard-sales.component';
@@ -27,6 +28,7 @@ const routes: Routes = [
   { path: 'transaction-out/create', component: CreateTransactionOutComponent },
   { path: 'transaction-in/print/:id', component: PrintTransactionInComponent },
   // { path: 'scales-passbox', component: ScalesPassboxComponent },
+  { path: 'scales-passbox/create', component: CreatePassboxComponent },
   { path: 'scales-passbox/oc1', component: ScalesPassboxOc1Component },
   { path: 'scales-passbox/oc2', component: ScalesPassboxOc2Component },
   { path: 'scales-tps', component: ScalesTpsComponent },
