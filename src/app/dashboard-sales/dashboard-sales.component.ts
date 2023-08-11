@@ -4,6 +4,9 @@ import {
   ChartSalesCategoryYTD,
   ChartSalesPerformance,
 } from '../apexcharts';
+import { ActualAug } from './db_sales';
+
+//
 
 @Component({
   selector: 'app-dashboard-sales',
@@ -15,17 +18,59 @@ export class DashboardSalesComponent {
   public chartBigFiveSales: Partial<ChartBigFiveSales> | any;
   public chartSalesPerformance: Partial<ChartSalesPerformance> | any;
 
+  actual: any[] = ActualAug;
+  // public chartOptions: Partial<ChartOptions>;
+
   constructor() {
     this.salesCategoryYTDChart();
     this.bigFiveSalesChart();
     this.salesPerformanceChart();
+    this.sumTotalActual();
+    this.sumActualByCategory();
   }
+
+  sumTotalActual() {
+    let total = 0;
+    this.actual.forEach((element) => {
+      total += element.total;
+    });
+    if (String(total).length > 9) {
+      // console.log(total / 1000000000);
+      return { qty: total / 1000000000, unit: 'Mio' };
+    } else {
+      // console.log(total / 1000000);
+      return { qty: total / 1000000, unit: 'Bio' };
+    }
+    console.log(total);
+  }
+
+  sumActualByCategory() {
+    // let data: any[];
+    let data = [0, 0, 0, 0, 0, 0, 0, 0];
+
+    this.actual.forEach((element) => {
+      data[0] += (element.preform.qty * element.preform.price) / 1000000;
+      data[1] += (element.botol.qty * element.botol.price) / 1000000;
+      data[2] += (element.karton.qty * element.karton.price) / 1000000;
+      data[3] += (element.balok.qty * element.balok.price) / 1000000;
+      data[4] += (element.sak_kecil.qty * element.sak_kecil.price) / 1000000;
+      data[5] += (element.sak_besar.qty * element.sak_besar.price) / 1000000;
+      data[6] += (element.resin.qty * element.resin.price) / 1000000;
+      data[7] +=
+        (element.palet_plastik.qty * element.palet_plastik.price) / 1000000;
+    });
+    console.log(Math.max(...data));
+
+    console.log(data);
+    return data;
+  }
+
   salesCategoryYTDChart() {
     this.chartSalesCategoryYTD = {
       series: [
         {
           name: 'serie1',
-          data: [4.4, 5.5, 4.1, 6.4, 2.2, 4.3, 2.1, 2.3],
+          data: this.sumActualByCategory(),
         },
         // {
         //   name: "serie2",
@@ -67,13 +112,13 @@ export class DashboardSalesComponent {
       dataLabels: {
         enabled: true,
         // offsetY:-10,
-        offsetX: 32,
+        offsetX: 50,
         style: {
           fontSize: '12px',
           colors: ['#0b82ce'],
         },
         formatter: (val: any) => {
-          return [Number(val) + ' Bio',] ;
+          return [Number(val).toFixed(1) + ' Mio'];
         },
       },
       dataLabels2: {
@@ -93,16 +138,28 @@ export class DashboardSalesComponent {
         colors: ['#fff'],
       },
       xaxis: {
+        max : Math.max(...this.sumActualByCategory()) + 20,
         categories: [
           'Preform',
           'Bottle',
           'Carton',
           'Balok',
           'Sak Kecil',
+          'Sak Besar',
           'Resin',
           'Palet Plastik',
-          'Palet Kayu',
         ],
+      },
+      yaxis: {
+        labels: {
+          show: true,
+          style: {
+            fontSize: '12px',
+            // fontFamily: 'Helvetica, Arial, sans-serif',
+            // fontWeight: 600,
+            cssClass: 'font-semibold ',
+          },
+        },
       },
       xaxis2: {
         categories: [['Ytd Actual ', ' Sales'], 'Ytd System'],
@@ -166,6 +223,13 @@ export class DashboardSalesComponent {
           },
         },
       ],
+      legend: {
+        offsetX: 5,
+        offsetY: 25,
+        fontSize: '12px',
+        position: 'right',
+        horizontalAlign: 'center',
+      },
     };
   }
 
@@ -193,11 +257,32 @@ export class DashboardSalesComponent {
         //   data: [20000, 40000, 25000, 10000, 12000, 28000],
         // },
       ],
+      series2: [
+        {
+          name: 'Actual',
+          data: [343],
+        },
+        {
+          name: 'Lost',
+          data: [58],
+        },
+        // {
+        //   name: 'Q2 Budget',
+        //   group: 'budget',
+        //   data: [13000, 36000, 20000, 8000, 13000, 27000],
+        // },
+        // {
+        //   name: 'Q2 Actual',
+        //   group: 'actual',
+        //   data: [20000, 40000, 25000, 10000, 12000, 28000],
+        // },
+      ],
       chart: {
         type: 'bar',
-        height: 350,
+        height: 250,
         stacked: true,
       },
+
       stroke: {
         width: 0,
         colors: ['#fff'],
@@ -225,7 +310,7 @@ export class DashboardSalesComponent {
         points: [
           {
             x: 'YTD',
-            y: '5000000000',
+            y: '4500000000',
             seriesIndex: 0,
             label: {
               borderWidth: 0,
@@ -264,6 +349,33 @@ export class DashboardSalesComponent {
         position: 'top',
         horizontalAlign: 'left',
       },
+      chart2: {
+        type: 'bar',
+        stacked: true,
+        height: 210,
+        stackType: '100%',
+        toolbar: { show: false },
+      },
+      plotOptions2: {
+        bar: {
+          // borderRadius: 5,
+          // borderRadiusApplication: 'around',
+          // horizontal: false,
+        },
+      },
+      xaxis2: {
+        categories: [' '],
+      },
+      legend2: {
+        // show: false,
+        position: 'bottom',
+        horizontalAlign: 'center',
+        fontSize: '10px',
+      },
+      yaxis2: {
+        show: false,
+      },
+      colors2: ['#58D68D', '#EC7063'],
     };
   }
 }

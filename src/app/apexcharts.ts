@@ -32,6 +32,7 @@ import {
     dataLabels: ApexDataLabels;
     plotOptions: ApexPlotOptions;
     xaxis: ApexXAxis;
+    yaxis: ApexYAxis;
     stroke: ApexStroke;
     tootlip: ApexTooltip
   };
