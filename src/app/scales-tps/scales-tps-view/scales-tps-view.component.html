@@ -5,14 +5,44 @@
   <div class="w-full pt-4 px-4 sm:px-6 md:px-8 lg:pl-72">
     <!-- Page Heading -->
     <header class="w-full flex justify-between items-center pr-3">
-      <div class="">
-        <h1 class="block text-2xl font-bold text-gray-800 sm:text-3xl">
-          TPS -
-          <span class="text-xl sm:text-2xl"
-            >{{ dataParams.get("line") }} {{ dataParams.get("lot") }}
-          </span>
-        </h1>
-        <p class="mb-1 text-sm font-semibold text-blue-600">Pages</p>
+      <div class="flex space-x-3 items-center">
+        <button
+          [routerLink]="['/scales-tps']"
+          type="button"
+          class="h-2/3 bg-gray-800 text-white rounded-l-md border-r border-gray-100 py-2 hover:bg-red-900 hover:text-white px-3"
+        >
+          <div class="flex flex-row align-middle">
+            <svg
+              class="w-5"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M7.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l2.293 2.293a1 1 0 010 1.414z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+          </div>
+        </button>
+        <div>
+          <div
+            class="flex flex-row gap-x-3 items-center text-2xl font-bold text-gray-800 sm:text-3xl"
+          >
+            <h1 class="">TPS </h1>
+            <div class="flex flex-col text-blue-600">
+              <h1 class="text-lg sm:text-xl">
+                Line : {{ dataParams.get("line") }}
+              </h1>
+              <h1 class="text-lg sm:text-xl">
+                Lot : {{ dataParams.get("lot") }}
+              </h1>
+            </div>
+          </div>
+
+          <!-- <p class="mb-1 text-sm font-semibold text-blue-600">Pages</p> -->
+        </div>
       </div>
       <div>
         <a
