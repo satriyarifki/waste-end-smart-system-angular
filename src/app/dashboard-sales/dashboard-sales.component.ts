@@ -138,7 +138,7 @@ export class DashboardSalesComponent {
         colors: ['#fff'],
       },
       xaxis: {
-        max : Math.max(...this.sumActualByCategory()) + 20,
+        max: Math.max(...this.sumActualByCategory()) + 20,
         categories: [
           'Preform',
           'Bottle',
@@ -171,7 +171,13 @@ export class DashboardSalesComponent {
   }
   bigFiveSalesChart() {
     this.chartBigFiveSales = {
-      series: [440000000, 550000000, 130000000, 430000000, 220000000],
+      series: [
+        834480000 + 230092800,
+        236865000 + 86047600,
+        31029000 + 8419950,
+        35628800 + 13415500,
+        25956000 + 5760000,
+      ],
       chart: {
         type: 'donut',
       },
@@ -184,7 +190,12 @@ export class DashboardSalesComponent {
                 show: true,
 
                 formatter: function (val: any) {
-                  return val / 1000000 + ' Mio';
+                  if(val.length >9) {
+                    return( val / 1000000000 ).toFixed(2)+ ' Bio';
+                  } else {
+                    return( val / 1000000 ).toFixed(2)+ ' Mio';
+                  }
+                  
                 },
               },
               total: {
@@ -197,11 +208,11 @@ export class DashboardSalesComponent {
                 color: '#373d3f',
                 formatter: function (w: any) {
                   return (
-                    w.globals.seriesTotals.reduce((a: any, b: any) => {
-                      return a + b;
-                    }, 0) /
-                      1000000000 +
-                    ' Bio'
+                    (
+                      w.globals.seriesTotals.reduce((a: any, b: any) => {
+                        return a + b;
+                      }, 0) / 1000000000
+                    ).toFixed(2) + ' Bio'
                   );
                 },
               },
