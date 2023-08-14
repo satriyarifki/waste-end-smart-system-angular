@@ -29,6 +29,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ScalesTpsViewComponent } from './scales-tps/scales-tps-view/scales-tps-view.component';
 import { CreatePassboxOc1Component } from './create/create-passbox-oc1/create-passbox-oc1.component';
 import { CreatePassboxComponent } from './create/create-passbox/create-passbox.component';
+import { ScalesSalesComponent } from './scales-sales/scales-sales.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { CreatePassboxComponent } from './create/create-passbox/create-passbox.c
     ScalesTpsViewComponent,
     CreatePassboxOc1Component,
     CreatePassboxComponent,
+    ScalesSalesComponent,
   ],
   imports: [
     BrowserModule,
