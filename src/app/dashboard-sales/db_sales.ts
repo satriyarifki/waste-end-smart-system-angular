@@ -535,7 +535,7 @@ export const ActualAug = [
     sak_kecil: { qty: 27, price: 13200, satuan: 'Pcs' },
   },
   {
-    date: '4-Aug-2023',
+    date: '7-Aug-2023',
     vendor: 'Sumber Rejeki',
     total: 63057000,
     resin: { qty: 48, price: 7000, satuan: 'Kg' },
