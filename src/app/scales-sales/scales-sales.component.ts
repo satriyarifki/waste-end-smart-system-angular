@@ -8,7 +8,7 @@ import { ApiService } from '../services/api.service';
 @Component({
   selector: 'app-scales-sales',
   templateUrl: './scales-sales.component.html',
-  styleUrls: ['./scales-sales.component.css']
+  styleUrls: ['./scales-sales.component.css'],
 })
 export class ScalesSalesComponent {
   exportAsConfig: ExportAsConfig = {
@@ -39,14 +39,17 @@ export class ScalesSalesComponent {
     private apiService: ApiService,
     private actRouter: ActivatedRoute
   ) {
-    forkJoin(
-      apiService.tpsGet()
-      
-    ).subscribe(([ tps]) => {
+    forkJoin(apiService.tpsGet()).subscribe(([tps]) => {
       // this.passboxApi = passboxOc2;
       this.tpsApi = tps;
-      this.config.totalItems = this.passboxApi.length;
-      console.log(tps);
+      this.tpsApi = this.tpsApi.sort((b, a) => {
+        return (
+          a.id - b.id
+          // new Date(a.created_at).valueOf() - new Date(b.created_at).valueOf()
+        );
+      });
+      this.config.totalItems = this.tpsApi.length;
+      console.log(this.tpsApi);
       // console.log(this.filterTpsByBag('bag3'));
     });
   }
@@ -67,10 +70,13 @@ export class ScalesSalesComponent {
     // });
   }
 
-  filterTpsByBag(bag: any) {
+  filterTpsByBag(lot: any, bag: any) {
     return this.tpsApi.filter(
       (value: any) =>
-        value.global_variable_2 != null && value.global_variable_2 == bag
+        value.global_variable_1 == lot &&
+        value.global_variable_2 != null &&
+        String(value.global_variable_2).toLowerCase() ==
+          String(bag).toLowerCase()
     );
   }
 

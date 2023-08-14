@@ -36,16 +36,69 @@ export class DashboardSalesComponent {
     });
     if (String(total).length > 9) {
       // console.log(total / 1000000000);
-      return { qty: total / 1000000000, unit: 'Mio' };
+      return { qty: total / 1000000000, unit: 'Bio' };
     } else {
       // console.log(total / 1000000);
-      return { qty: total / 1000000, unit: 'Bio' };
+      return { qty: total / 1000000, unit: 'Mio' };
     }
     console.log(total);
   }
+  sumTotalActualYTD() {
+    let totalYTD =
+      46520100 +
+      11700700 +
+      54236000 +
+      38248400 +
+      18059200 +
+      50156200 +
+      36892000 +
+      10184500 +
+      51949000 +
+      51091400 +
+      73678700 +
+      7072400 +
+      88318700 +
+      90550900 +
+      14049900 +
+      68954400 +
+      14101300 +
+      17142000 +
+      45176900 +
+      29049000 +
+      54299150 +
+      17608800 +
+      45801600 +
+      22229000 +
+      8298100 +
+      59695400 +
+      43058600 +
+      35374000 +
+      15643200 +
+      80043100 +
+      37474600 +
+      34016200 +
+      36344300 +
+      44723100 +
+      31529200 +
+      42580600 +
+      8980200 +
+      32457800 +
+      14102300 +
+      20996800 +
+      31571900 +
+      63057000 +
+      30491200;
+
+      if (String(totalYTD).length > 9) {
+        return (totalYTD / 1000000000).toFixed(3) + ' Bio';
+      } else {
+        return (totalYTD / 1000000).toFixed(3) + ' Mio';
+      }
+    console.log(totalYTD);
+  }
 
   sumActualByCategory() {
-    // let data: any[];
+    // let data: any[]
     let data = [0, 0, 0, 0, 0, 0, 0, 0];
 
     this.actual.forEach((element) => {
@@ -190,12 +243,11 @@ export class DashboardSalesComponent {
                 show: true,
 
                 formatter: function (val: any) {
-                  if(val.length >9) {
-                    return( val / 1000000000 ).toFixed(2)+ ' Bio';
+                  if (val.length > 9) {
+                    return (val / 1000000000).toFixed(2) + ' Bio';
                   } else {
-                    return( val / 1000000 ).toFixed(2)+ ' Mio';
+                    return (val / 1000000).toFixed(2) + ' Mio';
                   }
-                  
                 },
               },
               total: {
