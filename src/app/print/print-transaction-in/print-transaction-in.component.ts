@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 const data = [
   { nama: 'Jerigen', qty: 20, satuan: 'Kg', harga: 17500 },
@@ -20,5 +21,18 @@ const data = [
   styleUrls: ['./print-transaction-in.component.css'],
 })
 export class PrintTransactionInComponent {
+  dateNow = new Date()
   dataRekap = data;
+  dataJual = history.state
+
+  constructor(private router: Router) {
+    console.log(history.state);
+    // console.log(location.getState());
+    
+    console.log(router.getCurrentNavigation()?.extras.state);
+  }
+  ngOnInit(){
+    // console.log(history.state);
+    // console.log(this.location.get);
+  }
 }

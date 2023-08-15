@@ -161,6 +161,7 @@ export class TransactionOutComponent {
   // Data Result
   salesArray: any[] = [];
 
+  cobaState = { id: 1, name: 'Angula' };
   config = {
     id: 'custom',
     itemsPerPage: this.itemPerPage,

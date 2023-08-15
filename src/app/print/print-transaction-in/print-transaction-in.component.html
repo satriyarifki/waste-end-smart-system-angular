@@ -1,8 +1,10 @@
 <div class="w-full">
   <div class="bg-slate-100">
     <div class="text-center">
-      <h1 class="text-3xl font-medium">Rekap Penjualan ......</h1>
-      <h1 class="text-2xl font-medium">CV ...... Tahun</h1>
+      <h1 class="text-3xl font-medium">Rekap Penjualan Limbah Eks Produksi</h1>
+      <h1 class="text-2xl font-medium">
+        CV {{ dataJual.vendor }} Tahun {{ dateNow.getFullYear() }}
+      </h1>
     </div>
     <div class="">
       <h1 class="text-xl">Pelaksanaan</h1>
@@ -98,12 +100,12 @@
                   <tr class="border border-black">
                     <td
                       colspan="5"
-                      class="whitespace-nowrap border-black px-6 py-4 font-medium "
+                      class="whitespace-nowrap border-black px-6 py-4 font-medium"
                     >
                       DDP
                     </td>
                     <td
-                      class="whitespace-nowrap border border-black font-medium px-6 py-4 "
+                      class="whitespace-nowrap border border-black font-medium px-6 py-4"
                     >
                       -
                     </td>
@@ -112,12 +114,12 @@
                   <tr class="border border-black">
                     <td
                       colspan="5"
-                      class="whitespace-nowrap border-black px-6 py-4 font-medium "
+                      class="whitespace-nowrap border-black px-6 py-4 font-medium"
                     >
                       PPN
                     </td>
                     <td
-                      class="whitespace-nowrap border border-black font-medium px-6 py-4 "
+                      class="whitespace-nowrap border border-black font-medium px-6 py-4"
                     >
                       -
                     </td>
@@ -126,12 +128,12 @@
                   <tr class="border border-black">
                     <td
                       colspan="5"
-                      class="whitespace-nowrap border-black px-6 py-4 font-medium "
+                      class="whitespace-nowrap border-black px-6 py-4 font-medium"
                     >
                       Total
                     </td>
                     <td
-                      class="whitespace-nowrap border border-black font-medium px-6 py-4 "
+                      class="whitespace-nowrap border border-black font-medium px-6 py-4"
                     >
                       -
                     </td>
@@ -141,6 +143,12 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+    <div class="w-full flex flex-row">
+      <div class="w-1/3 text-center">
+        <h1>Penjual</h1>
+        <br><br><br>
       </div>
     </div>
   </div>
