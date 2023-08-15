@@ -21,18 +21,22 @@ const data = [
   styleUrls: ['./print-transaction-in.component.css'],
 })
 export class PrintTransactionInComponent {
-  dateNow = new Date()
+  dateNow = new Date();
   dataRekap = data;
-  dataJual = history.state
+  dataJual = history.state;
 
   constructor(private router: Router) {
     console.log(history.state);
     // console.log(location.getState());
-    
+    console.log(new Date(this.dataJual.date));
+
     console.log(router.getCurrentNavigation()?.extras.state);
   }
-  ngOnInit(){
+  ngOnInit() {
     // console.log(history.state);
     // console.log(this.location.get);
+  }
+  toDefaultDate(date: any) {
+    return new Date(date);
   }
 }
