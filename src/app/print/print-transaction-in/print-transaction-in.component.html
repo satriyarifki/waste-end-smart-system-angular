@@ -3,19 +3,26 @@
     <div class="text-center">
       <h1 class="text-2xl font-medium">Rekap Penjualan Limbah Eks Produksi</h1>
       <h1 class="text-xl font-medium">
-        CV {{ dataJual.vendor }} Tahun {{ dateNow.getFullYear() }}
+        CV {{ paramSales.vendor }} Tahun {{ dateNow.getFullYear() }}
       </h1>
     </div>
-    <div class=" px-10">
+    <div class="px-10">
       <!-- <h1 class="text-base font-semibold">PELAKSANAAN</h1> -->
-      <br>
+      <br />
       <div class="flex">
         <h1 class="text-base w-1/4">HARI</h1>
-        <h1 class="text-base">: {{toDefaultDate(dataJual.date).toLocaleString('id-ID', {weekday:'long'})}}</h1>
+        <h1 class="text-base">
+          :
+          {{
+            toDefaultDate(paramSales.date).toLocaleString("id-ID", {
+              weekday: "long"
+            })
+          }}
+        </h1>
       </div>
       <div class="flex">
         <h1 class="text-base w-1/4">TANGGAL</h1>
-        <h1 class="text-base">: {{dataJual.date}}</h1>
+        <h1 class="text-base">: {{ paramSales.date }}</h1>
       </div>
     </div>
 
@@ -59,14 +66,17 @@
                       scope="col"
                       class="border-r px-6 py-4 border-neutral-500"
                     >
-                      Harga
+                      Harga (Rp)
                     </th>
                     <th scope="col" class="px-6 py-4">Jumlah (Rp)</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr
-                    *ngFor="let item of dataRekap; index as i"
+                    *ngFor="
+                      let item of SalesToArrayByDate(paramSales.date);
+                      index as i
+                    "
                     class="border border-black dark:border-neutral-500"
                   >
                     <td
@@ -77,7 +87,7 @@
                     <td
                       class="whitespace-nowrap border-r font-medium px-6 py-1.5 border-neutral-500"
                     >
-                      {{ item.nama }}
+                      {{ item.name }}
                     </td>
                     <td
                       class="whitespace-nowrap border-r px-6 py-1.5 border-neutral-500"
@@ -92,10 +102,10 @@
                     <td
                       class="whitespace-nowrap border-r px-6 py-1.5 border-neutral-500"
                     >
-                      {{ item.harga }}
+                      {{ item.price.toLocaleString("en-US") }}
                     </td>
                     <td class="whitespace-nowrap px-6 py-1.5">
-                      Rp{{ (item.harga * item.qty).toLocaleString("en-US") }}
+                      {{ (item.price * item.qty).toLocaleString("en-US") }}
                     </td>
                   </tr>
                   <tr class="border border-black">
@@ -108,7 +118,12 @@
                     <td
                       class="whitespace-nowrap border border-black font-medium px-6 py-2"
                     >
-                      -
+                      {{
+                        (
+                          (filterSalesByDate(paramSales.date).total / 111) *
+                          100
+                        ).toLocaleString("en-US", { maximumFractionDigits: 0 })
+                      }}
                     </td>
                   </tr>
 
@@ -122,7 +137,12 @@
                     <td
                       class="whitespace-nowrap border border-black font-medium px-6 py-2"
                     >
-                      -
+                      {{
+                        (
+                          filterSalesByDate(paramSales.date).total -
+                          (filterSalesByDate(paramSales.date).total / 111) * 100
+                        ).toLocaleString("en-US", { maximumFractionDigits: 0 })
+                      }}
                     </td>
                   </tr>
 
@@ -136,7 +156,11 @@
                     <td
                       class="whitespace-nowrap border border-black font-medium px-6 py-2"
                     >
-                      -
+                      {{
+                        filterSalesByDate(paramSales.date).total.toLocaleString(
+                          "en-US"
+                        )
+                      }}
                     </td>
                   </tr>
                 </tbody>
@@ -149,25 +173,37 @@
     <div class="w-full flex flex-row">
       <div class="w-1/3 text-center">
         <h1>Penjual</h1>
-        <br><br><br>
-        <h1 class="underline">Putri Cahyani</h1>
+        <br /><br /><br />
+        <h1 class="underline underline-offset-4">Putri Cahyani</h1>
         <h1 class="">GA Dept</h1>
       </div>
       <div class="w-1/3 text-center">
         <h1>Diperiksa</h1>
-        <br><br><br>
-        <h1 class="underline">Yuliana Astike</h1>
+        <br /><br /><br />
+        <h1 class="underline underline-offset-4">Yuliana Astike</h1>
         <h1 class="">Fin/Acc</h1>
       </div>
       <div class="w-1/3 text-center">
         <h1>Pembeli</h1>
-        <br><br><br><br>
-        <h1 class="underline"> </h1>
-        <h1 class="">DESA</h1>
+        <br /><br /><br /><br />
+        <h1 class="underline"></h1>
+        <h1 class="">
+          {{
+            paramSales.vendor.includes("DESA")
+              ? "DESA"
+              : "CV." + paramSales.vendor
+          }}
+        </h1>
       </div>
     </div>
     <div class="px-10 pt-5">
-      <h1>Pembayaran di transfer ke rekening : <br> 2913002091 BCA an PT.Amerta Indah Otsuka <br> Mohon agar bukti transfer di email ke pcahyarina@aio.co.id / ngani@aio.co.id <br>atau WA ke 081283344668 <br> Note: Harga satuan sudah include PPN </h1>
+      <h1>
+        Pembayaran di transfer ke rekening : <br />
+        2913002091 BCA an PT.Amerta Indah Otsuka <br />
+        Mohon agar bukti transfer di email ke pcahyarina@aio.co.id /
+        ngani@aio.co.id <br />atau WA ke 081283344668 <br />
+        Note: Harga satuan sudah include PPN
+      </h1>
     </div>
   </div>
 </div>
