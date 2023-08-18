@@ -18,6 +18,7 @@ export class DashboardSalesComponent {
   public chartSalesCategoryYTD: Partial<ChartSalesCategoryYTD> | any;
   public chartBigFiveSales: Partial<ChartBigFiveSales> | any;
   public chartSalesPerformance: Partial<ChartSalesPerformance> | any;
+  public chartSalesPerformanceMonth: Partial<ChartSalesPerformance> | any;
 
   actual: any[] = ActualAug;
   monthIdr2022 = salesMonthIdr2022;
@@ -30,7 +31,7 @@ export class DashboardSalesComponent {
     this.salesPerformanceChart();
     this.sumTotalActual();
     this.sumActualByCategory();
-    console.log(salesMonthIdr2023[7]);
+    this.salesPerformanceMonthChart();
   }
 
   sumTotalActual() {
@@ -133,6 +134,10 @@ export class DashboardSalesComponent {
     return data;
   }
 
+  toPercentCompare(first: any, sec: any) {
+    return ((sec / first - 1) * 100).toFixed();
+  }
+
   salesCategoryYTDChart() {
     this.chartSalesCategoryYTD = {
       series: [
@@ -159,7 +164,7 @@ export class DashboardSalesComponent {
       ],
       chart: {
         type: 'bar',
-        height: 430,
+        height: 'auto',
       },
       chart2: {
         type: 'bar',
@@ -346,7 +351,7 @@ export class DashboardSalesComponent {
       ],
       legend: {
         offsetX: 5,
-        offsetY: 25,
+        offsetY: 0,
         fontSize: '12px',
         position: 'right',
         horizontalAlign: 'center',
@@ -360,42 +365,45 @@ export class DashboardSalesComponent {
         {
           name: 'MTD',
           group: 'budget',
-          data: [salesMonthIdr2022[7],salesMonthIdr2023[7] ],
+          data: [this.monthIdr2022[7], this.monthIdr2023[7]],
         },
         {
           name: 'YTD',
           group: 'actual',
-          data: [this.sumTotalYTD(salesMonthIdr2022), this.sumTotalYTD(salesMonthIdr2023)],
+          data: [
+            this.sumTotalYTD(this.monthIdr2022),
+            this.sumTotalYTD(this.monthIdr2023),
+          ],
         },
       ],
-      seriesMTD: [
-        {
-          name: 'Last Month',
-          group: 'budget',
-          data: [salesMonthIdr2022[7]],
-        },
-        {
-          name: 'This Month',
-          group: 'actual',
-          data: [salesMonthIdr2023[7]],
-        },
-      ],
-      seriesYTD: [
-        {
-          name: 'Last Year',
-          group: 'budget',
-          data: [this.sumTotalYTD(salesMonthIdr2022)],
-        },
-        {
-          name: 'This Year',
-          group: 'actual',
-          data: [this.sumTotalYTD(salesMonthIdr2023)],
-        },
-      ],
+      // seriesMTD: [
+      //   {
+      //     name: 'Last Month',
+      //     group: 'budget',
+      //     data: [salesMonthIdr2022[7]],
+      //   },
+      //   {
+      //     name: 'This Month',
+      //     group: 'actual',
+      //     data: [salesMonthIdr2023[7]],
+      //   },
+      // ],
+      // seriesYTD: [
+      //   {
+      //     name: 'Last Year',
+      //     group: 'budget',
+      //     data: [this.sumTotalYTD(salesMonthIdr2022)],
+      //   },
+      //   {
+      //     name: 'This Year',
+      //     group: 'actual',
+      //     data: [this.sumTotalYTD(salesMonthIdr2023)],
+      //   },
+      // ],
 
       chart: {
         type: 'bar',
-        height: 230,
+        height: 170,
         stacked: true,
         toolbar: {
           show: false,
@@ -407,18 +415,16 @@ export class DashboardSalesComponent {
         colors: ['#fff'],
       },
       dataLabels: {
-        
-        // offsetY: 50,
+        offsetY: 10,
         style: {
-          fontSize: '12px',
-          fontFamily: 'Helvetica, Arial, sans-serif',
+          fontSize: '11px',
           // colors: ['#7E57C2'],
         },
         formatter: (val: any) => {
           if (String(val).length > 9) {
-            return (val / 1000000000).toFixed(2) + ' Bio';
+            return [(val / 1000000000).toFixed(2), ' Bio'];
           } else {
-            return (val / 1000000).toFixed(2) + ' Mio';
+            return [(val / 1000000).toFixed(2), ' Mio'];
           }
         },
       },
@@ -522,9 +528,9 @@ export class DashboardSalesComponent {
           labels: {
             formatter: (val: any) => {
               if (String(val).length > 9) {
-                return val / 1000000000 + ' Bio';
+                return val / 1000000000 + ' B';
               } else {
-                return val / 1000000 + ' Mio';
+                return val / 1000000 + ' M';
               }
             },
           },
@@ -534,16 +540,16 @@ export class DashboardSalesComponent {
           labels: {
             formatter: (val: any) => {
               if (String(val).length > 9) {
-                return (val / 1000000000).toFixed(2) + ' Bio';
+                return (val / 1000000000).toFixed(2) + ' B';
               } else {
-                return (val / 1000000).toFixed(2) + ' Mio';
+                return (val / 1000000).toFixed(2) + ' M';
               }
             },
           },
         },
       ],
       legend: {
-        position: 'right',
+        position: 'top',
         verticallAlign: 'center',
       },
       series2: [
@@ -593,6 +599,172 @@ export class DashboardSalesComponent {
           },
         },
       ],
+    };
+  }
+  salesPerformanceMonthChart() {
+    this.chartSalesPerformanceMonth = {
+      series: [
+        {
+          name: 'Month',
+          data: this.monthIdr2023,
+        },
+      ],
+      // seriesMTD: [
+      //   {
+      //     name: 'Last Month',
+      //     group: 'budget',
+      //     data: [salesMonthIdr2022[7]],
+      //   },
+      //   {
+      //     name: 'This Month',
+      //     group: 'actual',
+      //     data: [salesMonthIdr2023[7]],
+      //   },
+      // ],
+      // seriesYTD: [
+      //   {
+      //     name: 'Last Year',
+      //     group: 'budget',
+      //     data: [this.sumTotalYTD(salesMonthIdr2022)],
+      //   },
+      //   {
+      //     name: 'This Year',
+      //     group: 'actual',
+      //     data: [this.sumTotalYTD(salesMonthIdr2023)],
+      //   },
+      // ],
+
+      chart: {
+        type: 'bar',
+        height: 170,
+        stacked: true,
+        toolbar: {
+          show: false,
+        },
+      },
+
+      stroke: {
+        width: 0,
+        colors: ['#fff'],
+      },
+      dataLabels: {
+        enabled: false,
+        // offsetY: 50,
+        style: {
+          fontSize: '12px',
+          fontFamily: 'Helvetica, Arial, sans-serif',
+          // colors: ['#7E57C2'],
+        },
+        formatter: (val: any) => {
+          if (String(val).length > 9) {
+            return (val / 1000000000).toFixed(2) + ' Bio';
+          } else {
+            return (val / 1000000).toFixed(2) + ' Mio';
+          }
+        },
+      },
+      plotOptions: {
+        bar: {
+          borderRadius: 5,
+          borderRadiusApplication: 'around',
+          horizontal: false,
+        },
+      },
+
+      annotations: {
+        // texts: [{
+        //   x: 'YTD',
+        //   y: '50000',
+        //   text: 'Test',
+        //   textAnchor: 'start',
+        // }],
+        points: [
+          {
+            x: 'YTD',
+            y:
+              Math.min(
+                this.sumTotalYTD(salesMonthIdr2022),
+                this.sumTotalYTD(salesMonthIdr2022)
+              ) / 12,
+            seriesIndex: 0,
+            label: {
+              borderColor: '#FFAB91',
+              borderWidth: 1,
+              offsetY: -100,
+              style: {
+                color: '#E64A19',
+                fontSize: '13px',
+                fontWeight: 600,
+                background: 'white',
+                padding: {
+                  left: 5,
+                  right: 5,
+                  top: 5,
+                  bottom: 5,
+                },
+              },
+              text: [
+                (
+                  (this.sumTotalYTD(salesMonthIdr2023) /
+                    this.sumTotalYTD(salesMonthIdr2022)) *
+                  100
+                ).toFixed(1) + '%',
+                'Ach from YTD This Year vs Last Year',
+              ],
+            },
+          },
+        ],
+      },
+      xaxis: {
+        labels: {
+          show: true,
+          style: {
+            fontSize: '12px',
+            // fontFamily: 'Helvetica, Arial, sans-serif',
+            // fontWeight: 600,
+            cssClass: 'font-semibold ',
+          },
+        },
+        categories: [
+          'Jan',
+          'Feb',
+          'Mar',
+          'Apr',
+          'May',
+          'Jun',
+          'Jul',
+          'Aug',
+          'Sep',
+          'Oct',
+          'Nov',
+          'Dec',
+        ],
+      },
+
+      fill: {
+        opacity: 1,
+      },
+      colors: ['#80c7fd', '#008FFB', '#80f1cb', '#00E396'],
+      colorsPurple: ['#B39DDB', '#7E57C2'],
+      colorsOrange: ['#FFAB91', '#FF7043'],
+      colorsEmerald: ['#80CBC4 ', '#26A69A'],
+      yaxis: [
+        {
+          labels: {
+            formatter: (val: any) => {
+              if (String(val).length > 9) {
+                return (val / 1000000000).toFixed(1) + ' Bio';
+              } else {
+                return (val / 1000000).toFixed(1) + ' Mio';
+              }
+            },
+          },
+        },
+      ],
+      legend: {
+        position: 'top',
+        verticallAlign: 'center',
+      },
     };
   }
 }
