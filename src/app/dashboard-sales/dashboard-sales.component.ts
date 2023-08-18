@@ -5,7 +5,15 @@ import {
   ChartSalesCategoryYTD,
   ChartSalesPerformance,
 } from '../apexcharts';
-import { ActualAug, salesMonthIdr2022, salesMonthIdr2023 } from './db_sales';
+import {
+  ActualAug,
+  harga,
+  salesDate2023,
+  salesDateIdr2023,
+  salesIdr2023,
+  salesMonthIdr2022,
+  salesMonthIdr2023,
+} from './db_sales';
 
 //
 
@@ -23,15 +31,23 @@ export class DashboardSalesComponent {
   actual: any[] = ActualAug;
   monthIdr2022 = salesMonthIdr2022;
   monthIdr2023 = salesMonthIdr2023;
+  priceLimbah = harga;
+  idrSales = salesIdr2023;
+  dateSales = salesDate2023;
+  dateidrSales = salesDateIdr2023;
   // public chartOptions: Partial<ChartOptions>;
+  salesFiltered: any[] = [];
+  sumSalesFiltered: any[] = [];
+  fromFilter: any = '2023-08-01';
+  toFilter: any = '2023-08-31';
 
   constructor() {
-    this.salesCategoryYTDChart();
-    this.bigFiveSalesChart();
-    this.salesPerformanceChart();
     this.sumTotalActual();
     this.sumActualByCategory();
     this.salesPerformanceMonthChart();
+
+    this.bigFiveSalesChart();
+    this.salesPerformanceChart();
   }
 
   sumTotalActual() {
@@ -49,50 +65,12 @@ export class DashboardSalesComponent {
     console.log(total);
   }
   sumTotalActualYTD() {
-    let totalYTD =
-      46520100 +
-      11700700 +
-      54236000 +
-      38248400 +
-      18059200 +
-      50156200 +
-      36892000 +
-      10184500 +
-      51949000 +
-      51091400 +
-      73678700 +
-      7072400 +
-      88318700 +
-      90550900 +
-      14049900 +
-      68954400 +
-      14101300 +
-      17142000 +
-      45176900 +
-      29049000 +
-      54299150 +
-      17608800 +
-      45801600 +
-      22229000 +
-      8298100 +
-      59695400 +
-      43058600 +
-      35374000 +
-      15643200 +
-      80043100 +
-      37474600 +
-      34016200 +
-      36344300 +
-      44723100 +
-      31529200 +
-      42580600 +
-      8980200 +
-      32457800 +
-      14102300 +
-      20996800 +
-      31571900 +
-      63057000 +
-      30491200;
+    let totalYTD = 0;
+    this.idrSales.forEach((element, i) => {
+      if (i > 78) {
+        totalYTD += element;
+      }
+    });
 
     if (String(totalYTD).length > 9) {
       return (totalYTD / 1000000000).toFixed(2) + ' Bio';
@@ -112,26 +90,100 @@ export class DashboardSalesComponent {
     });
     return total;
   }
+  filterByDate() {
+    this.salesFiltered = [];
+    console.log(this.toFilter);
+    console.log(this.dateSales.length);
+    let data: any[] = [];
+    if (this.toFilter != undefined && this.fromFilter != undefined) {
+      console.log('d');
+
+      data = this.dateidrSales.filter(
+        (elem) =>
+          new Date(elem.date) < new Date(this.toFilter) &&
+          new Date(elem.date) > new Date(this.fromFilter)
+      );
+    } else if (this.toFilter != undefined) {
+      console.log('s');
+      data = this.dateidrSales.filter(
+        (elem) => new Date(elem.date) < new Date(this.toFilter)
+      );
+    } else if (this.fromFilter != undefined) {
+      console.log('x');
+      data = this.dateidrSales.filter(
+        (elem) => new Date(elem.date) > new Date(this.fromFilter)
+      );
+    }
+    this.salesFiltered = data;
+    console.log(data);
+
+    let idr = this.idrSales;
+    this.sumActualByCategory();
+  }
 
   sumActualByCategory() {
     // let data: any[]
     let data = [0, 0, 0, 0, 0, 0, 0, 0];
+    console.log(this.salesFiltered);
 
-    this.actual.forEach((element) => {
-      data[0] += (element.preform.qty * element.preform.price) / 1000000;
-      data[1] += (element.botol.qty * element.botol.price) / 1000000;
-      data[2] += (element.karton.qty * element.karton.price) / 1000000;
-      data[3] += (element.balok.qty * element.balok.price) / 1000000;
-      data[4] += (element.sak_kecil.qty * element.sak_kecil.price) / 1000000;
-      data[5] += (element.sak_besar.qty * element.sak_besar.price) / 1000000;
-      data[6] += (element.resin.qty * element.resin.price) / 1000000;
-      data[7] +=
-        (element.palet_plastik.qty * element.palet_plastik.price) / 1000000;
-    });
+    if (this.salesFiltered.length != 0) {
+      // console.log('if');
+      this.salesFiltered.forEach((element) => {
+        if (element.vendor.includes('Desa')) {
+          console.log(element.vendor);
+          data[0] += element.preform * this.priceLimbah.desa.preform;
+          data[1] += element.botol * this.priceLimbah.desa.botol;
+          data[2] += element.karton * this.priceLimbah.desa.karton;
+          data[3] += element.balok * this.priceLimbah.desa.balok;
+          data[4] += element.sak_kecil * this.priceLimbah.desa.sak_kecil;
+          data[5] += element.sak_besar * this.priceLimbah.desa.sak_besar;
+          data[6] += element.resin * this.priceLimbah.desa.resin;
+          data[7] +=
+            element.palet_plastik * this.priceLimbah.desa.pallet_plastik;
+        } else {
+          console.log(element.vendor);
+          data[0] += element.preform * this.priceLimbah.swasta.preform;
+          data[1] += element.botol * this.priceLimbah.swasta.botol;
+          data[2] += element.karton * this.priceLimbah.swasta.karton;
+          console.log(this.priceLimbah.swasta.karton);
+          console.log(element.karton);
+          console.log(data[2]);
+
+          data[3] += element.balok * this.priceLimbah.swasta.balok;
+          data[4] += element.sak_kecil * this.priceLimbah.swasta.sak_kecil;
+          data[5] += element.sak_besar * this.priceLimbah.swasta.sak_besar;
+          data[6] += element.resin * this.priceLimbah.swasta.resin;
+          data[7] +=
+            element.palet_plastik * this.priceLimbah.swasta.pallet_plastik;
+        }
+      });
+    } else {
+      // console.log('else');
+
+      this.actual.forEach((element) => {
+        if (!element.vendor.includes('Desa')) {
+          data[0] += (element.preform.qty * element.preform.price) / 1000000;
+          data[1] += (element.botol.qty * element.botol.price) / 1000000;
+          data[2] += (element.karton.qty * element.karton.price) / 1000000;
+          data[3] += (element.balok.qty * element.balok.price) / 1000000;
+          data[4] +=
+            (element.sak_kecil.qty * element.sak_kecil.price) / 1000000;
+          data[5] +=
+            (element.sak_besar.qty * element.sak_besar.price) / 1000000;
+          data[6] += (element.resin.qty * element.resin.price) / 1000000;
+          data[7] +=
+            (element.palet_plastik.qty * element.palet_plastik.price) / 1000000;
+        }
+      });
+    }
+
     // console.log(Math.max(...data));
 
     // console.log(data);
-    return data;
+    this.sumSalesFiltered = data;
+    this.salesCategoryYTDChart();
+
+    // return data;
   }
 
   toPercentCompare(first: any, sec: any) {
@@ -139,11 +191,12 @@ export class DashboardSalesComponent {
   }
 
   salesCategoryYTDChart() {
+    console.log(this.sumSalesFiltered);
     this.chartSalesCategoryYTD = {
       series: [
         {
           name: 'serie1',
-          data: this.sumActualByCategory(),
+          data: this.sumSalesFiltered,
         },
         // {
         //   name: "serie2",
@@ -164,7 +217,7 @@ export class DashboardSalesComponent {
       ],
       chart: {
         type: 'bar',
-        height: 'auto',
+        height: 450,
       },
       chart2: {
         type: 'bar',
@@ -211,7 +264,7 @@ export class DashboardSalesComponent {
         colors: ['#fff'],
       },
       xaxis: {
-        max: Math.max(...this.sumActualByCategory()) + 20,
+        max: Math.max(...this.sumSalesFiltered) + 20,
         categories: [
           'Preform',
           'Bottle',
@@ -262,7 +315,9 @@ export class DashboardSalesComponent {
               show: true,
               value: {
                 show: true,
+                fontSize: '15px',
                 fontWeight: 600,
+                offsetY: -5,
                 formatter: function (val: any) {
                   if (val.length > 9) {
                     return (val / 1000000000).toFixed(2) + ' Bio';
@@ -275,7 +330,7 @@ export class DashboardSalesComponent {
                 show: true,
                 showAlways: false,
                 label: 'Total',
-                fontSize: '22px',
+                fontSize: '12px',
                 // fontWeight: 400,
                 color: '#373d3f',
                 formatter: (w: any) => {
