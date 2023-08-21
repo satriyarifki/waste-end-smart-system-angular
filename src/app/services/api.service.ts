@@ -32,4 +32,8 @@ export class ApiService {
   tpsByLotLineGet(line: any, lot: any): Observable<any> {
     return this.http.get(this.baseUrl + 'reports/tps/' + line + '/' + lot);
   }
+  tpsApproved(body:any): Observable<any> {
+    return this.http.post(this.baseUrl + 'reports/approved', body);
+  }
+  
 }

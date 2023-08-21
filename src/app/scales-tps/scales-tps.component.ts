@@ -19,12 +19,14 @@ export class ScalesTpsComponent {
   // Tools
   searchInput: any;
   itemPerPage: number = 7;
+  tempApproveLot: any;
 
   // Api
   passboxApi: any[] = [];
 
   // Boolean
   exportBool: Boolean = false;
+  approveModalBool: Boolean = false;
 
   config = {
     id: 'custom',
@@ -36,10 +38,15 @@ export class ScalesTpsComponent {
     private exportAsService: ExportAsService,
     private apiService: ApiService
   ) {
-    forkJoin(apiService.groupPassboxOc2Get()).subscribe((data) => {
+    
+  }
+  ngOnInit(){
+    forkJoin(this.apiService.groupPassboxOc2Get()).subscribe((data) => {
       this.passboxApi = data[0];
       this.passboxApi = this.passboxApi.sort((b, a) => {
-        return new Date(a.created_at).valueOf() - new Date(b.created_at).valueOf();
+        return (
+          new Date(a.created_at).valueOf() - new Date(b.created_at).valueOf()
+        );
       });
       this.config.totalItems = this.passboxApi.length;
       console.log(this.passboxApi);
@@ -68,6 +75,31 @@ export class ScalesTpsComponent {
   }
   exportDropdown() {
     this.exportBool = !this.exportBool;
+  }
+  changeModalApprove(behave: any) {
+    if (behave.status == 'open') {
+      this.approveModalBool = true;
+      this.tempApproveLot = behave.lot;
+      console.log(this.tempApproveLot);
+    } else if (behave.status == 'close') {
+      this.approveModalBool = false;
+      this.tempApproveLot = null;
+    } else {
+      this.approveModalBool = !this.approveModalBool;
+    }
+  }
+  toApproved() {
+    this.apiService.tpsApproved({ lot: this.tempApproveLot }).subscribe(
+      (elem) => {
+        console.log(elem);
+        console.log('Approved Success');
+        this.changeModalApprove('close');
+        this.ngOnInit()
+      },
+      (err) => {
+        console.log(err);
+      } 
+    );
   }
 
   onPageChange(event: any) {

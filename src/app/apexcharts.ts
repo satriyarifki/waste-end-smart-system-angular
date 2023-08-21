@@ -11,7 +11,7 @@ import {
     ApexFill,
     ApexTooltip,
     ApexNonAxisChartSeries,
-    ApexResponsive, ApexAnnotations
+    ApexResponsive, ApexAnnotations, ApexMarkers
   } from "ng-apexcharts";
   
   export type ChartOptions = {
@@ -22,9 +22,11 @@ import {
     yaxis: ApexYAxis;
     xaxis: ApexXAxis;
     fill: ApexFill;
+    colors: string[];
     tooltip: ApexTooltip;
     stroke: ApexStroke;
     legend: ApexLegend;
+    markers: ApexMarkers;
   };
   export type ChartSalesCategoryYTD = {
     series: ApexAxisChartSeries;
