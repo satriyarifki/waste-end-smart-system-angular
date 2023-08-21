@@ -49,7 +49,7 @@ export class ScalesSalesComponent {
         );
       });
       this.config.totalItems = this.tpsApi.length;
-      console.log(this.tpsApi);
+      // console.log(this.tpsApi);
       // console.log(this.filterTpsByBag('bag3'));
     });
   }
@@ -82,14 +82,14 @@ export class ScalesSalesComponent {
 
   changeItemPerPageSelect(value: any) {
     this.config.itemsPerPage = value;
-    console.log(this.config.itemsPerPage);
+    // console.log(this.config.itemsPerPage);
   }
   exportDropdown() {
     this.exportBool = !this.exportBool;
   }
 
   onPageChange(event: any) {
-    console.log(event);
+    // console.log(event);
     this.config.currentPage = event;
   }
 }

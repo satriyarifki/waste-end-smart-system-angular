@@ -50,8 +50,8 @@ export class ScalesTpsViewComponent {
       this.passboxApi = passboxOc2;
       this.tpsApi = tpsFilter;
       this.config.totalItems = this.passboxApi.length;
-      console.log(tpsFilter);
-      console.log(this.filterTpsByBag('bag3'));
+      // console.log(tpsFilter);
+      // console.log(this.filterTpsByBag('bag3'));
     });
   }
 
@@ -82,14 +82,14 @@ export class ScalesTpsViewComponent {
 
   changeItemPerPageSelect(value: any) {
     this.config.itemsPerPage = value;
-    console.log(this.config.itemsPerPage);
+    // console.log(this.config.itemsPerPage);
   }
   exportDropdown() {
     this.exportBool = !this.exportBool;
   }
 
   onPageChange(event: any) {
-    console.log(event);
+    // console.log(event);
     this.config.currentPage = event;
   }
 }

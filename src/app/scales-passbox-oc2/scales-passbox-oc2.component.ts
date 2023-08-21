@@ -143,7 +143,7 @@ export class ScalesPassboxOc2Component {
     forkJoin(apiService.passboxOc2Get()).subscribe((data) => {
       this.passboxApi = data[0];
       this.config.totalItems = this.passboxApi.length;
-      console.log(this.passboxApi[0]);
+      // console.log(this.passboxApi[0]);
     });
   }
 
@@ -165,14 +165,14 @@ export class ScalesPassboxOc2Component {
 
   changeItemPerPageSelect(value: any) {
     this.config.itemsPerPage = value;
-    console.log(this.config.itemsPerPage);
+    // console.log(this.config.itemsPerPage);
   }
   exportDropdown() {
     this.exportBool = !this.exportBool;
   }
 
   onPageChange(event: any) {
-    console.log(event);
+    // console.log(event);
     this.config.currentPage = event;
   }
 }

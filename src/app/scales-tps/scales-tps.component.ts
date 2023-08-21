@@ -1,8 +1,9 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ViewChildren } from '@angular/core';
 import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
 import { PaginationControlsDirective } from 'ngx-pagination';
 import { forkJoin } from 'rxjs';
 import { ApiService } from '../services/api.service';
+import { TooltipDirective } from '../directive/tooltip.directive';
 
 @Component({
   selector: 'app-scales-tps',
@@ -10,6 +11,7 @@ import { ApiService } from '../services/api.service';
   styleUrls: ['./scales-tps.component.css'],
 })
 export class ScalesTpsComponent {
+  @ViewChildren(TooltipDirective) tooltipDirs: TooltipDirective | any;
   exportAsConfig: ExportAsConfig = {
     type: 'csv', // the type you want to download
     elementIdOrContent: 'stockTable', // the id of html/table element
@@ -37,10 +39,8 @@ export class ScalesTpsComponent {
   constructor(
     private exportAsService: ExportAsService,
     private apiService: ApiService
-  ) {
-    
-  }
-  ngOnInit(){
+  ) {}
+  ngOnInit() {
     forkJoin(this.apiService.groupPassboxOc2Get()).subscribe((data) => {
       this.passboxApi = data[0];
       this.passboxApi = this.passboxApi.sort((b, a) => {
@@ -49,7 +49,7 @@ export class ScalesTpsComponent {
         );
       });
       this.config.totalItems = this.passboxApi.length;
-      console.log(this.passboxApi);
+      // console.log(this.passboxApi);
     });
   }
 
@@ -71,7 +71,7 @@ export class ScalesTpsComponent {
 
   changeItemPerPageSelect(value: any) {
     this.config.itemsPerPage = value;
-    console.log(this.config.itemsPerPage);
+    // console.log(this.config.itemsPerPage);
   }
   exportDropdown() {
     this.exportBool = !this.exportBool;
@@ -80,7 +80,7 @@ export class ScalesTpsComponent {
     if (behave.status == 'open') {
       this.approveModalBool = true;
       this.tempApproveLot = behave.lot;
-      console.log(this.tempApproveLot);
+      // console.log(this.tempApproveLot);
     } else if (behave.status == 'close') {
       this.approveModalBool = false;
       this.tempApproveLot = null;
@@ -91,14 +91,14 @@ export class ScalesTpsComponent {
   toApproved() {
     this.apiService.tpsApproved({ lot: this.tempApproveLot }).subscribe(
       (elem) => {
-        console.log(elem);
+        // console.log(elem);
         console.log('Approved Success');
         this.changeModalApprove('close');
-        this.ngOnInit()
+        this.ngOnInit();
       },
       (err) => {
-        console.log(err);
-      } 
+        // console.log(err);
+      }
     );
   }
 

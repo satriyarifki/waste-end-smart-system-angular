@@ -27,7 +27,6 @@ export class DashboardComponent {
   chart() {
     this.chartOptions = {
       series: [
-        
         {
           name: 'Botol Plastik',
           data: [
@@ -195,7 +194,7 @@ export class DashboardComponent {
           endingShape: 'rounded',
         },
       },
-      colors:['#D98880','#F1948A','#F7DC6F','#F7DC6F'],
+      colors: ['#D98880', '#F1948A', '#F7DC6F', '#F7DC6F'],
       dataLabels: {
         enabled: false,
         formatter: (val: any) => {
@@ -295,10 +294,10 @@ export class DashboardComponent {
         height: 350,
       },
       plotOptions: {
-        bar: {
-          horizontal: false,
-          columnWidth: '55%',
-          endingShape: 'rounded',
+        line: {
+          dataLabels: {
+            hideOverflowingLabels: false,
+          },
         },
       },
       dataLabels: {
