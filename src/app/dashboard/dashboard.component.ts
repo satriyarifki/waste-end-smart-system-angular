@@ -315,6 +315,7 @@ export class DashboardComponent {
         width: 4,
         // colors:,
       },
+      colors:['#EA0577'],
       markers: {
         size: 6,
       },
