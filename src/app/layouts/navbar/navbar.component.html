@@ -1,12 +1,10 @@
-<header class="fixed w-64 py-2.5  max-lg:hidden z-50 bg-white bg-opacity-0">
+<header class="fixed w-64 py-2.5 max-lg:hidden z-50 bg-white bg-opacity-0">
   <nav
     class="flex basis-full items-center w-full mx-auto px-4 sm:px-6 md:px-8"
     aria-label="Global"
   >
     <div class="mr-5 lg:mr-0 lg:hidden">
-      <a
-        class="flex-none text-xl font-semibold text-black"
-        aria-label="Brand"
+      <a class="flex-none text-xl font-semibold text-black" aria-label="Brand"
         >WESS</a
       >
     </div>
@@ -102,17 +100,19 @@
         </button> -->
 
         <div
-          class="hs-dropdown relative inline-flex [--placement:bottom-right]"
+        [ngClass]="router.url == '/login'?'bg-white rounded hover:shadow-md hover:shadow-gray-400':''"
+          class="hs-dropdown relative inline-flex [--placement:bottom-right] "
         >
-          <button
-            class="inline-block w-full rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]"
-            type="button"
-            data-te-ripple-init
-            data-te-ripple-color="light"
-            style="background: linear-gradient(to right, #10957a, #0a3c1f)"
+          <a
+            [routerLink]="router.url == '/login' ? ['/'] : ['/login']"
+            routerLinkActive="router-link-active"
+            [ngClass]="router.url == '/login'? 'font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[#10957a] to-[#0a3c1f]' : 'bg-gradient-to-r from-[#10957a] to-[#0a3c1f]'"
+            class="inline-block w-full cursor-pointer rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white  shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]"
           >
-            Log in
-          </button>
+          <span *ngIf="router.url != '/login'"> Log in </span>
+          <span *ngIf="router.url == '/login'"> Back Home </span>
+            
+          </a>
           <button
             id="hs-dropdown-with-header"
             type="button"

@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "waste-smart-system": {
+    "wess": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/waste-smart-system",
+            "outputPath": "dist/wess",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": ["zone.js"],
@@ -59,10 +59,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "waste-smart-system:build:production"
+              "browserTarget": "wess:build:production"
             },
             "development": {
-              "browserTarget": "waste-smart-system:build:development"
+              "browserTarget": "wess:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -70,7 +70,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "waste-smart-system:build"
+            "browserTarget": "wess:build"
           }
         },
         "test": {
