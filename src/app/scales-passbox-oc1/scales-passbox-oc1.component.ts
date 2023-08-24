@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
 import { PaginationControlsDirective } from 'ngx-pagination';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { forkJoin } from 'rxjs';
 import { ApiService } from '../services/api.service';
 
@@ -19,23 +20,112 @@ const stockBarang = [
   { name: 'Meja', qty: 5, satuan: 'pcs', hargaSatuan: 500000, ppn: 11 },
 ];
 const passbox = [
-  { date: 'Juli 5, 2023', line: 'OC1', lot:'12.32.56',name: 'Preform', noBag:1, qty: 20, satuan: 'kg', pic: 'Adinda' },
-  { date: 'Juli 6, 2023', line: 'OC1', lot:'12.32.56',name: 'Preform', noBag:3, qty: 12, satuan: 'kg', pic: 'Adinda' },
-  { date: 'Juli 7, 2023', line: 'OC1', lot:'12.32.56',name: 'Preform', noBag:2, qty: 10, satuan: 'kg', pic: 'Adinda' },
-  { date: 'Juli 8, 2023', line: 'OC1', lot:'12.32.56',name: 'Preform', noBag:5, qty: 15, satuan: 'kg', pic: 'Adinda' },
-  { date: 'Juli 9, 2023', line: 'OC1', lot:'12.32.56',name: 'Preform', noBag:4, qty: 16, satuan: 'kg', pic: 'Adinda' },
-  { date: 'Juli 10, 2023', line: 'OC1', lot:'12.32.56',name: 'Preform', noBag:9, qty: 10, satuan: 'kg', pic: 'Adinda' },
-  { date: 'Juli 11, 2023', line: 'OC1', lot:'12.32.56',name: 'Preform', noBag:8, qty: 22, satuan: 'kg', pic: 'Adinda' },
-  { date: 'Juli 12, 2023', line: 'OC1', lot:'12.32.56',name: 'Preform', noBag:7, qty: 10, satuan: 'kg', pic: 'Adinda' },
-  { date: 'Juli 13, 2023', line: 'OC1', lot:'12.32.56',name: 'Preform', noBag:10, qty: 15, satuan: 'kg', pic: 'Adinda' },
-  { date: 'Juli 14, 2023', line: 'OC1', lot:'12.32.56',name: 'Preform', noBag:11, qty: 14, satuan: 'kg', pic: 'Adinda' }
-
+  {
+    date: 'Juli 5, 2023',
+    line: 'OC1',
+    lot: '12.32.56',
+    name: 'Preform',
+    noBag: 1,
+    qty: 20,
+    satuan: 'kg',
+    pic: 'Adinda',
+  },
+  {
+    date: 'Juli 6, 2023',
+    line: 'OC1',
+    lot: '12.32.56',
+    name: 'Preform',
+    noBag: 3,
+    qty: 12,
+    satuan: 'kg',
+    pic: 'Adinda',
+  },
+  {
+    date: 'Juli 7, 2023',
+    line: 'OC1',
+    lot: '12.32.56',
+    name: 'Preform',
+    noBag: 2,
+    qty: 10,
+    satuan: 'kg',
+    pic: 'Adinda',
+  },
+  {
+    date: 'Juli 8, 2023',
+    line: 'OC1',
+    lot: '12.32.56',
+    name: 'Preform',
+    noBag: 5,
+    qty: 15,
+    satuan: 'kg',
+    pic: 'Adinda',
+  },
+  {
+    date: 'Juli 9, 2023',
+    line: 'OC1',
+    lot: '12.32.56',
+    name: 'Preform',
+    noBag: 4,
+    qty: 16,
+    satuan: 'kg',
+    pic: 'Adinda',
+  },
+  {
+    date: 'Juli 10, 2023',
+    line: 'OC1',
+    lot: '12.32.56',
+    name: 'Preform',
+    noBag: 9,
+    qty: 10,
+    satuan: 'kg',
+    pic: 'Adinda',
+  },
+  {
+    date: 'Juli 11, 2023',
+    line: 'OC1',
+    lot: '12.32.56',
+    name: 'Preform',
+    noBag: 8,
+    qty: 22,
+    satuan: 'kg',
+    pic: 'Adinda',
+  },
+  {
+    date: 'Juli 12, 2023',
+    line: 'OC1',
+    lot: '12.32.56',
+    name: 'Preform',
+    noBag: 7,
+    qty: 10,
+    satuan: 'kg',
+    pic: 'Adinda',
+  },
+  {
+    date: 'Juli 13, 2023',
+    line: 'OC1',
+    lot: '12.32.56',
+    name: 'Preform',
+    noBag: 10,
+    qty: 15,
+    satuan: 'kg',
+    pic: 'Adinda',
+  },
+  {
+    date: 'Juli 14, 2023',
+    line: 'OC1',
+    lot: '12.32.56',
+    name: 'Preform',
+    noBag: 11,
+    qty: 14,
+    satuan: 'kg',
+    pic: 'Adinda',
+  },
 ];
 
 @Component({
   selector: 'app-scales-passbox-oc1',
   templateUrl: './scales-passbox-oc1.component.html',
-  styleUrls: ['./scales-passbox-oc1.component.css']
+  styleUrls: ['./scales-passbox-oc1.component.css'],
 })
 export class ScalesPassboxOc1Component {
   exportAsConfig: ExportAsConfig = {
@@ -64,13 +154,21 @@ export class ScalesPassboxOc1Component {
   };
   constructor(
     private exportAsService: ExportAsService,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private spinner: NgxSpinnerService
   ) {
-    forkJoin(apiService.passboxOc1Get()).subscribe((data) => {
-      this.passboxApi = data[0];
-      this.config.totalItems = this.passboxApi.length;
-      console.log(this.passboxApi[0]);
-    });
+    spinner.show();
+    forkJoin(apiService.passboxOc1Get()).subscribe(
+      (data) => {
+        this.passboxApi = data[0];
+        this.config.totalItems = this.passboxApi.length;
+        console.log(this.passboxApi[0]);
+      },
+      (err) => {},
+      () => {
+        spinner.hide();
+      }
+    );
   }
 
   export(type: any) {

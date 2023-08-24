@@ -4,6 +4,7 @@ import { PaginationControlsDirective } from 'ngx-pagination';
 import { forkJoin } from 'rxjs';
 import { ApiService } from '../services/api.service';
 import { TooltipDirective } from '../directive/tooltip.directive';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-scales-tps',
@@ -38,19 +39,28 @@ export class ScalesTpsComponent {
   };
   constructor(
     private exportAsService: ExportAsService,
-    private apiService: ApiService
-  ) {}
+    private apiService: ApiService,
+    private spinner: NgxSpinnerService
+  ) {
+    spinner.show();
+  }
   ngOnInit() {
-    forkJoin(this.apiService.groupPassboxOc2Get()).subscribe((data) => {
-      this.passboxApi = data[0];
-      this.passboxApi = this.passboxApi.sort((b, a) => {
-        return (
-          new Date(a.created_at).valueOf() - new Date(b.created_at).valueOf()
-        );
-      });
-      this.config.totalItems = this.passboxApi.length;
-      // console.log(this.passboxApi);
-    });
+    forkJoin(this.apiService.groupPassboxOc2Get()).subscribe(
+      (data) => {
+        this.passboxApi = data[0];
+        this.passboxApi = this.passboxApi.sort((b, a) => {
+          return (
+            new Date(a.created_at).valueOf() - new Date(b.created_at).valueOf()
+          );
+        });
+        this.config.totalItems = this.passboxApi.length;
+        // console.log(this.passboxApi);
+      },
+      (err) => {},
+      () => {
+        this.spinner.hide();
+      }
+    );
   }
 
   export(type: any) {

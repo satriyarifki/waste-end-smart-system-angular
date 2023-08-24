@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
 import { PaginationControlsDirective } from 'ngx-pagination';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { forkJoin } from 'rxjs';
 import { ApiService } from '../services/api.service';
 
@@ -138,13 +139,15 @@ export class ScalesPassboxOc2Component {
   };
   constructor(
     private exportAsService: ExportAsService,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private spinner: NgxSpinnerService
   ) {
+    spinner.show()
     forkJoin(apiService.passboxOc2Get()).subscribe((data) => {
       this.passboxApi = data[0];
       this.config.totalItems = this.passboxApi.length;
       // console.log(this.passboxApi[0]);
-    });
+    },(err)=>{},()=>{spinner.hide()});
   }
 
   export(type: any) {

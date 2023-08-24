@@ -1,5 +1,6 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -30,6 +31,7 @@ import { ScalesTpsViewComponent } from './scales-tps/scales-tps-view/scales-tps-
 import { CreatePassboxOc1Component } from './create/create-passbox-oc1/create-passbox-oc1.component';
 import { CreatePassboxComponent } from './create/create-passbox/create-passbox.component';
 import { ScalesSalesComponent } from './scales-sales/scales-sales.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
@@ -66,7 +68,10 @@ import { ScalesSalesComponent } from './scales-sales/scales-sales.component';
     NgxPaginationModule,
     ExportAsModule,
     HttpClientModule,
+    BrowserAnimationsModule,
+    NgxSpinnerModule,
   ],
+  schemas:[CUSTOM_ELEMENTS_SCHEMA],
   providers: [],
   bootstrap: [AppComponent],
 })

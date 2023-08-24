@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
 import { PaginationControlsDirective } from 'ngx-pagination';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { forkJoin } from 'rxjs';
 import { ApiService } from '../services/api.service';
 
@@ -37,8 +38,10 @@ export class ScalesSalesComponent {
   constructor(
     private exportAsService: ExportAsService,
     private apiService: ApiService,
-    private actRouter: ActivatedRoute
+    private actRouter: ActivatedRoute,
+    private spinner: NgxSpinnerService
   ) {
+    spinner.show()
     forkJoin(apiService.tpsGet()).subscribe(([tps]) => {
       // this.passboxApi = passboxOc2;
       this.tpsApi = tps;
@@ -51,7 +54,7 @@ export class ScalesSalesComponent {
       this.config.totalItems = this.tpsApi.length;
       // console.log(this.tpsApi);
       // console.log(this.filterTpsByBag('bag3'));
-    });
+    },(err)=>{},()=>{spinner.hide()});
   }
 
   export(type: any) {
