@@ -100,23 +100,36 @@
         </button> -->
 
         <div
-        [ngClass]="router.url == '/login'?'bg-white rounded hover:shadow-md hover:shadow-gray-400':''"
-          class="hs-dropdown relative inline-flex [--placement:bottom-right] "
+          [ngClass]="
+            router.url == '/login'
+              ? 'bg-slate-50 rounded hover:shadow-md hover:shadow-gray-400'
+              : ''
+          "
+          class="hs-dropdown relative inline-flex [--placement:bottom-right]"
         >
           <a
+            *ngIf="onAuthCheck()"
             [routerLink]="router.url == '/login' ? ['/'] : ['/login']"
             routerLinkActive="router-link-active"
-            [ngClass]="router.url == '/login'? 'font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[#10957a] to-[#0a3c1f]' : 'bg-gradient-to-r from-[#10957a] to-[#0a3c1f]'"
-            class="inline-block w-full cursor-pointer rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white  shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]"
+            [ngClass]="
+              router.url == '/login'
+                ? 'font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[#10957a] to-[#0a3c1f]'
+                : 'bg-gradient-to-r from-[#10957a] to-[#0a3c1f]'
+            "
+            class="inline-block w-full cursor-pointer rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]"
           >
-          <span *ngIf="router.url != '/login'"> Log in </span>
-          <span *ngIf="router.url == '/login'"> Back Home </span>
-            
+            <span *ngIf="router.url != '/login'"> Log in </span>
+            <span
+              *ngIf="router.url == '/login'"
+              class="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[#10957a] to-[#0a3c1f]"
+            >
+              Back Home
+            </span>
           </a>
           <button
-            id="hs-dropdown-with-header"
+            *ngIf="!onAuthCheck()"
             type="button"
-            class="hidden flex-shrink-0 justify-center items-center gap-2 h-[2.375rem] w-[2.375rem] rounded-full font-medium bg-white text-gray-700 align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-white transition-all text-xs"
+            class="flex-shrink-0 justify-center items-center gap-2 h-[2.375rem] w-[2.375rem] rounded-full font-medium bg-white text-gray-700 align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-white transition-all text-xs"
           >
             <img
               class="inline-block h-[2.375rem] w-[2.375rem] rounded-full ring-2 ring-white"
@@ -126,12 +139,14 @@
           </button>
 
           <div
-            class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-[15rem] bg-white shadow-md rounded-lg p-2 border border-gray-700"
-            aria-labelledby="hs-dropdown-with-header"
+            *ngIf="!onAuthCheck()"
+            class="transition-[opacity,margin] duration min-w-[15rem] bg-white shadow-md rounded-lg p-2 border border-gray-700"
           >
             <div class="py-3 px-5 -m-2 bg-gray-100 rounded-t-lg">
               <p class="text-sm text-gray-500">Signed in as</p>
-              <p class="text-sm font-medium text-gray-800">james@site.com</p>
+              <p class="text-sm font-medium text-gray-800">
+                {{ employee.lg_name }}
+              </p>
             </div>
             <div class="mt-2 py-2 first:pt-0 last:pb-0">
               <a
@@ -194,7 +209,7 @@
               </a>
               <a
                 class="flex items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500"
-                href="#"
+                (click)="signOut()"
               >
                 <svg
                   class="flex-none"
@@ -207,7 +222,7 @@
                     d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816zM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275zM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"
                   />
                 </svg>
-                Team Account
+                Sign Out
               </a>
             </div>
           </div>
