@@ -3,6 +3,8 @@ import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
 import { PaginationControlsDirective } from 'ngx-pagination';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { forkJoin } from 'rxjs';
+import { AlertType } from '../services/alert/alert.model';
+import { AlertService } from '../services/alert/alert.service';
 import { ApiService } from '../services/api.service';
 
 const stockBarang = [
@@ -155,16 +157,26 @@ export class ScalesPassboxOc1Component {
   constructor(
     private exportAsService: ExportAsService,
     private apiService: ApiService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private alertService: AlertService
   ) {
     spinner.show();
     forkJoin(apiService.passboxOc1Get()).subscribe(
       (data) => {
         this.passboxApi = data[0];
         this.config.totalItems = this.passboxApi.length;
-        console.log(this.passboxApi[0]);
+        console.log(this.passboxApi);
+        if (this.passboxApi.length == 0) {
+          alertService.onCallAlert('Data Null', AlertType.Info);
+        }
       },
-      (err) => {},
+      (err) => {
+        alertService.onCallAlert(
+          'Data cannot loaded, server error !',
+          AlertType.Error
+        ),
+          spinner.hide();
+      },
       () => {
         spinner.hide();
       }

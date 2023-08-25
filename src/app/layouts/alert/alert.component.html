@@ -5,6 +5,7 @@
   
 </div> -->
 <div
+  [@ZoomInOutAnimation]
   *ngIf="show"
   role="alert"
   [ngClass]="
@@ -16,7 +17,7 @@
       ? 'bg-yellow-200'
       : 'bg-blue-200'
   "
-  class="fixed z-[100] left-[10%] sm:left-[25%] md:left-[35%] right-[10%] sm:right-[25%] md:right-[35%] rounded-xl my-6 h-[90px] w-[80%] sm:w-[50%] md:w-[30%] bg-blue-200 p-4 shadow-xl font-outfit"
+  class="fixed z-[100] left-[10%] sm:left-[25%] md:left-[35%] right-[10%] sm:right-[25%] md:right-[35%] rounded-xl my-6 h-fit w-[80%] sm:w-[50%] md:w-[30%] bg-blue-200 p-4 shadow-xl font-outfit"
 >
   <div class="flex items-start gap-4">
     <svg

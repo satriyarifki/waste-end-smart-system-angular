@@ -14,6 +14,7 @@ import { ScalesSalesComponent } from './scales-sales/scales-sales.component';
 import { ScalesTpsViewComponent } from './scales-tps/scales-tps-view/scales-tps-view.component';
 import { ScalesTpsComponent } from './scales-tps/scales-tps.component';
 import { onAuthGuard } from './services/guard/on-auth.guard';
+import { outAuthGuard } from './services/guard/out-auth.guard';
 import { StockBarangComponent } from './stock-barang/stock-barang.component';
 import { SystemFlowComponent } from './system-flow/system-flow.component';
 import { TransactionInComponent } from './transaction-in/transaction-in.component';
@@ -22,7 +23,7 @@ import { TransactionOutComponent } from './transaction-out/transaction-out.compo
 const routes: Routes = [
   { path: '', component: DashboardComponent },
   { path: 'dashboard-sales', component: DashboardSalesComponent },
-  { path: 'login', component: LoginComponent },
+  { path: 'login', component: LoginComponent, canActivate: [outAuthGuard] },
   { path: 'stock-barang', component: StockBarangComponent },
   { path: 'transaction-in', component: TransactionInComponent },
   { path: 'transaction-out', component: TransactionOutComponent },
@@ -30,7 +31,7 @@ const routes: Routes = [
   { path: 'transaction-out/create', component: CreateTransactionOutComponent, canActivate: [onAuthGuard] },
   { path: 'transaction-in/print/:id', component: PrintTransactionInComponent },
   // { path: 'scales-passbox', component: ScalesPassboxComponent },
-  { path: 'scales-passbox/create', component: CreatePassboxComponent },
+  { path: 'scales-passbox/create', component: CreatePassboxComponent, canActivate: [onAuthGuard] },
   { path: 'scales-passbox/oc1', component: ScalesPassboxOc1Component },
   { path: 'scales-passbox/oc2', component: ScalesPassboxOc2Component },
   { path: 'scales-tps', component: ScalesTpsComponent },

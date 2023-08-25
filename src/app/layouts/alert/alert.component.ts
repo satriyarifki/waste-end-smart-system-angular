@@ -1,12 +1,14 @@
 import { Component, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
+import { zoomInOutVar } from 'src/app/animations';
 import { AlertType } from 'src/app/services/alert/alert.model';
 import { AlertService } from 'src/app/services/alert/alert.service';
 
 @Component({
   selector: 'app-alert',
   templateUrl: './alert.component.html',
-  styleUrls: ['./alert.component.css']
+  styleUrls: ['./alert.component.css'],
+  animations: [zoomInOutVar]
 })
 export class AlertComponent {
   show: Boolean = false;
@@ -26,9 +28,9 @@ export class AlertComponent {
       this.type = alert.type;
       
       setTimeout(() => {
-        this.show = false;
         this.message = '';
         this.type = AlertType.None;
+        this.show = false;
       }, 7000);
     }
   }

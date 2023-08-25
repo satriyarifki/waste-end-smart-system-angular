@@ -5,6 +5,8 @@ import { forkJoin } from 'rxjs';
 import { ApiService } from '../services/api.service';
 import { TooltipDirective } from '../directive/tooltip.directive';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { AlertService } from '../services/alert/alert.service';
+import { AlertType } from '../services/alert/alert.model';
 
 @Component({
   selector: 'app-scales-tps',
@@ -40,7 +42,8 @@ export class ScalesTpsComponent {
   constructor(
     private exportAsService: ExportAsService,
     private apiService: ApiService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private alertService: AlertService
   ) {
     spinner.show();
   }
@@ -56,7 +59,13 @@ export class ScalesTpsComponent {
         this.config.totalItems = this.passboxApi.length;
         // console.log(this.passboxApi);
       },
-      (err) => {},
+      (err) => {
+        this.alertService.onCallAlert(
+          'Data cannot loaded, server error !',
+          AlertType.Error
+        ),
+          this.spinner.hide();
+      },
       () => {
         this.spinner.hide();
       }

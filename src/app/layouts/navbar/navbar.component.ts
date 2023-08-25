@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AlertType } from 'src/app/services/alert/alert.model';
+import { AlertService } from 'src/app/services/alert/alert.service';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -10,7 +12,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class NavbarComponent {
   employee:any
   userBool = false
-  constructor(public router: Router, private authService:AuthService){
+  constructor(public router: Router, private authService:AuthService,private alertService:AlertService){
     console.log(authService.getUser());
     
     this.employee = authService.getUser()
@@ -27,7 +29,7 @@ export class NavbarComponent {
 
   signOut() {
     this.authService.signOut();
-    // this.alertService.onCallAlert('Log Out Sucess!', AlertType.Success)
+    this.alertService.onCallAlert('Log Out Sucessful!', AlertType.Success)
     this.router.navigate(['/login']);
   }
 }

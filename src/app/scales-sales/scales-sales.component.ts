@@ -4,6 +4,8 @@ import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
 import { PaginationControlsDirective } from 'ngx-pagination';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { forkJoin } from 'rxjs';
+import { AlertType } from '../services/alert/alert.model';
+import { AlertService } from '../services/alert/alert.service';
 import { ApiService } from '../services/api.service';
 
 @Component({
@@ -39,22 +41,35 @@ export class ScalesSalesComponent {
     private exportAsService: ExportAsService,
     private apiService: ApiService,
     private actRouter: ActivatedRoute,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private alertService: AlertService
   ) {
-    spinner.show()
-    forkJoin(apiService.tpsGet()).subscribe(([tps]) => {
-      // this.passboxApi = passboxOc2;
-      this.tpsApi = tps;
-      this.tpsApi = this.tpsApi.sort((b, a) => {
-        return (
-          a.id - b.id
-          // new Date(a.created_at).valueOf() - new Date(b.created_at).valueOf()
-        );
-      });
-      this.config.totalItems = this.tpsApi.length;
-      // console.log(this.tpsApi);
-      // console.log(this.filterTpsByBag('bag3'));
-    },(err)=>{},()=>{spinner.hide()});
+    spinner.show();
+    forkJoin(apiService.tpsGet()).subscribe(
+      ([tps]) => {
+        // this.passboxApi = passboxOc2;
+        this.tpsApi = tps;
+        this.tpsApi = this.tpsApi.sort((b, a) => {
+          return (
+            a.id - b.id
+            // new Date(a.created_at).valueOf() - new Date(b.created_at).valueOf()
+          );
+        });
+        this.config.totalItems = this.tpsApi.length;
+        // console.log(this.tpsApi);
+        // console.log(this.filterTpsByBag('bag3'));
+      },
+      (err) => {
+        alertService.onCallAlert(
+          'Data cannot loaded, server error !',
+          AlertType.Error
+        ),
+          spinner.hide();
+      },
+      () => {
+        spinner.hide();
+      }
+    );
   }
 
   export(type: any) {

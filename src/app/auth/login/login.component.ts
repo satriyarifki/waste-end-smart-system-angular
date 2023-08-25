@@ -52,7 +52,7 @@ export class LoginComponent {
           // alert('Sign In Success')
           this.router.navigate(['/']);
           
-          this.alertService.onCallAlert('Login Success', AlertType.Success);
+          this.alertService.onCallAlert('Login Successful !', AlertType.Success);
           //this.reloadPage();
         },
         (err) => {
