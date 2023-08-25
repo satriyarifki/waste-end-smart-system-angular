@@ -32,6 +32,7 @@ import { CreatePassboxOc1Component } from './create/create-passbox-oc1/create-pa
 import { CreatePassboxComponent } from './create/create-passbox/create-passbox.component';
 import { ScalesSalesComponent } from './scales-sales/scales-sales.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { AlertComponent } from './layouts/alert/alert.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     CreatePassboxOc1Component,
     CreatePassboxComponent,
     ScalesSalesComponent,
+    AlertComponent,
   ],
   imports: [
     BrowserModule,

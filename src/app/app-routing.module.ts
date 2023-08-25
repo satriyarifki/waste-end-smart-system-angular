@@ -13,6 +13,7 @@ import { ScalesPassboxComponent } from './scales-passbox/scales-passbox.componen
 import { ScalesSalesComponent } from './scales-sales/scales-sales.component';
 import { ScalesTpsViewComponent } from './scales-tps/scales-tps-view/scales-tps-view.component';
 import { ScalesTpsComponent } from './scales-tps/scales-tps.component';
+import { onAuthGuard } from './services/guard/on-auth.guard';
 import { StockBarangComponent } from './stock-barang/stock-barang.component';
 import { SystemFlowComponent } from './system-flow/system-flow.component';
 import { TransactionInComponent } from './transaction-in/transaction-in.component';
@@ -25,8 +26,8 @@ const routes: Routes = [
   { path: 'stock-barang', component: StockBarangComponent },
   { path: 'transaction-in', component: TransactionInComponent },
   { path: 'transaction-out', component: TransactionOutComponent },
-  { path: 'transaction-in/create', component: CreateTransactionInComponent },
-  { path: 'transaction-out/create', component: CreateTransactionOutComponent },
+  { path: 'transaction-in/create', component: CreateTransactionInComponent, canActivate: [onAuthGuard]},
+  { path: 'transaction-out/create', component: CreateTransactionOutComponent, canActivate: [onAuthGuard] },
   { path: 'transaction-in/print/:id', component: PrintTransactionInComponent },
   // { path: 'scales-passbox', component: ScalesPassboxComponent },
   { path: 'scales-passbox/create', component: CreatePassboxComponent },

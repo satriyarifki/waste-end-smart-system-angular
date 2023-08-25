@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Route, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { AlertType } from 'src/app/services/alert/alert.model';
+import { AlertService } from 'src/app/services/alert/alert.service';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -19,7 +21,8 @@ export class LoginComponent {
     private router:Router,
     private authService: AuthService,
     private formBuilder: FormBuilder,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private alertService: AlertService
   ) {
     this.form = this.formBuilder.group({
       nik: ['', Validators.required],
@@ -46,12 +49,10 @@ export class LoginComponent {
           this.authService.saveUser(data.user);
 
           console.log('Sign In Success');
-          alert('Sign In Success')
+          // alert('Sign In Success')
           this.router.navigate(['/']);
           
-          //this.alertService.onCallAlert('Login Success', AlertType.Success);
-
-          // this.alertService.onCallAlert('Login Success', AlertType.Success);
+          this.alertService.onCallAlert('Login Success', AlertType.Success);
           //this.reloadPage();
         },
         (err) => {
@@ -59,13 +60,13 @@ export class LoginComponent {
 
           if (err.statusText == 'Unauthorized') {
             console.log('NIK or Pass Invalid');
-            alert('NIK or Pass Invalid')
-            // this.alertService.onCallAlert(
-            //   'NIK or Password Invalid',
-            //   AlertType.Error
-            // );
+            
+            this.alertService.onCallAlert(
+              'NIK or Password Invalid',
+              AlertType.Error
+            );
           } else {
-            //this.alertService.onCallAlert('Login Failed', AlertType.Error);
+            this.alertService.onCallAlert('Login Failed', AlertType.Error);
             console.log('Sign In Failed');
           }
 

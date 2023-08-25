@@ -14,21 +14,14 @@
       class="h-fit my-auto rounded-md px-10 py-5 bg-gray-900 backdrop-blur-sm bg-opacity-30"
     >
       <div
-        class="text-xl cursor-pointer flex flex-col justify-center items-center mt-5 md:mt-0"
+        class="text-xl cursor-pointer flex flex-col justify-center gap-y-3 items-center mt-5 md:mt-0"
       >
-        <!-- <a
-          class="flex justify-center text-xl font-semibold text-white"
-          [routerLink]="['/']"
-          aria-label="Brand"
-          ><img
-            class="h-20 drop-shadow-lg shadow-white"
-            src="assets/img/WESS Logo White.png"
-            alt=""
-        /></a> -->
+        
 
         <h1 class="text-3xl font-semibold font-outfit text-white">
           Welcome Back<span class="text-5xl text-teal-200">.</span>
         </h1>
+        
       </div>
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <div
@@ -39,7 +32,7 @@
               type="text"
               formControlName="nik"
               placeholder="NIK"
-              class="bg-gray-100 rounded-lg px-5 py-2 focus:outline-none text-black placeholder:text-gray-600 placeholder:opacity-50 font-semibold font-outfit md:w-72 lg:w-[340px]"
+              class="bg-gray-100 rounded-lg px-5 py-2 focus:outline-none text-black placeholder:text-gray-600 placeholder:opacity-50 font-medium font-outfit md:w-72 lg:w-[340px]"
             />
           </div>
           <div *ngIf="submitReq && f['nik'].errors" class="invalid-feedback">
@@ -58,7 +51,7 @@
               [type]="this.showPassword ? 'text' : 'password'"
               formControlName="password"
               placeholder="Password"
-              class="bg-gray-100 rounded-lg px-5 py-2 focus:outline-none text-black placeholder:text-gray-600 placeholder:opacity-50 font-semibold font-outfit w-full"
+              class="bg-gray-100 rounded-lg px-5 py-2 focus:outline-none text-black placeholder:text-gray-600 placeholder:opacity-50 font-medium font-outfit w-full"
             />
             <button type="button" (click)="changeVisibilityPassword()">
               <svg
