@@ -48,7 +48,16 @@ export class DashboardSalesComponent {
 
     this.bigFiveSalesChart();
     this.salesPerformanceChart();
+    window.onresize = function() {
+          
+      // Setting the current height & width
+      // to the elements
+      console.log(window.innerHeight);
+      console.log(window.innerWidth);
+  };
+  
   }
+  
 
   sumTotalActual() {
     let total = 0;

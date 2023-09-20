@@ -18,10 +18,10 @@ export class ApiService {
   passboxOc1Get(): Observable<any> {
     return this.http.get(this.baseUrl + 'reports/passbox-oc1');
   }
-  passboxOc2ByLotGet(lot: any): Observable<any> {
-    return this.http.get(this.baseUrl + 'reports/passbox-oc2/' + lot);
+  passboxByLotGet(line:any,lot: any): Observable<any> {
+    return this.http.get(this.baseUrl + 'reports/passbox-oc2/'+ line + '/' + lot);
   }
-  groupPassboxOc2Get(): Observable<any> {
+  groupPassboxGet(): Observable<any> {
     return this.http.get(this.baseUrl + 'reports/group/passbox-oc2');
   }
 

@@ -406,7 +406,7 @@
                       class="bg-white hover:bg-gray-50 text-center cursor-pointer"
                       [routerLink]="['view']"
                       [queryParams]="{
-                        lot: item.global_variable_1,
+                        lot: item.global_variable_2,
                         line: item.line_name,
                         product: item.product_name
                       }"
@@ -423,7 +423,7 @@
                         </h1>
                       </td>
                       <td class="h-px w-px whitespace-nowrap">
-                        <h1 class="text-sm">{{ item.global_variable_1 }}</h1>
+                        <h1 class="text-sm">{{ item.global_variable_2 }}</h1>
                       </td>
                       <td class="h-px w-px whitespace-nowrap">
                         <h1 class="text-sm">
@@ -439,7 +439,7 @@
                             item.approval != 1
                               ? changeModalApprove({
                                   status: 'open',
-                                  lot: item.global_variable_1
+                                  lot: item.global_variable_2
                                 })
                               : '';
                             $event.stopPropagation()

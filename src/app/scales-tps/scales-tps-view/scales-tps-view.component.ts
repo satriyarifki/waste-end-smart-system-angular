@@ -40,8 +40,14 @@ export class ScalesTpsViewComponent {
     private apiService: ApiService,
     private actRouter: ActivatedRoute
   ) {
+    console.log(this.dataParams.get('line'));
+    console.log(this.dataParams.get('lot'));
+
     forkJoin(
-      apiService.passboxOc2ByLotGet(this.dataParams.get('lot')),
+      apiService.passboxByLotGet(
+        this.dataParams.get('line'),
+        this.dataParams.get('lot')
+      ),
       apiService.tpsByLotLineGet(
         this.dataParams.get('line'),
         this.dataParams.get('lot')

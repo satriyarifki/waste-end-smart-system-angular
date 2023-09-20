@@ -477,14 +477,14 @@
                         </h1>
                       </td>
                       <td class="h-px w-px whitespace-nowrap">
-                        <h1 class="text-sm">{{ item.global_variable_2 }}</h1>
+                        <h1 class="text-sm">{{ item.global_variable_1 }}</h1>
                       </td>
                       <td class="h-px w-px whitespace-nowrap py-2">
                         <h1 class="text-sm">{{ item.netto }}</h1>
                       </td>
                       <td class="h-px w-px whitespace-nowrap">
                         <h1 class="text-sm">
-                          {{ filterTpsByBag(item.global_variable_2)[0]?.netto }}
+                          {{ filterTpsByBag(item.global_variable_1)[0]?.netto }}
                         </h1>
                       </td>
                       <td class="h-px w-px whitespace-nowrap">
@@ -500,7 +500,7 @@
                           "
                         >
                           {{
-                            filterTpsByBag(item.global_variable_2)[0]?.netto -
+                            filterTpsByBag(item.global_variable_1)[0]?.netto -
                               item.netto | number
                           }}
                         </h1>
@@ -514,7 +514,7 @@
                       <td class="h-px w-px whitespace-nowrap">
                         <h1 class="text-sm">
                           {{
-                            filterTpsByBag(item.global_variable_2)[0]
+                            filterTpsByBag(item.global_variable_1)[0]
                               ?.customer_remark
                           }}
                         </h1>

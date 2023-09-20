@@ -30,3 +30,8 @@ export const zoomInOutVar = trigger('ZoomInOutAnimation', [
 export const zoomInVar = trigger('ZoomInAnimation', [
   transition(':enter', useAnimation(zoomIn, { params: { timing: 0.25 } })),
 ]);
+
+
+// INSERT INTO `reports` (`product_name`, `product_code`, `neto`, `gross`, unit, `global_variable_1`,`global_variable_2`, `supplier_name`, `line_name`, `updated_at`) VALUES
+// 	('Preform', '001', 
+

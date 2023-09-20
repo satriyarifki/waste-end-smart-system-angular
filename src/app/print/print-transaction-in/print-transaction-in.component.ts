@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { timeout } from 'rxjs';
 import { ActualAug } from 'src/app/dashboard-sales/db_sales';
 
 const data = [
@@ -38,6 +39,10 @@ export class PrintTransactionInComponent {
   ngOnInit() {
     // console.log(history.state);
     // console.log(this.location.get);
+    setTimeout(() => {
+      window.print()
+    }, 1000);
+    
   }
   toDefaultDate(date: any) {
     return new Date(date);

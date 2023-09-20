@@ -48,7 +48,7 @@ export class ScalesTpsComponent {
     spinner.show();
   }
   ngOnInit() {
-    forkJoin(this.apiService.groupPassboxOc2Get()).subscribe(
+    forkJoin(this.apiService.groupPassboxGet()).subscribe(
       (data) => {
         this.passboxApi = data[0];
         this.passboxApi = this.passboxApi.sort((b, a) => {
