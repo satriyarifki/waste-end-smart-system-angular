@@ -35,5 +35,13 @@ export class ApiService {
   tpsApproved(body:any): Observable<any> {
     return this.http.post(this.baseUrl + 'reports/approved', body);
   }
+
+  //----SALES
+  salesViewGet(): Observable<any> {
+    return this.http.get(this.baseUrl + 'sales');
+  }
+  salesViewIdGet(id:any): Observable<any> {
+    return this.http.get(this.baseUrl + 'sales/' + id);
+  }
   
 }

@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { timeout } from 'rxjs';
+import { forkJoin, timeout } from 'rxjs';
 import { ActualAug } from 'src/app/dashboard-sales/db_sales';
+import { ApiService } from 'src/app/services/api.service';
 
 const data = [
   { nama: 'Jerigen', qty: 20, satuan: 'Kg', harga: 17500 },
@@ -29,9 +30,11 @@ export class PrintTransactionInComponent {
   dataRekap = data;
   dataSales = ActualAug;
   paramSales = history.state;
+  salesViewApi:any[] = []
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private apiService: ApiService) {
     console.log(history.state);
+    
     // console.log(location.getState());
 
     console.log(this.filterSalesByDate(this.paramSales.date));
@@ -39,35 +42,36 @@ export class PrintTransactionInComponent {
   ngOnInit() {
     // console.log(history.state);
     // console.log(this.location.get);
-    setTimeout(() => {
-      window.print()
-    }, 1000);
-    
+    // setTimeout(() => {
+    //   window.print();
+    // }, 500);
   }
   toDefaultDate(date: any) {
     return new Date(date);
   }
 
-  SalesToArrayByDate(date: any): any[] {
-    let dataFilter = this.dataSales.filter((val) => val.date == date)[0];
+  SalesToArrayByDate(): any[] {
+    // let {dataFilter = this.dataSales.filter((val) => val.date == date)[0];
     let dataArray: any[] = [];
     dataArray.push(
-      dataFilter.balok,
-      dataFilter.besi,
-      dataFilter.botol,
-      dataFilter.drum,
-      dataFilter.karton,
-      dataFilter.palet_kayu,
-      dataFilter.palet_plastik,
-      dataFilter.plastik,
-      dataFilter.preform,
-      dataFilter.resin,
-      dataFilter.sak_besar,
-      dataFilter.sak_kecil
+      {name: 'Balok',qty: this.paramSales.balok_qty, price: this.paramSales.balok_price, satuan: 'kg'},
+      {name: 'Besi',qty: this.paramSales.besi_qty, price: this.paramSales.besi_price, satuan: 'kg'},
+      {name: 'Botol Plastik',qty: this.paramSales.botol_plastik_qty, price: this.paramSales.botol_plastik_price, satuan: 'kg'},
+      {name: 'Drum',qty: this.paramSales.drum_qty, price: this.paramSales.drum_price, satuan: 'pcs'},
+      {name: 'Karton',qty: this.paramSales.karton_qty, price: this.paramSales.katron_price, satuan: 'kg'},
+      {name: 'Pallet Kayu',qty: this.paramSales.pallet_kayu_qty, price: this.paramSales.pallet_kayu_price, satuan: 'pcs'},
+      {name: 'Pallet Plastik',qty: this.paramSales.pallet_plastik_qty, price: this.paramSales.pallet_plastik_price, satuan: 'pcs'},
+      // {name: 'Plastik',qty: this.paramSales.plastik_qty, price: this.paramSales.plastik_price, satuan: 'kg'},
+      {name: 'Preform',qty: this.paramSales.preform_qty, price: this.paramSales.preform_price, satuan: 'kg'},
+      {name: 'Resin',qty: this.paramSales.resin_qty, price: this.paramSales.resin_price, satuan: 'kg'},
+      {name: 'Sak Besar',qty: this.paramSales.sak_besar_qty, price: this.paramSales.sak_besar_price, satuan: 'pcs'},
+      {name: 'Sak Kecil',qty: this.paramSales.sak_kecil_qty, price: this.paramSales.sak_kecil_price, satuan: 'pcs'}
     );
+    console.log(dataArray);
+    
     return dataArray;
   }
-  filterSalesByDate(date: any){
+  filterSalesByDate(date: any) {
     return this.dataSales.filter((val) => val.date == date)[0];
   }
 }
