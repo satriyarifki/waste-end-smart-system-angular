@@ -22,7 +22,9 @@
       </div>
       <div class="flex">
         <h1 class="text-base w-1/4">TANGGAL</h1>
-        <h1 class="text-base">: {{ paramSales.date }}</h1>
+        <h1 class="text-base">: {{ toDefaultDate(paramSales.date).toLocaleString("id-ID", {
+          dateStyle: "long"
+        })}}</h1>
       </div>
     </div>
 
@@ -73,10 +75,7 @@
                 </thead>
                 <tbody>
                   <tr
-                    *ngFor="
-                      let item of SalesToArrayByDate();
-                      index as i
-                    "
+                    *ngFor="let item of SalesToArrayByDate(); index as i"
                     class="border border-black dark:border-neutral-500"
                   >
                     <td
@@ -118,12 +117,12 @@
                     <td
                       class="whitespace-nowrap border border-black font-medium px-6 py-2"
                     >
-                      <!-- {{
-                        (
-                          (filterSalesByDate(paramSales.date).total / 111) *
-                          100
-                        ).toLocaleString("en-US", { maximumFractionDigits: 0 })
-                      }} -->
+                      {{
+                        ((paramSales.total_price / 111) * 100).toLocaleString(
+                          "en-US",
+                          { maximumFractionDigits: 0 }
+                        )
+                      }}
                     </td>
                   </tr>
 
@@ -137,12 +136,12 @@
                     <td
                       class="whitespace-nowrap border border-black font-medium px-6 py-2"
                     >
-                      <!-- {{
+                      {{
                         (
-                          filterSalesByDate(paramSales.date).total -
-                          (filterSalesByDate(paramSales.date).total / 111) * 100
+                          paramSales.total_price -
+                          (paramSales.total_price / 111) * 100
                         ).toLocaleString("en-US", { maximumFractionDigits: 0 })
-                      }} -->
+                      }}
                     </td>
                   </tr>
 
@@ -156,11 +155,7 @@
                     <td
                       class="whitespace-nowrap border border-black font-medium px-6 py-2"
                     >
-                      {{
-                        paramSales.total_price.toLocaleString(
-                          "en-US"
-                        )
-                      }}
+                      {{ paramSales.total_price.toLocaleString("en-US") }}
                     </td>
                   </tr>
                 </tbody>
@@ -189,7 +184,7 @@
         <h1 class="underline"></h1>
         <h1 class="">
           {{
-            paramSales.vendor.includes("DESA")
+            paramSales.vendor.includes("Desa")
               ? "DESA"
               : "CV." + paramSales.vendor
           }}

@@ -58,7 +58,7 @@ export class PrintTransactionInComponent {
       {name: 'Besi',qty: this.paramSales.besi_qty, price: this.paramSales.besi_price, satuan: 'kg'},
       {name: 'Botol Plastik',qty: this.paramSales.botol_plastik_qty, price: this.paramSales.botol_plastik_price, satuan: 'kg'},
       {name: 'Drum',qty: this.paramSales.drum_qty, price: this.paramSales.drum_price, satuan: 'pcs'},
-      {name: 'Karton',qty: this.paramSales.karton_qty, price: this.paramSales.katron_price, satuan: 'kg'},
+      {name: 'Karton',qty: this.paramSales.karton_qty, price: this.paramSales.karton_price, satuan: 'kg'},
       {name: 'Pallet Kayu',qty: this.paramSales.pallet_kayu_qty, price: this.paramSales.pallet_kayu_price, satuan: 'pcs'},
       {name: 'Pallet Plastik',qty: this.paramSales.pallet_plastik_qty, price: this.paramSales.pallet_plastik_price, satuan: 'pcs'},
       // {name: 'Plastik',qty: this.paramSales.plastik_qty, price: this.paramSales.plastik_price, satuan: 'kg'},

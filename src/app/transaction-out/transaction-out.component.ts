@@ -1,9 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
 import { PaginationControlsDirective } from 'ngx-pagination';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { forkJoin } from 'rxjs';
 import { ActualAug, harga } from '../dashboard-sales/db_sales';
+import { AlertType } from '../services/alert/alert.model';
+import { AlertService } from '../services/alert/alert.service';
 import { ApiService } from '../services/api.service';
-
 
 @Component({
   selector: 'app-transaction-out',
@@ -24,7 +26,7 @@ export class TransactionOutComponent {
   //API
   sales_data = ActualAug;
   price_sales = harga;
-  salesViewApi:any[] = []
+  salesViewApi: any[] = [];
 
   // Data Result
   salesArray: any[] = [];
@@ -37,14 +39,28 @@ export class TransactionOutComponent {
     totalItems: this.salesArray.length,
   };
 
-  constructor(private apiService: ApiService) {
-    
-    forkJoin(apiService.salesViewGet()).subscribe(([salesView]) => {
-      this.salesViewApi = salesView;
-      console.log(salesView);
-      console.log(this.salesViewApi);
-      
-    });
+  constructor(
+    private apiService: ApiService,
+    private spinner: NgxSpinnerService,
+    private alertService: AlertService
+  ) {
+    spinner.show();
+
+    forkJoin(apiService.salesViewGet()).subscribe(
+      ([salesView]) => {
+        this.salesViewApi = salesView;
+        console.log(salesView);
+        console.log(this.salesViewApi);
+        spinner.hide();
+      },
+      (err) => {
+        this.alertService.onCallAlert(
+          'Data cannot loaded, server error !',
+          AlertType.Error
+        ),
+        spinner.hide();
+      }
+    );
     this.changeSalesToArray();
   }
 
