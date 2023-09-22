@@ -37,11 +37,27 @@ export class ApiService {
   }
 
   //----SALES
-  salesViewGet(): Observable<any> {
+  salesGet(): Observable<any> {
     return this.http.get(this.baseUrl + 'sales');
   }
-  salesViewIdGet(id:any): Observable<any> {
+  salesIdGet(id:any): Observable<any> {
     return this.http.get(this.baseUrl + 'sales/' + id);
+  }
+  salesViewGet(): Observable<any> {
+    return this.http.get(this.baseUrl + 'sales/view');
+  }
+  salesViewIdGet(id:any): Observable<any> {
+    return this.http.get(this.baseUrl + 'sales/view/' + id);
+  }
+
+  //-----VENDOR
+  vendorGet(): Observable<any> {
+    return this.http.get(this.baseUrl + 'vendor');
+  }
+
+  //-----PRICE
+  priceGet(): Observable<any> {
+    return this.http.get(this.baseUrl + 'price');
   }
   
 }

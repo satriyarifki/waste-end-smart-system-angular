@@ -1,63 +1,30 @@
 <!-- Hire Us -->
-<div class="w-full pt-4 lg:pt-16 md:px-8 lg:pl-72 px-4 py-10 sm:px-6 lg:px-8 mx-auto">
+<div
+  class="w-full pt-4 lg:pt-16 md:px-8 lg:pl-72 px-4 py-10 sm:px-6 lg:px-8 mx-auto"
+>
   <div class="mx-auto">
     <div class="text-center">
-      <h1 class="text-2xl font-bold text-gray-800 sm:text-4xl">
+      <h1 class="text-2xl font-bold text-gray-800 sm:text-3xl">
         Transaksi Barang Keluar
       </h1>
-      <p class="mt-1 text-gray-600">Input to add new transaction</p>
+      <p class="text-gray-600">Input to add new transaction</p>
     </div>
 
-    <div class="mt-5">
+    <div class="mt-4">
       <!-- Form -->
-      <form>
+      <form [formGroup]="form">
         <div class="grid gap-4 w-2/3 lg:w-1/2 mx-auto">
-          <!-- Grid -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-6">
-            <div>
-              <label
-                for="hs-firstname-hire-us-2"
-                class="block text-sm text-gray-700 font-medium"
-                >Supplier</label
-              >
-              <Select
-                class="py-2 px-3 block w-full border border-gray-300 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
-              >
-                <option value="0">Choose Supplier</option>
-              </Select>
-              <!-- <input
-                  type="text"
-                  name="hs-firstname-hire-us-2"
-                  id="hs-firstname-hire-us-2"
-                  class="py-2 px-3 block w-full border border-gray-300 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 "
-                /> -->
-            </div>
-
-            <div>
-              <label
-                for="hs-lastname-hire-us-2"
-                class="block text-sm text-gray-700 font-medium"
-                >Customer</label
-              >
-              <Select
-                class="py-2 px-3 block w-full border border-gray-300 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
-              >
-                <option value="0">Choose Customer</option>
-              </Select>
-            </div>
-          </div>
-          <!-- End Grid -->
-
           <!-- Grid -->
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-6">
             <div>
               <label
                 for="hs-company-hire-us-2"
                 class="block text-sm text-gray-700 font-medium"
-                >Order Date</label
+                >Sales Date</label
               >
 
               <input
+                formControlName="date"
                 type="date"
                 name="hs-company-hire-us-2"
                 id="hs-company-hire-us-2"
@@ -69,19 +36,23 @@
               <label
                 for="hs-company-website-hire-us-2"
                 class="block text-sm text-gray-700 font-medium"
-                >Petugas</label
+                >Vendor</label
               >
-              <Select
+              <select
+                formControlName="vendorId"
                 class="py-2 px-3 block w-full border border-gray-300 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
               >
-                <option value="0">Choose Petugas</option>
-              </Select>
+                <!-- <option value="0">Choose Vendor</option> -->
+                <option *ngFor="let item of vendorsApi" [value]="item.id">
+                  {{ item.name }}
+                </option>
+              </select>
             </div>
           </div>
           <!-- End Grid -->
         </div>
         <div class="my-5 rounded-t-lg border">
-          <div
+          <!-- <div
             class="w-full flex bg-slate-100 py-2 px-3 rounded-t-lg justify-between"
           >
             <button
@@ -114,27 +85,13 @@
                 <path d="M200-450v-60h560v60H200Z" />
               </svg>
             </button>
-          </div>
-          <div class="grid gap-x-4 gap-y-2 lg:gap-x-6 py-3 px-5">
+          </div> -->
+          <div class="grid md:grid-cols-2 gap-x-4 gap-y-2 lg:gap-x-6 py-3 px-5">
             <!-- Grid -->
             <div
-              *ngFor="let item of arrayItem; index as i"
-              class="flex items-end justify-center gap-x-4 lg:gap-6"
+              *ngFor="let item of salesToArray; index as i"
+              class="flex items-end justify-center gap-x-4 lg:gap-1.5"
             >
-              <div class="w-1/6 lg:w-1/12">
-                <label
-                  for="hs-firstname-hire-us-2"
-                  class="block text-sm text-gray-700 font-medium"
-                  >ID Barang
-                </label>
-                <input
-                  type="text"
-                  name="hs-firstname-hire-us-2"
-                  id="hs-firstname-hire-us-2"
-                  class="py-2 px-3 block w-full border border-gray-300 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
-                />
-              </div>
-
               <div>
                 <label
                   for="hs-lastname-hire-us-2"
@@ -143,12 +100,14 @@
                 >
                 <input
                   type="text"
+                  disabled
                   name="hs-lastname-hire-us-2"
                   id="hs-lastname-hire-us-2"
-                  class="py-2 px-3 block w-full border border-gray-300 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
+                  [value]="item.name"
+                  class="py-1.5 px-2 block w-full border border-gray-300 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
                 />
               </div>
-              <div class="lg:w-1/12">
+              <div class="lg:w-1/6">
                 <label
                   for="hs-company-hire-us-2"
                   class="block text-sm text-gray-700 font-medium"
@@ -159,49 +118,28 @@
                   min="1"
                   name="hs-company-hire-us-2"
                   id="hs-company-hire-us-2"
-                  class="py-2 px-3 block w-full border border-gray-300 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
+                  class="py-1.5 px-2 block w-full border border-gray-300 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
                 />
               </div>
 
-              <div class="lg:w-1/12">
+              <div class="lg:w-1/6">
                 <label
                   for="hs-company-website-hire-us-2"
                   class="block text-sm text-gray-700 font-medium"
                   >Satuan</label
                 >
-                <Select
-                  class="py-2 px-3 block w-full border border-gray-300 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
-                >
-                  <option value="0">Choose</option>
-                </Select>
-              </div>
-              <div>
-                <label
-                  for="hs-company-website-hire-us-2"
-                  class="block text-sm text-gray-700 font-medium"
-                  >Harga</label
-                >
                 <input
                   type="text"
-                  name="hs-company-website-hire-us-2"
                   id="hs-company-website-hire-us-2"
-                  class="py-2 px-3 block w-full border border-gray-300 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
+                  disabled
+                  [value]="item.satuan"
+                  class="py-1.5 px-2 block w-full border border-gray-300 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
                 />
-              </div>
-              <div class="lg:w-1/12">
-                <label
-                  for="hs-company-website-hire-us-2"
-                  class="block text-sm text-gray-700 font-medium"
-                  >PPN</label
+                <!-- <Select
+                  class="py-1.5 px-2 block w-full border border-gray-300 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
                 >
-                <input
-                  type="number"
-                  min="0"
-                  max="100"
-                  name="hs-company-website-hire-us-2"
-                  id="hs-company-website-hire-us-2"
-                  class="py-2 px-3 block w-full border border-gray-300 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
-                />
+                  <option value="0">Choose</option>
+                </Select> -->
               </div>
               <div>
                 <label
@@ -213,7 +151,7 @@
                   type="text"
                   name="hs-company-website-hire-us-2"
                   id="hs-company-website-hire-us-2"
-                  class="py-2 px-3 block w-full border border-gray-300 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
+                  class="py-1.5 px-2 block w-full border border-gray-300 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
                 />
               </div>
               <!-- <div class="">
