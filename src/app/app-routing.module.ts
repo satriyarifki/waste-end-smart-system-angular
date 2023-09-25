@@ -10,6 +10,7 @@ import { PrintTransactionInComponent } from './print/print-transaction-in/print-
 import { ScalesPassboxOc1Component } from './scales-passbox-oc1/scales-passbox-oc1.component';
 import { ScalesPassboxOc2Component } from './scales-passbox-oc2/scales-passbox-oc2.component';
 import { ScalesPassboxComponent } from './scales-passbox/scales-passbox.component';
+import { ScalesSalesViewComponent } from './scales-sales/scales-sales-view/scales-sales-view.component';
 import { ScalesSalesComponent } from './scales-sales/scales-sales.component';
 import { ScalesTpsViewComponent } from './scales-tps/scales-tps-view/scales-tps-view.component';
 import { ScalesTpsComponent } from './scales-tps/scales-tps.component';
@@ -37,6 +38,7 @@ const routes: Routes = [
   { path: 'scales-tps', component: ScalesTpsComponent },
   { path: 'scales-tps/view', component: ScalesTpsViewComponent },
   { path: 'scales-sales', component: ScalesSalesComponent },
+  { path: 'scales-sales/view', component: ScalesSalesViewComponent },
   { path: 'system-flow', component: SystemFlowComponent },
 ];
 

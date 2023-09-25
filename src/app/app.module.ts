@@ -33,6 +33,7 @@ import { CreatePassboxComponent } from './create/create-passbox/create-passbox.c
 import { ScalesSalesComponent } from './scales-sales/scales-sales.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { AlertComponent } from './layouts/alert/alert.component';
+import { ScalesSalesViewComponent } from './scales-sales/scales-sales-view/scales-sales-view.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import { AlertComponent } from './layouts/alert/alert.component';
     CreatePassboxComponent,
     ScalesSalesComponent,
     AlertComponent,
+    ScalesSalesViewComponent,
   ],
   imports: [
     BrowserModule,

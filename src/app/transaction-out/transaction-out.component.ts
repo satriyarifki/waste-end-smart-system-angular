@@ -54,6 +54,8 @@ export class TransactionOutComponent {
         spinner.hide();
       },
       (err) => {
+        console.log(err);
+        
         this.alertService.onCallAlert(
           'Data cannot loaded, server error !',
           AlertType.Error

@@ -29,6 +29,15 @@ export class ApiService {
   tpsGet(): Observable<any> {
     return this.http.get(this.baseUrl + 'reports/tps');
   }
+  tpsOnSalesGet(): Observable<any> {
+    return this.http.get(this.baseUrl + 'reports/tps/sales');
+  }
+  tpsOnSalesByDateGet(date:any): Observable<any> {
+    return this.http.get(this.baseUrl + 'reports/tps/sales/'+date);
+  }
+  tpsOnSalesGroupGet(): Observable<any> {
+    return this.http.get(this.baseUrl + 'reports/tps/sales-group');
+  }
   tpsByLotLineGet(line: any, lot: any): Observable<any> {
     return this.http.get(this.baseUrl + 'reports/tps/' + line + '/' + lot);
   }
@@ -39,6 +48,9 @@ export class ApiService {
   //----SALES
   salesGet(): Observable<any> {
     return this.http.get(this.baseUrl + 'sales');
+  }
+  salesPost(body:any): Observable<any> {
+    return this.http.post(this.baseUrl + 'sales',body);
   }
   salesIdGet(id:any): Observable<any> {
     return this.http.get(this.baseUrl + 'sales/' + id);

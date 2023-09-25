@@ -27,6 +27,7 @@ export class ScalesSalesComponent {
   // Api
   passboxApi: any[] = [];
   tpsApi: any[] = [];
+  salesGroupApi: any[] = [];
 
   // Boolean
   exportBool: Boolean = false;
@@ -35,7 +36,7 @@ export class ScalesSalesComponent {
     id: 'custom',
     itemsPerPage: this.itemPerPage,
     currentPage: 1,
-    totalItems: this.passboxApi.length,
+    totalItems: this.salesGroupApi.length,
   };
   constructor(
     private exportAsService: ExportAsService,
@@ -45,21 +46,29 @@ export class ScalesSalesComponent {
     private alertService: AlertService
   ) {
     spinner.show();
-    forkJoin(apiService.tpsGet()).subscribe(
-      ([tps]) => {
+    forkJoin(
+      apiService.tpsOnSalesGet(),
+      apiService.tpsOnSalesGroupGet()
+    ).subscribe(
+      ([tps, salesGroup]) => {
         // this.passboxApi = passboxOc2;
         this.tpsApi = tps;
+        this.salesGroupApi = salesGroup;
+        console.log(salesGroup);
+
         this.tpsApi = this.tpsApi.sort((b, a) => {
           return (
             a.id - b.id
             // new Date(a.created_at).valueOf() - new Date(b.created_at).valueOf()
           );
         });
-        this.config.totalItems = this.tpsApi.length;
+        this.config.totalItems = this.salesGroupApi.length;
         // console.log(this.tpsApi);
         // console.log(this.filterTpsByBag('bag3'));
       },
       (err) => {
+        console.log(err);
+
         alertService.onCallAlert(
           'Data cannot loaded, server error !',
           AlertType.Error
