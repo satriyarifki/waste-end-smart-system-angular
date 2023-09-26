@@ -38,26 +38,24 @@ export class DashboardSalesComponent {
   // public chartOptions: Partial<ChartOptions>;
   salesFiltered: any[] = [];
   sumSalesFiltered: any[] = [];
-  fromFilter: any = '2023-08-01';
-  toFilter: any = '2023-08-31';
+  fromFilter: any = '2023-09-01';
+  toFilter: any = '2023-09-30';
 
   constructor() {
     this.sumTotalActual();
-    this.sumActualByCategory();
+    // this.sumActualByCategory();
+    this.filterByDate();
     this.salesPerformanceMonthChart();
 
     this.bigFiveSalesChart();
     this.salesPerformanceChart();
-    window.onresize = function() {
-          
+    window.onresize = function () {
       // Setting the current height & width
       // to the elements
       console.log(window.innerHeight);
       console.log(window.innerWidth);
-  };
-  
+    };
   }
-  
 
   sumTotalActual() {
     let total = 0;
@@ -91,7 +89,7 @@ export class DashboardSalesComponent {
   sumTotalYTD(data: any[]) {
     let total = 0;
     data.forEach((element, i) => {
-      if (i < 8) {
+      if (i < 9) {
         total += element;
       } else {
         return;
@@ -154,9 +152,9 @@ export class DashboardSalesComponent {
           data[0] += element.preform * this.priceLimbah.swasta.preform;
           data[1] += element.botol * this.priceLimbah.swasta.botol;
           data[2] += element.karton * this.priceLimbah.swasta.karton;
-          console.log(this.priceLimbah.swasta.karton);
-          console.log(element.karton);
-          console.log(data[2]);
+          // console.log(this.priceLimbah.swasta.karton);
+          // console.log(element.karton);
+          // console.log(data[2]);
 
           data[3] += element.balok * this.priceLimbah.swasta.balok;
           data[4] += element.sak_kecil * this.priceLimbah.swasta.sak_kecil;
@@ -171,17 +169,14 @@ export class DashboardSalesComponent {
 
       this.actual.forEach((element) => {
         if (!element.vendor.includes('Desa')) {
-          data[0] += (element.preform.qty * element.preform.price) / 1000000;
-          data[1] += (element.botol.qty * element.botol.price) / 1000000;
-          data[2] += (element.karton.qty * element.karton.price) / 1000000;
-          data[3] += (element.balok.qty * element.balok.price) / 1000000;
-          data[4] +=
-            (element.sak_kecil.qty * element.sak_kecil.price) / 1000000;
-          data[5] +=
-            (element.sak_besar.qty * element.sak_besar.price) / 1000000;
-          data[6] += (element.resin.qty * element.resin.price) / 1000000;
-          data[7] +=
-            (element.palet_plastik.qty * element.palet_plastik.price) / 1000000;
+          data[0] += element.preform.qty * element.preform.price;
+          data[1] += element.botol.qty * element.botol.price;
+          data[2] += element.karton.qty * element.karton.price;
+          data[3] += element.balok.qty * element.balok.price;
+          data[4] += element.sak_kecil.qty * element.sak_kecil.price;
+          data[5] += element.sak_besar.qty * element.sak_besar.price;
+          data[6] += element.resin.qty * element.resin.price;
+          data[7] += element.palet_plastik.qty * element.palet_plastik.price;
         }
       });
     }
@@ -246,14 +241,25 @@ export class DashboardSalesComponent {
       },
       dataLabels: {
         enabled: true,
-        // offsetY:-10,
+        // offsetY: -7.5,
         offsetX: 55,
         style: {
           fontSize: '12px',
-          colors: ['#0b82ce'],
+          fontWeight: 600,
+          colors: ['#018EB4'],
         },
         formatter: (val: any) => {
-          return [Number(val).toFixed(2) + ' Mio'];
+          if (String(val).length > 9) {
+            return [(val / 1000000000).toFixed(2) + ' Bio'];
+          } else {
+            return [(val / 1000000).toFixed(2) + ' Mio'];
+          }
+        },
+        background: {
+          enabled: true,
+          foreColor: '#fff',
+          padding: 4,
+          opacity: 0.8,
         },
       },
       dataLabels2: {
@@ -284,15 +290,29 @@ export class DashboardSalesComponent {
           'Resin',
           'Palet Plastik',
         ],
+        labels: {
+          show: true,
+          style: {
+            fontFamily: 'Outfit',
+            cssClass: 'font-medium',
+          },
+          formatter: (val: any) => {
+            if (String(val).length > 9) {
+              return (val / 1000000000).toFixed(0) + ' B';
+            } else {
+              return (val / 1000000).toFixed(0) + ' M';
+            }
+          },
+        },
       },
       yaxis: {
         labels: {
           show: true,
           style: {
             fontSize: '12px',
-            // fontFamily: 'Helvetica, Arial, sans-serif',
+            fontFamily: 'Outfit',
             // fontWeight: 600,
-            cssClass: 'font-semibold ',
+            cssClass: 'font-semibold',
           },
         },
       },
