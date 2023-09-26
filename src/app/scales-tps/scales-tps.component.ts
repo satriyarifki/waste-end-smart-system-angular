@@ -51,6 +51,7 @@ export class ScalesTpsComponent {
     forkJoin(this.apiService.groupPassboxGet()).subscribe(
       (data) => {
         this.passboxApi = data[0];
+        // console.log(this.passboxApi);
         this.passboxApi = this.passboxApi.sort((b, a) => {
           return (
             new Date(a.created_at).valueOf() - new Date(b.created_at).valueOf()

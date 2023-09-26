@@ -12,6 +12,7 @@ import { ApiService } from 'src/app/services/api.service';
   styleUrls: ['./create-transaction-out.component.css'],
 })
 export class CreateTransactionOutComponent {
+  params = history.state
   //FORM
   form!: FormGroup;
 
@@ -26,10 +27,29 @@ export class CreateTransactionOutComponent {
     private alertService: AlertService,
     private formBuilder: FormBuilder
   ) {
+    console.log(this.params);
     spinner.show();
-    this.arrayItem.push('item', '', '', '');
-    console.log(this.arrayItem);
-    this.initialForm();
+    let paramForm
+    if (this.params.total_qty) {
+      console.log(this.params);
+      
+      console.log(new Date(this.params.created_at).toISOString().slice(0,10));
+      const id = this.params.customer_name.includes('DESA')? 3 : this.params.customer_name.includes('TPS')? 1 : 2
+      paramForm = {
+        date: new Date(this.params.created_at).toISOString().slice(0,10),
+        vendorId: id,
+        preform: this.params.total_qty
+      }
+      
+    } else {
+      console.log('e');
+      paramForm = {
+        date: new Date().toISOString().slice(0,10),
+        vendorId: 0,
+        preform: 0
+      }
+    }
+    this.initialForm(paramForm);
     forkJoin(
       apiService.salesIdGet(1),
       apiService.vendorGet(),
@@ -39,10 +59,8 @@ export class CreateTransactionOutComponent {
         this.salesApi = sales;
         this.vendorsApi = vendor;
         this.pricesApi = price;
-        console.log(this.vendorsApi);
-        console.log(this.pricesApi);
         spinner.hide();
-        console.log(this.filterVendorById(2).price['resin']);
+        // console.log(this.filterVendorById(2).price['resin']);
       },
       (err) => {
         console.log(err);
@@ -60,10 +78,10 @@ export class CreateTransactionOutComponent {
     return this.form.value;
   }
 
-  initialForm() {
+  initialForm(param:any) {
     this.form = this.formBuilder.group({
-      date: ['', Validators.required],
-      vendorId: [0, Validators.required],
+      date: [param.date, Validators.required],
+      vendorId: [param.vendorId, Validators.required],
       alumunium: [0, Validators.min(0)],
       balok: [0, Validators.min(0)],
       besi: [0, Validators.min(0)],
@@ -76,7 +94,7 @@ export class CreateTransactionOutComponent {
       pallet_kayu: [0],
       pallet_plastik: [0],
       plastik: [0],
-      preform: [0],
+      preform: [param.preform],
       resin: [0],
       sak_besar: [0],
       sak_kecil: [0],
@@ -188,7 +206,7 @@ export class CreateTransactionOutComponent {
         this.f[item.formName];
     });
     this.f.total_price = total;
-    console.log(this.f);
+    // console.log(this.f);
 
     if (
       this.form.invalid

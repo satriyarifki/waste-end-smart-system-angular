@@ -165,7 +165,8 @@ export class ScalesPassboxOc1Component {
       (data) => {
         this.passboxApi = data[0];
         this.config.totalItems = this.passboxApi.length;
-        console.log(this.passboxApi);
+        console.log(new Date(this.passboxApi[0].created_at));
+        console.log(this.passboxApi[0]);
         if (this.passboxApi.length == 0) {
           alertService.onCallAlert('Data Null', AlertType.Info);
         }

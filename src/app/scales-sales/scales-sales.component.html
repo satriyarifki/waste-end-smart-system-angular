@@ -370,8 +370,6 @@
                         </div>
                       </th>
 
-                      
-
                       <!-- <th scope="col" class="px-6 py-3 text-left">
                         <div class="flex items-center justify-center gap-x-2">
                           <span
@@ -400,7 +398,7 @@
                           </span>
                         </div>
                       </th>
-                      
+
                       <th scope="col" class="px-6 py-3 text-left">
                         <div class="flex items-center justify-center gap-x-2">
                           <span
@@ -424,19 +422,19 @@
                           <span
                             class="text-center text-xs font-semibold uppercase tracking-wide text-gray-800"
                           >
-                            Cust
+                            Vendor
                           </span>
                         </div>
                       </th>
-                      <!-- <th scope="col" class="px-6 py-3 text-left">
+                      <th scope="col" class="px-6 py-3 text-left">
                         <div class="flex items-center justify-center gap-x-2">
                           <span
                             class="text-center text-xs font-semibold uppercase tracking-wide text-gray-800"
                           >
-                            Note
+                            Aksi
                           </span>
                         </div>
-                      </th> -->
+                      </th>
                     </tr>
                   </thead>
 
@@ -448,7 +446,8 @@
                           | paginate : config
                       "
                       class="bg-white cursor-pointer hover:bg-gray-50 text-center"
-                      [routerLink]="['view']" [queryParams]="{date:item.global_variable_2}" 
+                      [routerLink]="['view']"
+                      [queryParams]="{ date: item.global_variable_2 }"
                     >
                       <td class="h-px w-px whitespace-nowrap py-2.5">
                         <h1 class="text-sm">
@@ -460,7 +459,7 @@
                           {{ item.line_name }}
                         </h1>
                       </td>
-                      
+
                       <!-- <td class="h-px w-px whitespace-nowrap">
                         <h1 class="text-sm">
                           {{ item.product_name }}
@@ -470,7 +469,9 @@
                         <h1 class="text-sm">{{ item.total_bag }}</h1>
                       </td>
                       <td class="h-px w-px whitespace-nowrap py-2">
-                        <h1 class="text-sm">{{ item.total_qty.toLocaleString() }}</h1>
+                        <h1 class="text-sm">
+                          {{ item.total_qty.toLocaleString() }}
+                        </h1>
                       </td>
                       <td class="h-px w-px whitespace-nowrap">
                         <h1 class="text-sm">{{ item.unit }}</h1>
@@ -478,7 +479,14 @@
                       <td class="h-px w-px whitespace-nowrap">
                         <h1 class="text-sm">{{ item.customer_name }}</h1>
                       </td>
-                      
+                      <td class="h-px w-px whitespace-nowrap py-2.5">
+                        <a
+                          [routerLink]="['/transaction-out/create']"
+                          [state]="item"
+                          class="text-sm cursor-pointer px-4 py-2 bg-lime-500 hover:bg-lime-600 text-white rounded-lg font-medium"
+                          >Buat Rekap</a
+                        >
+                      </td>
                     </tr>
                   </tbody>
                 </table>

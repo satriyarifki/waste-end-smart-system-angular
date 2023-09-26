@@ -49,8 +49,6 @@ export class TransactionOutComponent {
     forkJoin(apiService.salesViewGet()).subscribe(
       ([salesView]) => {
         this.salesViewApi = salesView;
-        console.log(salesView);
-        console.log(this.salesViewApi);
         spinner.hide();
       },
       (err) => {

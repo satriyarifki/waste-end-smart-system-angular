@@ -80,8 +80,8 @@ export class ScalesTpsViewComponent {
   filterTpsByBag(bag: any) {
     return this.tpsApi.filter(
       (value: any) =>
-        value.global_variable_2 != null &&
-        String(value.global_variable_2).toLowerCase() ==
+        value.global_variable_1 != null &&
+        String(value.global_variable_1).toLowerCase() ==
           String(bag).toLowerCase()
     );
   }
