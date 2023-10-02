@@ -18,8 +18,10 @@ export class ApiService {
   passboxOc1Get(): Observable<any> {
     return this.http.get(this.baseUrl + 'reports/passbox-oc1');
   }
-  passboxByLotGet(line:any,lot: any): Observable<any> {
-    return this.http.get(this.baseUrl + 'reports/passbox-oc2/'+ line + '/' + lot);
+  passboxByLotGet(line: any, lot: any): Observable<any> {
+    return this.http.get(
+      this.baseUrl + 'reports/passbox-oc2/' + line + '/' + lot
+    );
   }
   groupPassboxGet(): Observable<any> {
     return this.http.get(this.baseUrl + 'reports/group/passbox-oc2');
@@ -32,8 +34,8 @@ export class ApiService {
   tpsOnSalesGet(): Observable<any> {
     return this.http.get(this.baseUrl + 'reports/tps/sales');
   }
-  tpsOnSalesByDateGet(date:any): Observable<any> {
-    return this.http.get(this.baseUrl + 'reports/tps/sales/'+date);
+  tpsOnSalesByDateGet(date: any): Observable<any> {
+    return this.http.get(this.baseUrl + 'reports/tps/sales/' + date);
   }
   tpsOnSalesGroupGet(): Observable<any> {
     return this.http.get(this.baseUrl + 'reports/tps/sales-group');
@@ -41,7 +43,7 @@ export class ApiService {
   tpsByLotLineGet(line: any, lot: any): Observable<any> {
     return this.http.get(this.baseUrl + 'reports/tps/' + line + '/' + lot);
   }
-  tpsApproved(body:any): Observable<any> {
+  tpsApproved(body: any): Observable<any> {
     return this.http.post(this.baseUrl + 'reports/approved', body);
   }
 
@@ -49,17 +51,23 @@ export class ApiService {
   salesGet(): Observable<any> {
     return this.http.get(this.baseUrl + 'sales');
   }
-  salesPost(body:any): Observable<any> {
-    return this.http.post(this.baseUrl + 'sales',body);
+  salesPost(body: any): Observable<any> {
+    return this.http.post(this.baseUrl + 'sales', body);
   }
-  salesIdGet(id:any): Observable<any> {
-    return this.http.get(this.baseUrl + 'sales/' + id);
+  salesIdGet(id: any): Observable<any> {
+    return this.http.get(this.baseUrl + 'sales/byid/' + id);
   }
   salesViewGet(): Observable<any> {
     return this.http.get(this.baseUrl + 'sales/view');
   }
-  salesViewIdGet(id:any): Observable<any> {
+  salesViewIdGet(id: any): Observable<any> {
     return this.http.get(this.baseUrl + 'sales/view/' + id);
+  }
+  salesYearlyGet(): Observable<any> {
+    return this.http.get(this.baseUrl + 'sales/yearly');
+  }
+  salesMonthlyGet(): Observable<any> {
+    return this.http.get(this.baseUrl + 'sales/monthly');
   }
 
   //-----VENDOR
@@ -71,5 +79,4 @@ export class ApiService {
   priceGet(): Observable<any> {
     return this.http.get(this.baseUrl + 'price');
   }
-  
 }

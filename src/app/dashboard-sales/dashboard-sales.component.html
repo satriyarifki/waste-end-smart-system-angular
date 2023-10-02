@@ -38,7 +38,7 @@
           <h1 class="text-2xl lg:text-3xl text-blue-600 font-semibold">
             IDR
             {{
-              (this.monthIdr2023[8] / 1000000).toFixed(2) +
+              (salesMonthlyApi[0]?.sum_total / 1000000).toFixed(2) +
                 " " +
                 this.sumTotalActual().unit
             }}
@@ -85,7 +85,11 @@
           <h1 class="text-blue-600">Actual YTD 2023</h1>
           <h1 class="text-2xl lg:text-3xl text-blue-600 font-semibold">
             IDR
-            {{ sumTotalActualYTD() }}
+            {{
+              salesYearNow?.sum_total.length > 9
+                ? (salesYearNow?.sum_total / 1000000000).toFixed(2) + " Bio"
+                : (salesYearNow?.sum_total / 1000000).toFixed(2) + " Mio"
+            }}
           </h1>
           <h1 class="flex gap-x-1">
             <span
@@ -147,9 +151,7 @@
       </div>
     </div>
     <div class="w-full h-screen md:w-2/5 flex flex-wrap space-y-2.5">
-      <div
-        class="w-full flex flex-col space-x-2.5 max-[560px]:space-y-4"
-      >
+      <div class="w-full flex flex-col space-x-2.5 max-[560px]:space-y-4">
         <div
           class="gap-y-2 py-2 px-2 h-full bg-white shadow-md rounded-lg w-full"
         >

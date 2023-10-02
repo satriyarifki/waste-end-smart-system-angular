@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { max } from 'rxjs';
+import { forkJoin, max } from 'rxjs';
 import {
   ChartBigFiveSales,
   ChartSalesCategoryYTD,
   ChartSalesPerformance,
 } from '../apexcharts';
+import { ApiService } from '../services/api.service';
 import {
   ActualAug,
   harga,
@@ -41,20 +42,43 @@ export class DashboardSalesComponent {
   fromFilter: any = '2023-09-01';
   toFilter: any = '2023-09-30';
 
-  constructor() {
-    this.sumTotalActual();
-    // this.sumActualByCategory();
-    this.filterByDate();
-    this.salesPerformanceMonthChart();
+  //API
+  salesYearlyApi: any[] = [];
+  salesMonthlyApi: any[] = [];
 
-    this.bigFiveSalesChart();
-    this.salesPerformanceChart();
+  constructor(private apiService: ApiService) {
+   
+    console.log(new Date().getFullYear());
+
+    forkJoin(apiService.salesYearlyGet(), apiService.salesMonthlyGet()).subscribe(([salesYear,salesMonth]) => {
+      
+      this.salesYearlyApi = salesYear;
+      this.salesMonthlyApi = salesMonth;
+      console.log(this.salesYearNow);
+      this.sumTotalActual();
+      // this.sumActualByCategory();
+      this.filterByDate();
+      this.salesPerformanceMonthChart();
+  
+      this.bigFiveSalesChart();
+      this.salesPerformanceChart();
+    });
     window.onresize = function () {
       // Setting the current height & width
       // to the elements
-      console.log(window.innerHeight);
-      console.log(window.innerWidth);
+      // console.log(window.innerHeight);
+      // console.log(window.innerWidth);
     };
+  }
+  get salesYearNow() {
+    return this.salesYearlyApi.filter(
+      (data) => data.year == new Date().getFullYear()
+    )[0];
+  }
+  get salesMonthlyYearNow() {
+    return this.salesMonthlyApi.filter(
+      (data) => data.year == new Date().getFullYear()
+    );
   }
 
   sumTotalActual() {
@@ -99,8 +123,8 @@ export class DashboardSalesComponent {
   }
   filterByDate() {
     this.salesFiltered = [];
-    console.log(this.toFilter);
-    console.log(this.dateSales.length);
+    // console.log(this.toFilter);
+    // console.log(this.dateSales.length);
     let data: any[] = [];
     if (this.toFilter != undefined && this.fromFilter != undefined) {
       console.log('d');
@@ -111,18 +135,18 @@ export class DashboardSalesComponent {
           new Date(elem.date) > new Date(this.fromFilter)
       );
     } else if (this.toFilter != undefined) {
-      console.log('s');
+      // console.log('s');
       data = this.dateidrSales.filter(
         (elem) => new Date(elem.date) < new Date(this.toFilter)
       );
     } else if (this.fromFilter != undefined) {
-      console.log('x');
+      // console.log('x');
       data = this.dateidrSales.filter(
         (elem) => new Date(elem.date) > new Date(this.fromFilter)
       );
     }
     this.salesFiltered = data;
-    console.log(data);
+    // console.log(data);
 
     let idr = this.idrSales;
     this.sumActualByCategory();
@@ -131,13 +155,13 @@ export class DashboardSalesComponent {
   sumActualByCategory() {
     // let data: any[]
     let data = [0, 0, 0, 0, 0, 0, 0, 0];
-    console.log(this.salesFiltered);
+    // console.log(this.salesFiltered);
 
     if (this.salesFiltered.length != 0) {
       // console.log('if');
       this.salesFiltered.forEach((element) => {
         if (element.vendor.includes('Desa')) {
-          console.log(element.vendor);
+          // console.log(element.vendor);
           data[0] += element.preform * this.priceLimbah.desa.preform;
           data[1] += element.botol * this.priceLimbah.desa.botol;
           data[2] += element.karton * this.priceLimbah.desa.karton;
@@ -148,14 +172,10 @@ export class DashboardSalesComponent {
           data[7] +=
             element.palet_plastik * this.priceLimbah.desa.pallet_plastik;
         } else {
-          console.log(element.vendor);
+          // console.log(element.vendor);
           data[0] += element.preform * this.priceLimbah.swasta.preform;
           data[1] += element.botol * this.priceLimbah.swasta.botol;
           data[2] += element.karton * this.priceLimbah.swasta.karton;
-          // console.log(this.priceLimbah.swasta.karton);
-          // console.log(element.karton);
-          // console.log(data[2]);
-
           data[3] += element.balok * this.priceLimbah.swasta.balok;
           data[4] += element.sak_kecil * this.priceLimbah.swasta.sak_kecil;
           data[5] += element.sak_besar * this.priceLimbah.swasta.sak_besar;
@@ -195,7 +215,7 @@ export class DashboardSalesComponent {
   }
 
   salesCategoryYTDChart() {
-    console.log(this.sumSalesFiltered);
+    // console.log(this.sumSalesFiltered);
     this.chartSalesCategoryYTD = {
       series: [
         {
@@ -686,6 +706,8 @@ export class DashboardSalesComponent {
     };
   }
   salesPerformanceMonthChart() {
+    console.log(this.salesMonthlyYearNow);
+    
     this.chartSalesPerformanceMonth = {
       series: [
         {
