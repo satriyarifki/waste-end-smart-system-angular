@@ -1,6 +1,6 @@
 <!-- Sidebar Toggle -->
 <div
-  class="sticky top-0 inset-x-0 z-20 flex justify-between bg-white border-y px-4 sm:px-6 md:px-8 lg:hidden "
+  class="sticky top-0 inset-x-0 z-20 flex justify-between bg-white border-y px-4 sm:px-6 md:px-8 lg:hidden"
 >
   <div class="flex items-center py-4">
     <!-- Navigation Toggle -->
@@ -60,16 +60,76 @@
     </ol>
     <!-- End Breadcrumb -->
   </div>
-  <div class="px-2 py-2">
-    <button
-      class="inline-block w-full rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]"
-      type="button"
-      data-te-ripple-init
-      data-te-ripple-color="light"
-      style="background: linear-gradient(to right, #10957a, #0a3c1f)"
+  <div
+    [ngClass]="
+      router.url == '/login'
+        ? 'bg-slate-50 rounded hover:shadow-md hover:shadow-gray-400'
+        : ''
+    "
+    class="hs-dropdown relative flex-col inline-flex py-2 [--placement:bottom-right]"
+  >
+    <a
+      *ngIf="onAuthCheck()"
+      [routerLink]="router.url == '/login' ? ['/'] : ['/login']"
+      routerLinkActive="router-link-active"
+      [ngClass]="
+        router.url == '/login'
+          ? 'font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[#10957a] to-[#0a3c1f]'
+          : 'bg-gradient-to-r from-[#10957a] to-[#0a3c1f]'
+      "
+      class="inline-block w-full cursor-pointer rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]"
     >
-      Log in
+      <span *ngIf="router.url != '/login'"> Log in </span>
+      <span
+        *ngIf="router.url == '/login'"
+        class="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[#10957a] to-[#0a3c1f]"
+      >
+        Back Home
+      </span>
+    </a>
+    <button
+      *ngIf="!onAuthCheck()"
+      (click)="userDropdown()"
+      type="button"
+      class="flex-shrink-0 justify-center items-center gap-2 h-[2.375rem] w-[2.375rem] rounded-full font-medium bg-white text-gray-700 align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-white transition-all text-xs"
+    >
+      <img
+        class="inline-block h-[2.375rem] w-[2.375rem] rounded-full ring-2 ring-white"
+        src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=320&h=320&q=80"
+        alt="Image Description"
+      />
     </button>
+
+    <div
+      *ngIf="!onAuthCheck() && userBool"
+      class="fixed right-2 top-12 transition-[opacity,margin] duration min-w-[15rem] bg-white shadow-md rounded-lg p-2 ml-2"
+    >
+      <div class="py-3 px-5 -m-2 bg-gray-100 rounded-t-lg">
+        <p class="text-sm text-gray-500">Signed in as</p>
+        <p class="text-sm font-medium text-gray-800">
+          {{ employee.lg_name }}
+        </p>
+      </div>
+      <div class="mt-2 py-2 first:pt-0 last:pb-0">
+        <a
+          class="flex items-center cursor-pointer gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500"
+          (click)="signOut()"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="16"
+            viewBox="0 -960 960 960"
+            width="16"
+            fill="currentColor"
+          >
+            <path
+              d="M180-120q-24 0-42-18t-18-42v-600q0-24 18-42t42-18h291v60H180v600h291v60H180Zm486-185-43-43 102-102H375v-60h348L621-612l43-43 176 176-174 174Z"
+            />
+          </svg>
+          Sign Out
+        </a>
+      </div>
+    </div>
   </div>
 </div>
 <!-- End Sidebar Toggle -->

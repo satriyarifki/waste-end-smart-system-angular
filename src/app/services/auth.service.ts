@@ -14,11 +14,10 @@ const TOKEN_KEY = 'auth-token';
 const USER_KEY = 'auth-user';
 const USER_DATA_KEY = 'auth-user-data';
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-
-  datas:any
+  datas: any;
   private authUrl = baseApi + 'auth/';
   constructor(private http: HttpClient, private router: Router) {}
   login(nik: string, password: string): Observable<any> {
@@ -34,6 +33,8 @@ export class AuthService {
 
   signOut(): void {
     window.sessionStorage.clear();
+    localStorage.clear();
+    document.cookie = ''
     // window.location.reload();
     this.router.navigate(['/']);
   }
@@ -41,6 +42,11 @@ export class AuthService {
   public saveToken(token: string): void {
     window.sessionStorage.removeItem(TOKEN_KEY);
     window.sessionStorage.setItem(TOKEN_KEY, token);
+    localStorage.removeItem(TOKEN_KEY);
+    localStorage.setItem(TOKEN_KEY, token);
+    document.cookie = 'TOKEN_KEY=' + token + ';expires=' + new Date() + ';';
+    console.log(document.cookie);
+    
   }
 
   public getToken(): string | null {
@@ -54,7 +60,6 @@ export class AuthService {
     this.employeesGetById(this.getUser().lg_nik).subscribe((data) => {
       window.sessionStorage.setItem(USER_DATA_KEY, JSON.stringify(data[0]));
     });
-    
   }
 
   public getUser(): any {
@@ -67,7 +72,7 @@ export class AuthService {
   }
   public getUserData(): any {
     const user = window.sessionStorage.getItem(USER_DATA_KEY);
-   
+
     if (user) {
       return JSON.parse(user);
     }
