@@ -45,21 +45,25 @@ export class DashboardSalesComponent {
   //API
   salesYearlyApi: any[] = [];
   salesMonthlyApi: any[] = [];
+  bigFiveApi: any;
 
   constructor(private apiService: ApiService) {
-   
     console.log(new Date().getFullYear());
 
-    forkJoin(apiService.salesYearlyGet(), apiService.salesMonthlyGet()).subscribe(([salesYear,salesMonth]) => {
-      
+    forkJoin(
+      apiService.salesYearlyGet(),
+      apiService.salesMonthlyGet(),
+      apiService.salesBigFiveGet()
+    ).subscribe(([salesYear, salesMonth, bigFive]) => {
       this.salesYearlyApi = salesYear;
       this.salesMonthlyApi = salesMonth;
-      console.log(this.salesYearNow);
+      this.bigFiveApi = bigFive;
+      console.log(this.bigFiveApi);
       this.sumTotalActual();
       // this.sumActualByCategory();
       this.filterByDate();
       this.salesPerformanceMonthChart();
-  
+
       this.bigFiveSalesChart();
       this.salesPerformanceChart();
     });
@@ -78,6 +82,12 @@ export class DashboardSalesComponent {
   get salesMonthlyYearNow() {
     return this.salesMonthlyApi.filter(
       (data) => data.year == new Date().getFullYear()
+    );
+  }
+
+  get salesMTDThisLastYear() {
+    return this.salesMonthlyApi.filter(
+      (data) => data.month == new Date().getMonth()
     );
   }
 
@@ -347,11 +357,11 @@ export class DashboardSalesComponent {
   bigFiveSalesChart() {
     this.chartBigFiveSales = {
       series: [
-        834480000 + 230092800,
-        236865000 + 86047600,
-        31029000 + 8419950,
-        35628800 + 13415500,
-        25956000 + 5760000,
+        Number(this.bigFiveApi.preform),
+        Number(this.bigFiveApi.botol_plastik),
+        Number(this.bigFiveApi.karton),
+        Number(this.bigFiveApi.balok),
+        Number(this.bigFiveApi.sak_kecil),
       ],
       chart: {
         type: 'donut',
@@ -383,7 +393,11 @@ export class DashboardSalesComponent {
                 // fontWeight: 400,
                 color: '#373d3f',
                 formatter: (w: any) => {
-                  return this.sumTotalActualYTD();
+                  return this.salesYearNow?.sum_total.length > 9
+                    ? (this.salesYearNow?.sum_total / 1000000000).toFixed(2) +
+                        ' Bio'
+                    : (this.salesYearNow?.sum_total / 1000000).toFixed(2) +
+                        ' Mio';
                   // (
                   //   w.globals.seriesTotals.reduce((a: any, b: any) => {
                   //     return a + b;
@@ -436,14 +450,14 @@ export class DashboardSalesComponent {
                       fontWeight: 600,
                       color: '#373d3f',
                       offsetY: -60,
-                      formatter: function (w: any) {
-                        return (
-                          (
-                            w.globals.seriesTotals.reduce((a: any, b: any) => {
-                              return a + b;
-                            }, 0) / 1000000000
-                          ).toFixed(2) + ' Bio'
-                        );
+                      formatter: (w: any) => {
+                        return this.salesYearNow?.sum_total.length > 9
+                          ? (this.salesYearNow?.sum_total / 1000000000).toFixed(
+                              2
+                            ) + ' Bio'
+                          : (this.salesYearNow?.sum_total / 1000000).toFixed(
+                              2
+                            ) + ' Mio';
                       },
                     },
                   },
@@ -464,19 +478,24 @@ export class DashboardSalesComponent {
   }
 
   salesPerformanceChart() {
+    console.log(this.salesMTDThisLastYear);
+
     this.chartSalesPerformance = {
       series: [
         {
           name: 'MTD',
           group: 'budget',
-          data: [this.monthIdr2022[7], this.monthIdr2023[7]],
+          data: [
+            this.salesMTDThisLastYear[1].sum_total,
+            this.salesMTDThisLastYear[0].sum_total,
+          ],
         },
         {
           name: 'YTD',
           group: 'actual',
           data: [
-            this.sumTotalYTD(this.monthIdr2022),
-            this.sumTotalYTD(this.monthIdr2023),
+            this.salesYearlyApi[1].sum_total,
+            this.salesYearlyApi[0].sum_total,
           ],
         },
       ],
@@ -706,13 +725,20 @@ export class DashboardSalesComponent {
     };
   }
   salesPerformanceMonthChart() {
+    
+    let valueMonthlyYearNow:any[] = []
+    this.salesMonthlyYearNow.forEach(elem => {
+      valueMonthlyYearNow.push(elem.sum_total)
+    });
+    
     console.log(this.salesMonthlyYearNow);
     
+    console.log(valueMonthlyYearNow);
     this.chartSalesPerformanceMonth = {
       series: [
         {
           name: 'Month',
-          data: this.monthIdr2023,
+          data: valueMonthlyYearNow.reverse(),
         },
       ],
       // seriesMTD: [

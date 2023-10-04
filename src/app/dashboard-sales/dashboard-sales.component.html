@@ -139,14 +139,15 @@
           <h1 class="font-medium text-center">SALES by CATEGORY MTD 2023</h1>
         </div>
         <apx-chart
+          *ngIf="chartSalesCategoryYTD"
           class="h-full"
-          [series]="chartSalesCategoryYTD.series"
-          [chart]="chartSalesCategoryYTD.chart"
-          [dataLabels]="chartSalesCategoryYTD.dataLabels"
-          [plotOptions]="chartSalesCategoryYTD.plotOptions"
-          [xaxis]="chartSalesCategoryYTD.xaxis"
-          [yaxis]="chartSalesCategoryYTD.yaxis"
-          [stroke]="chartSalesCategoryYTD.stroke"
+          [series]="chartSalesCategoryYTD?.series"
+          [chart]="chartSalesCategoryYTD?.chart"
+          [dataLabels]="chartSalesCategoryYTD?.dataLabels"
+          [plotOptions]="chartSalesCategoryYTD?.plotOptions"
+          [xaxis]="chartSalesCategoryYTD?.xaxis"
+          [yaxis]="chartSalesCategoryYTD?.yaxis"
+          [stroke]="chartSalesCategoryYTD?.stroke"
         ></apx-chart>
       </div>
     </div>
@@ -162,13 +163,14 @@
           </div>
           <div class="flex justify-center h-full">
             <apx-chart
+              *ngIf="chartBigFiveSales"
               class="h-full"
-              [series]="chartBigFiveSales.series"
-              [chart]="chartBigFiveSales.chart"
-              [plotOptions]="chartBigFiveSales.plotOptions"
-              [labels]="chartBigFiveSales.labels"
-              [legend]="chartBigFiveSales.legend"
-              [responsive]="chartBigFiveSales.responsive"
+              [series]="chartBigFiveSales?.series"
+              [chart]="chartBigFiveSales?.chart"
+              [plotOptions]="chartBigFiveSales?.plotOptions"
+              [labels]="chartBigFiveSales?.labels"
+              [legend]="chartBigFiveSales?.legend"
+              [responsive]="chartBigFiveSales?.responsive"
             ></apx-chart>
           </div>
         </div>
@@ -183,15 +185,15 @@
           </div>
           
           <apx-chart
-            [series]="chartSalesPerformance.series2"
-            [chart]="chartSalesPerformance.chart2"
-            [xaxis]="chartSalesPerformance.xaxis2"
-            [yaxis]="chartSalesPerformance.yaxis2"
-            [colors]="chartSalesPerformance.colors2"
-            [plotOptions]="chartSalesPerformance.plotOptions2"
-            [legend]="chartSalesPerformance.legend2"
-            [fill]="chartSalesPerformance.fill"
-            [responsive]="chartSalesPerformance.responsive2"
+            [series]="chartSalesPerformance?.series2"
+            [chart]="chartSalesPerformance?.chart2"
+            [xaxis]="chartSalesPerformance?.xaxis2"
+            [yaxis]="chartSalesPerformance?.yaxis2"
+            [colors]="chartSalesPerformance?.colors2"
+            [plotOptions]="chartSalesPerformance?.plotOptions2"
+            [legend]="chartSalesPerformance?.legend2"
+            [fill]="chartSalesPerformance?.fill"
+            [responsive]="chartSalesPerformance?.responsive2"
           ></apx-chart>
           
         </div> -->
@@ -205,16 +207,17 @@
         </div>
         <div class="w-full">
           <apx-chart
-            [series]="chartSalesPerformance.series"
-            [chart]="chartSalesPerformance.chart"
-            [stroke]="chartSalesPerformance.stroke"
-            [dataLabels]="chartSalesPerformance.dataLabels"
-            [plotOptions]="chartSalesPerformance.plotOptions"
-            [xaxis]="chartSalesPerformance.xaxis"
-            [colors]="chartSalesPerformance.colorsPurple"
-            [fill]="chartSalesPerformance.fill"
-            [yaxis]="chartSalesPerformance.yaxis"
-            [legend]="chartSalesPerformance.legend"
+            *ngIf="chartSalesPerformance"
+            [series]="chartSalesPerformance?.series"
+            [chart]="chartSalesPerformance?.chart"
+            [stroke]="chartSalesPerformance?.stroke"
+            [dataLabels]="chartSalesPerformance?.dataLabels"
+            [plotOptions]="chartSalesPerformance?.plotOptions"
+            [xaxis]="chartSalesPerformance?.xaxis"
+            [colors]="chartSalesPerformance?.colorsPurple"
+            [fill]="chartSalesPerformance?.fill"
+            [yaxis]="chartSalesPerformance?.yaxis"
+            [legend]="chartSalesPerformance?.legend"
           ></apx-chart>
         </div>
         <!-- <div class="w-full min-[560px]:w-2/5"></div> -->
@@ -233,17 +236,17 @@
           </h1> -->
         <!-- <apx-chart
             
-            [annotations]="chartSalesPerformance.annotations"
-            [series]="chartSalesPerformance.seriesYTD"
-            [chart]="chartSalesPerformance.chart"
-            [stroke]="chartSalesPerformance.stroke"
-            [dataLabels]="chartSalesPerformance.dataLabels"
-            [plotOptions]="chartSalesPerformance.plotOptions"
-            [xaxis]="chartSalesPerformance.xaxisYTD"
-            [colors]="chartSalesPerformance.colorsOrange"
-            [fill]="chartSalesPerformance.fill"
-            [yaxis]="chartSalesPerformance.yaxis"
-            [legend]="chartSalesPerformance.legend"
+            [annotations]="chartSalesPerformance?.annotations"
+            [series]="chartSalesPerformance?.seriesYTD"
+            [chart]="chartSalesPerformance?.chart"
+            [stroke]="chartSalesPerformance?.stroke"
+            [dataLabels]="chartSalesPerformance?.dataLabels"
+            [plotOptions]="chartSalesPerformance?.plotOptions"
+            [xaxis]="chartSalesPerformance?.xaxisYTD"
+            [colors]="chartSalesPerformance?.colorsOrange"
+            [fill]="chartSalesPerformance?.fill"
+            [yaxis]="chartSalesPerformance?.yaxis"
+            [legend]="chartSalesPerformance?.legend"
           ></apx-chart> -->
         <!-- </div> -->
       </div>
@@ -255,16 +258,17 @@
         </div>
         <div class="w-full">
           <apx-chart
-            [series]="chartSalesPerformanceMonth.series"
-            [chart]="chartSalesPerformanceMonth.chart"
-            [stroke]="chartSalesPerformanceMonth.stroke"
-            [dataLabels]="chartSalesPerformanceMonth.dataLabels"
-            [plotOptions]="chartSalesPerformanceMonth.plotOptions"
-            [xaxis]="chartSalesPerformanceMonth.xaxis"
-            [colors]="chartSalesPerformanceMonth.colorsPurple"
-            [fill]="chartSalesPerformanceMonth.fill"
-            [yaxis]="chartSalesPerformanceMonth.yaxis"
-            [legend]="chartSalesPerformanceMonth.legend"
+            *ngIf="chartSalesPerformanceMonth"
+            [series]="chartSalesPerformanceMonth?.series"
+            [chart]="chartSalesPerformanceMonth?.chart"
+            [stroke]="chartSalesPerformanceMonth?.stroke"
+            [dataLabels]="chartSalesPerformanceMonth?.dataLabels"
+            [plotOptions]="chartSalesPerformanceMonth?.plotOptions"
+            [xaxis]="chartSalesPerformanceMonth?.xaxis"
+            [colors]="chartSalesPerformanceMonth?.colorsPurple"
+            [fill]="chartSalesPerformanceMonth?.fill"
+            [yaxis]="chartSalesPerformanceMonth?.yaxis"
+            [legend]="chartSalesPerformanceMonth?.legend"
           ></apx-chart>
         </div>
       </div>

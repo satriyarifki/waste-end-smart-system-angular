@@ -63,6 +63,12 @@ export class ApiService {
   salesViewIdGet(id: any): Observable<any> {
     return this.http.get(this.baseUrl + 'sales/view/' + id);
   }
+  salesViewPriceGet(): Observable<any> {
+    return this.http.get(this.baseUrl + 'sales/price-view');
+  }
+  salesBigFiveGet(): Observable<any> {
+    return this.http.get(this.baseUrl + 'sales/big-five');
+  }
   salesYearlyGet(): Observable<any> {
     return this.http.get(this.baseUrl + 'sales/yearly');
   }
