@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { forkJoin, max } from 'rxjs';
 import {
   ChartBigFiveSales,
-  ChartSalesCategoryYTD,
+  ChartSalesCategory,
   ChartSalesPerformance,
 } from '../apexcharts';
 import { ApiService } from '../services/api.service';
@@ -24,11 +24,12 @@ import {
   styleUrls: ['./dashboard-sales.component.css'],
 })
 export class DashboardSalesComponent {
-  public chartSalesCategoryYTD: Partial<ChartSalesCategoryYTD> | any;
+  public chartSalesCategory: Partial<ChartSalesCategory> | any;
   public chartBigFiveSales: Partial<ChartBigFiveSales> | any;
   public chartSalesPerformance: Partial<ChartSalesPerformance> | any;
   public chartSalesPerformanceMonth: Partial<ChartSalesPerformance> | any;
 
+  dateNow = new Date();
   actual: any[] = ActualAug;
   monthIdr2022 = salesMonthIdr2022;
   monthIdr2023 = salesMonthIdr2023;
@@ -39,31 +40,43 @@ export class DashboardSalesComponent {
   // public chartOptions: Partial<ChartOptions>;
   salesFiltered: any[] = [];
   sumSalesFiltered: any[] = [];
-  fromFilter: any = '2023-09-01';
-  toFilter: any = '2023-09-30';
+  fromFilter: any = new Date(
+    this.dateNow.getFullYear(),
+    this.dateNow.getMonth() - 1,
+    1 + 1
+  )
+    .toISOString()
+    .slice(0, 10);
+  toFilter: any = new Date(
+    this.dateNow.getFullYear(),
+    this.dateNow.getMonth(),
+    0
+  )
+    .toISOString()
+    .slice(0, 10);
 
   //API
   salesYearlyApi: any[] = [];
   salesMonthlyApi: any[] = [];
+  categoryBetweenApi: any;
   bigFiveApi: any;
 
   constructor(private apiService: ApiService) {
-    console.log(new Date().getFullYear());
-
     forkJoin(
       apiService.salesYearlyGet(),
       apiService.salesMonthlyGet(),
-      apiService.salesBigFiveGet()
-    ).subscribe(([salesYear, salesMonth, bigFive]) => {
+      apiService.salesBigFiveGet(),
+      apiService.salesCategoryBetweenGet(this.fromFilter, this.toFilter)
+    ).subscribe(([salesYear, salesMonth, bigFive, category]) => {
       this.salesYearlyApi = salesYear;
       this.salesMonthlyApi = salesMonth;
       this.bigFiveApi = bigFive;
-      console.log(this.bigFiveApi);
+      this.categoryBetweenApi = category;
+      // console.log(this.categoryBetweenApi);
+      this.salesCategoryChart();
       this.sumTotalActual();
-      // this.sumActualByCategory();
       this.filterByDate();
       this.salesPerformanceMonthChart();
-
       this.bigFiveSalesChart();
       this.salesPerformanceChart();
     });
@@ -132,46 +145,24 @@ export class DashboardSalesComponent {
     return total;
   }
   filterByDate() {
-    this.salesFiltered = [];
-    // console.log(this.toFilter);
-    // console.log(this.dateSales.length);
-    let data: any[] = [];
-    if (this.toFilter != undefined && this.fromFilter != undefined) {
-      console.log('d');
+    console.log('From : ' + this.fromFilter + ', to : ' + this.toFilter);
 
-      data = this.dateidrSales.filter(
-        (elem) =>
-          new Date(elem.date) < new Date(this.toFilter) &&
-          new Date(elem.date) > new Date(this.fromFilter)
-      );
-    } else if (this.toFilter != undefined) {
-      // console.log('s');
-      data = this.dateidrSales.filter(
-        (elem) => new Date(elem.date) < new Date(this.toFilter)
-      );
-    } else if (this.fromFilter != undefined) {
-      // console.log('x');
-      data = this.dateidrSales.filter(
-        (elem) => new Date(elem.date) > new Date(this.fromFilter)
-      );
-    }
-    this.salesFiltered = data;
-    // console.log(data);
-
-    let idr = this.idrSales;
-    this.sumActualByCategory();
+    this.apiService
+      .salesCategoryBetweenGet(this.fromFilter, this.toFilter)
+      .subscribe((data) => {
+        this.categoryBetweenApi = data;
+        console.log(data);
+        this.salesCategoryChart();
+      });
+    //
   }
 
   sumActualByCategory() {
-    // let data: any[]
     let data = [0, 0, 0, 0, 0, 0, 0, 0];
-    // console.log(this.salesFiltered);
 
     if (this.salesFiltered.length != 0) {
-      // console.log('if');
       this.salesFiltered.forEach((element) => {
         if (element.vendor.includes('Desa')) {
-          // console.log(element.vendor);
           data[0] += element.preform * this.priceLimbah.desa.preform;
           data[1] += element.botol * this.priceLimbah.desa.botol;
           data[2] += element.karton * this.priceLimbah.desa.karton;
@@ -215,7 +206,6 @@ export class DashboardSalesComponent {
 
     // console.log(data);
     this.sumSalesFiltered = data;
-    this.salesCategoryYTDChart();
 
     // return data;
   }
@@ -224,13 +214,24 @@ export class DashboardSalesComponent {
     return ((sec / first - 1) * 100).toFixed();
   }
 
-  salesCategoryYTDChart() {
-    // console.log(this.sumSalesFiltered);
-    this.chartSalesCategoryYTD = {
+  salesCategoryChart() {
+    console.log(this.categoryBetweenApi);
+    const category = [
+      this.categoryBetweenApi.preform,
+      this.categoryBetweenApi.botol_plastik,
+      this.categoryBetweenApi.karton,
+      this.categoryBetweenApi.balok,
+      this.categoryBetweenApi.sak_kecil,
+      this.categoryBetweenApi.sak_besar,
+      this.categoryBetweenApi.resin,
+      this.categoryBetweenApi.pallet_plastik,
+    ];
+    console.log(category);
+    this.chartSalesCategory = {
       series: [
         {
           name: 'serie1',
-          data: this.sumSalesFiltered,
+          data: category,
         },
         // {
         //   name: "serie2",
@@ -309,7 +310,7 @@ export class DashboardSalesComponent {
         colors: ['#fff'],
       },
       xaxis: {
-        max: Math.max(...this.sumSalesFiltered) + 20,
+        max: Math.max(...category) + 20,
         categories: [
           'Preform',
           'Bottle',
@@ -478,8 +479,6 @@ export class DashboardSalesComponent {
   }
 
   salesPerformanceChart() {
-    console.log(this.salesMTDThisLastYear);
-
     this.chartSalesPerformance = {
       series: [
         {
@@ -725,15 +724,10 @@ export class DashboardSalesComponent {
     };
   }
   salesPerformanceMonthChart() {
-    
-    let valueMonthlyYearNow:any[] = []
-    this.salesMonthlyYearNow.forEach(elem => {
-      valueMonthlyYearNow.push(elem.sum_total)
+    let valueMonthlyYearNow: any[] = [];
+    this.salesMonthlyYearNow.forEach((elem) => {
+      valueMonthlyYearNow.push(elem.sum_total);
     });
-    
-    console.log(this.salesMonthlyYearNow);
-    
-    console.log(valueMonthlyYearNow);
     this.chartSalesPerformanceMonth = {
       series: [
         {

@@ -69,6 +69,9 @@ export class ApiService {
   salesBigFiveGet(): Observable<any> {
     return this.http.get(this.baseUrl + 'sales/big-five');
   }
+  salesCategoryBetweenGet(from: any, to: any): Observable<any> {
+    return this.http.get(this.baseUrl + 'sales/category/' + from + '/' + to);
+  }
   salesYearlyGet(): Observable<any> {
     return this.http.get(this.baseUrl + 'sales/yearly');
   }

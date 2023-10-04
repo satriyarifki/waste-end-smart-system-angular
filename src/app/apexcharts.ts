@@ -28,7 +28,7 @@ import {
     legend: ApexLegend;
     markers: ApexMarkers;
   };
-  export type ChartSalesCategoryYTD = {
+  export type ChartSalesCategory = {
     series: ApexAxisChartSeries;
     chart: ApexChart;
     dataLabels: ApexDataLabels;
