@@ -161,12 +161,12 @@ export class ScalesPassboxOc1Component {
     private alertService: AlertService
   ) {
     spinner.show();
-    forkJoin(apiService.passboxOc1Get()).subscribe(
+    forkJoin(apiService.passboxByAppGet('OC1')).subscribe(
       (data) => {
-        this.passboxApi = data[0];
+        this.passboxApi = data[0].reverse();
         this.config.totalItems = this.passboxApi.length;
-        console.log(new Date(this.passboxApi[0].created_at));
-        console.log(this.passboxApi[0]);
+        // console.log(new Date(this.passboxApi[0].created_at));
+        // console.log(this.passboxApi[0]);
         if (this.passboxApi.length == 0) {
           alertService.onCallAlert('Data Null', AlertType.Info);
         }

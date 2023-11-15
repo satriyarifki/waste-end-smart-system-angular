@@ -44,9 +44,9 @@ export class ScalesPassboxOc2Component {
     private alertService:AlertService
   ) {
     spinner.show();
-    forkJoin(apiService.passboxOc2Get()).subscribe(
+    forkJoin(apiService.passboxByAppGet('OC2')).subscribe(
       (data) => {
-        this.passboxApi = data[0];
+        this.passboxApi = data[0].reverse();
         this.config.totalItems = this.passboxApi.length;
         // console.log(this.passboxApi[0]);
       },

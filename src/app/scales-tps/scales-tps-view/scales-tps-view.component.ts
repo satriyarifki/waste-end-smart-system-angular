@@ -56,7 +56,9 @@ export class ScalesTpsViewComponent {
       this.passboxApi = passboxOc2;
       this.tpsApi = tpsFilter;
       this.config.totalItems = this.passboxApi.length;
-      // console.log(tpsFilter);
+      console.log(tpsFilter);
+      console.log(this.passboxApi);
+      
       // console.log(this.filterTpsByBag('bag3'));
     });
   }

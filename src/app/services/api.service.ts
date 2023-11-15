@@ -23,6 +23,11 @@ export class ApiService {
       this.baseUrl + 'reports/passbox-oc2/' + line + '/' + lot
     );
   }
+  passboxByAppGet(line: any): Observable<any> {
+    return this.http.get(
+      this.baseUrl + 'reports/passbox/' + line 
+    );
+  }
   groupPassboxGet(): Observable<any> {
     return this.http.get(this.baseUrl + 'reports/group/passbox-oc2');
   }
