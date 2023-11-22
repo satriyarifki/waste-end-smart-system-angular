@@ -1,4 +1,11 @@
-<body class="bg-gray-50 pt-4 lg:pt-10 font-outfit">
+<ngx-spinner
+  color="white"
+  type="ball-scale-ripple"
+  [fullScreen]="true"
+  size="medium"
+  ><p style="color: white">Loading...</p></ngx-spinner
+>
+<div class="bg-gray-50 pt-4 lg:pt-10 font-outfit">
   <!-- ========== MAIN CONTENT ========== -->
 
   <!-- Content -->
@@ -35,10 +42,11 @@
         </div>
       </div> -->
     </header>
-    <div class="px-3 py-5 flex gap-3">
-      <div class="w-1/2 shadow-md drop-shadow-lg rounded-lg p-2">
+    <div class="px-3 py-5 flex flex-wrap gap-3">
+      <div class="w-full md:w-[49%] shadow-md drop-shadow-lg rounded-lg p-2">
         <h1 class="text-center text-lg font-semibold pt-3">TREND PENJUALAN LIMBAH KOMERSIL (IDR)</h1>
         <apx-chart
+        *ngIf="trendSalesChart"
           [series]="trendSalesChart?.series"
           [chart]="trendSalesChart?.chart"
           [dataLabels]="trendSalesChart?.dataLabels"
@@ -53,9 +61,10 @@
           [markers]="trendSalesChart?.markers"
         ></apx-chart>
       </div>
-      <div class="w-1/2 shadow-md drop-shadow-lg rounded-lg p-2">
+      <div class="w-full md:w-[49%] shadow-md drop-shadow-lg rounded-lg p-2">
         <h1 class="text-center text-lg font-semibold pt-3">PENJUALAN BY PRODUCT (QTY)</h1>
         <apx-chart
+        *ngIf="chartOptions"
           [series]="chartOptions?.series"
           [chart]="chartOptions?.chart"
           [dataLabels]="chartOptions?.dataLabels"
@@ -74,4 +83,4 @@
   </div>
   <!-- End Content -->
   <!-- ========== END MAIN CONTENT ========== -->
-</body>
+</div>

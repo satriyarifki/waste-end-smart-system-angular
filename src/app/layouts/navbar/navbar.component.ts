@@ -13,7 +13,7 @@ export class NavbarComponent {
   employee:any
   userBool = false
   constructor(public router: Router, private authService:AuthService,private alertService:AlertService){
-    console.log(authService.getUser());
+    // console.log(authService.getUser());
     
     this.employee = authService.getUser()
   }

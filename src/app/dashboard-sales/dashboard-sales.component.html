@@ -1,3 +1,10 @@
+<ngx-spinner
+  color="white"
+  type="ball-scale-ripple"
+  [fullScreen]="true"
+  size="medium"
+  ><p style="color: white">Loading...</p></ngx-spinner
+>
 <div
   class="w-full h-screen bg-gray-50 pt-4 lg:pt-2 px-4 sm:px-6 md:px-8 lg:pl-72"
 >
@@ -48,8 +55,8 @@
               class="flex font-semibold"
               [ngClass]="
                 +toPercentCompare(
-                  this.sumTotalYTD(this.monthIdr2022),
-                  this.sumTotalYTD(this.monthIdr2023)
+                  salesMonthlyFilter(salesMonthlyApi[0]?.month,salesMonthlyApi[0]?.year-1)?.sum_total,
+                  salesMonthlyApi[0]?.sum_total
                 ) >= 0
                   ? 'text-green-500'
                   : 'text-red-400'
@@ -58,8 +65,8 @@
               <svg
                 [ngClass]="
                   +toPercentCompare(
-                    this.sumTotalYTD(this.monthIdr2022),
-                    this.sumTotalYTD(this.monthIdr2023)
+                    salesMonthlyFilter(salesMonthlyApi[0]?.month,salesMonthlyApi[0]?.year-1)?.sum_total,
+                    salesMonthlyApi[0]?.sum_total
                   ) >= 0
                     ? 'rotate-180'
                     : ''
@@ -73,7 +80,7 @@
                 <path d="M480-360 280-559h400L480-360Z" />
               </svg>
               {{
-                toPercentCompare(this.monthIdr2022[8], this.monthIdr2023[8])
+                toPercentCompare(salesMonthlyFilter(salesMonthlyApi[0]?.month,salesMonthlyApi[0]?.year-1)?.sum_total,salesMonthlyApi[0]?.sum_total)
               }}%
             </span>
             from MTD of last year
@@ -96,8 +103,8 @@
               class="flex font-semibold"
               [ngClass]="
                 +toPercentCompare(
-                  this.sumTotalYTD(this.monthIdr2022),
-                  this.sumTotalYTD(this.monthIdr2023)
+                  salesYear('2022')?.sum_total,
+                  salesYearNow?.sum_total
                 ) >= 0
                   ? 'text-green-500'
                   : 'text-red-400'
@@ -106,8 +113,8 @@
               <svg
                 [ngClass]="
                   +toPercentCompare(
-                    this.sumTotalYTD(this.monthIdr2022),
-                    this.sumTotalYTD(this.monthIdr2023)
+                    salesYear('2022')?.sum_total,
+                    salesYearNow?.sum_total
                   ) >= 0
                     ? 'rotate-180'
                     : ''
@@ -122,8 +129,8 @@
               </svg>
               {{
                 toPercentCompare(
-                  this.sumTotalYTD(this.monthIdr2022),
-                  this.sumTotalYTD(this.monthIdr2023)
+                  salesYear('2022')?.sum_total,
+                  salesYearNow?.sum_total
                 )
               }}%
             </span>
@@ -226,8 +233,8 @@
             <span class="font-semibold"
               >{{
                 (
-                  (this.sumTotalYTD(monthIdr2023) /
-                    this.sumTotalYTD(monthIdr2022)) *
+                  (monthIdr2023) /
+                    monthIdr2022)) *
                   100
                 ).toFixed(1)
               }}% </span

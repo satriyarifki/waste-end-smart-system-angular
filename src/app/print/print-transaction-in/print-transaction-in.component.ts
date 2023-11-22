@@ -37,7 +37,7 @@ export class PrintTransactionInComponent {
     
     // console.log(location.getState());
 
-    console.log(this.filterSalesByDate(this.paramSales.date));
+    // console.log(this.filterSalesByDate(this.paramSales.date));
   }
   ngOnInit() {
     // console.log(history.state);
@@ -67,7 +67,7 @@ export class PrintTransactionInComponent {
       {name: 'Sak Besar',qty: this.paramSales.sak_besar_qty, price: this.paramSales.sak_besar_price, satuan: 'pcs'},
       {name: 'Sak Kecil',qty: this.paramSales.sak_kecil_qty, price: this.paramSales.sak_kecil_price, satuan: 'pcs'}
     );
-    console.log(dataArray);
+    // console.log(dataArray);
     
     return dataArray;
   }

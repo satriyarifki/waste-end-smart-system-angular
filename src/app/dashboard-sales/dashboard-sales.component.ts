@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { forkJoin, max } from 'rxjs';
 import {
   ChartBigFiveSales,
   ChartSalesCategory,
   ChartSalesPerformance,
 } from '../apexcharts';
+import { AlertType } from '../services/alert/alert.model';
+import { AlertService } from '../services/alert/alert.service';
 import { ApiService } from '../services/api.service';
 import {
   ActualAug,
@@ -31,26 +34,26 @@ export class DashboardSalesComponent {
 
   dateNow = new Date();
   actual: any[] = ActualAug;
-  monthIdr2022 = salesMonthIdr2022;
-  monthIdr2023 = salesMonthIdr2023;
-  priceLimbah = harga;
-  idrSales = salesIdr2023;
-  dateSales = salesDate2023;
-  dateidrSales = salesDateIdr2023;
+  // monthIdr2022 = salesMonthIdr2022;
+  // monthIdr2023 = salesMonthIdr2023;
+  // priceLimbah = harga;
+  // idrSales = salesIdr2023;
+  // dateSales = salesDate2023;
+  // dateidrSales = salesDateIdr2023;
   // public chartOptions: Partial<ChartOptions>;
   salesFiltered: any[] = [];
   sumSalesFiltered: any[] = [];
   fromFilter: any = new Date(
     this.dateNow.getFullYear(),
-    this.dateNow.getMonth() - 1,
+    this.dateNow.getMonth(),
     1 + 1
   )
     .toISOString()
     .slice(0, 10);
   toFilter: any = new Date(
     this.dateNow.getFullYear(),
-    this.dateNow.getMonth(),
-    0
+    this.dateNow.getMonth()+1,
+    +1
   )
     .toISOString()
     .slice(0, 10);
@@ -61,7 +64,8 @@ export class DashboardSalesComponent {
   categoryBetweenApi: any;
   bigFiveApi: any;
 
-  constructor(private apiService: ApiService) {
+  constructor(private apiService: ApiService,private spinner:NgxSpinnerService,private alertService:AlertService) {
+    spinner.show()
     forkJoin(
       apiService.salesYearlyGet(),
       apiService.salesMonthlyGet(),
@@ -72,13 +76,17 @@ export class DashboardSalesComponent {
       this.salesMonthlyApi = salesMonth;
       this.bigFiveApi = bigFive;
       this.categoryBetweenApi = category;
-      // console.log(this.categoryBetweenApi);
+      // console.log(this.salesMonthlyApi);
       this.salesCategoryChart();
       this.sumTotalActual();
       this.filterByDate();
       this.salesPerformanceMonthChart();
       this.bigFiveSalesChart();
       this.salesPerformanceChart();
+      spinner.hide()
+    },err=>{
+      alertService.onCallAlert('Data can`t loaded!' , AlertType.Error)
+      spinner.hide()
     });
     window.onresize = function () {
       // Setting the current height & width
@@ -92,6 +100,11 @@ export class DashboardSalesComponent {
       (data) => data.year == new Date().getFullYear()
     )[0];
   }
+  salesYear(year:any){
+    return this.salesYearlyApi.filter(
+      (data) => data.year == year
+    )[0];
+  }
   get salesMonthlyYearNow() {
     return this.salesMonthlyApi.filter(
       (data) => data.year == new Date().getFullYear()
@@ -102,6 +115,12 @@ export class DashboardSalesComponent {
     return this.salesMonthlyApi.filter(
       (data) => data.month == new Date().getMonth()
     );
+  }
+
+  salesMonthlyFilter(month:any, year:any){
+    return this.salesMonthlyApi.filter(
+      (data) => data.year == year && data.month == month 
+    )[0];
   }
 
   sumTotalActual() {
@@ -118,21 +137,21 @@ export class DashboardSalesComponent {
     }
     console.log(total);
   }
-  sumTotalActualYTD() {
-    let totalYTD = 0;
-    this.idrSales.forEach((element, i) => {
-      if (i > 78) {
-        totalYTD += element;
-      }
-    });
+  // sumTotalActualYTD() {
+  //   let totalYTD = 0;
+  //   this.idrSales.forEach((element, i) => {
+  //     if (i > 78) {
+  //       totalYTD += element;
+  //     }
+  //   });
 
-    if (String(totalYTD).length > 9) {
-      return (totalYTD / 1000000000).toFixed(2) + ' Bio';
-    } else {
-      return (totalYTD / 1000000).toFixed(2) + ' Mio';
-    }
-    console.log(totalYTD);
-  }
+  //   if (String(totalYTD).length > 9) {
+  //     return (totalYTD / 1000000000).toFixed(2) + ' Bio';
+  //   } else {
+  //     return (totalYTD / 1000000).toFixed(2) + ' Mio';
+  //   }
+  //   console.log(totalYTD);
+  // }
   sumTotalYTD(data: any[]) {
     let total = 0;
     data.forEach((element, i) => {
@@ -145,77 +164,77 @@ export class DashboardSalesComponent {
     return total;
   }
   filterByDate() {
-    console.log('From : ' + this.fromFilter + ', to : ' + this.toFilter);
+    // console.log('From : ' + this.fromFilter + ', to : ' + this.toFilter);
 
     this.apiService
       .salesCategoryBetweenGet(this.fromFilter, this.toFilter)
       .subscribe((data) => {
         this.categoryBetweenApi = data;
-        console.log(data);
+        // console.log(data);
         this.salesCategoryChart();
       });
     //
   }
 
-  sumActualByCategory() {
-    let data = [0, 0, 0, 0, 0, 0, 0, 0];
+  // sumActualByCategory() {
+  //   let data = [0, 0, 0, 0, 0, 0, 0, 0];
 
-    if (this.salesFiltered.length != 0) {
-      this.salesFiltered.forEach((element) => {
-        if (element.vendor.includes('Desa')) {
-          data[0] += element.preform * this.priceLimbah.desa.preform;
-          data[1] += element.botol * this.priceLimbah.desa.botol;
-          data[2] += element.karton * this.priceLimbah.desa.karton;
-          data[3] += element.balok * this.priceLimbah.desa.balok;
-          data[4] += element.sak_kecil * this.priceLimbah.desa.sak_kecil;
-          data[5] += element.sak_besar * this.priceLimbah.desa.sak_besar;
-          data[6] += element.resin * this.priceLimbah.desa.resin;
-          data[7] +=
-            element.palet_plastik * this.priceLimbah.desa.pallet_plastik;
-        } else {
-          // console.log(element.vendor);
-          data[0] += element.preform * this.priceLimbah.swasta.preform;
-          data[1] += element.botol * this.priceLimbah.swasta.botol;
-          data[2] += element.karton * this.priceLimbah.swasta.karton;
-          data[3] += element.balok * this.priceLimbah.swasta.balok;
-          data[4] += element.sak_kecil * this.priceLimbah.swasta.sak_kecil;
-          data[5] += element.sak_besar * this.priceLimbah.swasta.sak_besar;
-          data[6] += element.resin * this.priceLimbah.swasta.resin;
-          data[7] +=
-            element.palet_plastik * this.priceLimbah.swasta.pallet_plastik;
-        }
-      });
-    } else {
-      // console.log('else');
+  //   if (this.salesFiltered.length != 0) {
+  //     this.salesFiltered.forEach((element) => {
+  //       if (element.vendor.includes('Desa')) {
+  //         data[0] += element.preform * this.priceLimbah.desa.preform;
+  //         data[1] += element.botol * this.priceLimbah.desa.botol;
+  //         data[2] += element.karton * this.priceLimbah.desa.karton;
+  //         data[3] += element.balok * this.priceLimbah.desa.balok;
+  //         data[4] += element.sak_kecil * this.priceLimbah.desa.sak_kecil;
+  //         data[5] += element.sak_besar * this.priceLimbah.desa.sak_besar;
+  //         data[6] += element.resin * this.priceLimbah.desa.resin;
+  //         data[7] +=
+  //           element.palet_plastik * this.priceLimbah.desa.pallet_plastik;
+  //       } else {
+  //         // console.log(element.vendor);
+  //         data[0] += element.preform * this.priceLimbah.swasta.preform;
+  //         data[1] += element.botol * this.priceLimbah.swasta.botol;
+  //         data[2] += element.karton * this.priceLimbah.swasta.karton;
+  //         data[3] += element.balok * this.priceLimbah.swasta.balok;
+  //         data[4] += element.sak_kecil * this.priceLimbah.swasta.sak_kecil;
+  //         data[5] += element.sak_besar * this.priceLimbah.swasta.sak_besar;
+  //         data[6] += element.resin * this.priceLimbah.swasta.resin;
+  //         data[7] +=
+  //           element.palet_plastik * this.priceLimbah.swasta.pallet_plastik;
+  //       }
+  //     });
+  //   } else {
+  //     // console.log('else');
 
-      this.actual.forEach((element) => {
-        if (!element.vendor.includes('Desa')) {
-          data[0] += element.preform.qty * element.preform.price;
-          data[1] += element.botol.qty * element.botol.price;
-          data[2] += element.karton.qty * element.karton.price;
-          data[3] += element.balok.qty * element.balok.price;
-          data[4] += element.sak_kecil.qty * element.sak_kecil.price;
-          data[5] += element.sak_besar.qty * element.sak_besar.price;
-          data[6] += element.resin.qty * element.resin.price;
-          data[7] += element.palet_plastik.qty * element.palet_plastik.price;
-        }
-      });
-    }
+  //     this.actual.forEach((element) => {
+  //       if (!element.vendor.includes('Desa')) {
+  //         data[0] += element.preform.qty * element.preform.price;
+  //         data[1] += element.botol.qty * element.botol.price;
+  //         data[2] += element.karton.qty * element.karton.price;
+  //         data[3] += element.balok.qty * element.balok.price;
+  //         data[4] += element.sak_kecil.qty * element.sak_kecil.price;
+  //         data[5] += element.sak_besar.qty * element.sak_besar.price;
+  //         data[6] += element.resin.qty * element.resin.price;
+  //         data[7] += element.palet_plastik.qty * element.palet_plastik.price;
+  //       }
+  //     });
+  //   }
 
-    // console.log(Math.max(...data));
+  //   // console.log(Math.max(...data));
 
-    // console.log(data);
-    this.sumSalesFiltered = data;
+  //   // console.log(data);
+  //   this.sumSalesFiltered = data;
 
-    // return data;
-  }
+  //   // return data;
+  // }
 
   toPercentCompare(first: any, sec: any) {
     return ((sec / first - 1) * 100).toFixed();
   }
 
   salesCategoryChart() {
-    console.log(this.categoryBetweenApi);
+    // console.log(this.categoryBetweenApi);
     const category = [
       this.categoryBetweenApi.preform,
       this.categoryBetweenApi.botol_plastik,
@@ -226,7 +245,7 @@ export class DashboardSalesComponent {
       this.categoryBetweenApi.resin,
       this.categoryBetweenApi.pallet_plastik,
     ];
-    console.log(category);
+    // console.log(category);
     this.chartSalesCategory = {
       series: [
         {
@@ -485,8 +504,8 @@ export class DashboardSalesComponent {
           name: 'MTD',
           group: 'budget',
           data: [
-            this.salesMTDThisLastYear[1].sum_total,
-            this.salesMTDThisLastYear[0].sum_total,
+            this.salesMonthlyFilter(this.salesMonthlyApi[0]?.month,this.salesMonthlyApi[0]?.year-1)?.sum_total,
+                  this.salesMonthlyApi[0]?.sum_total
           ],
         },
         {
@@ -558,50 +577,50 @@ export class DashboardSalesComponent {
         },
       },
 
-      annotations: {
-        // texts: [{
-        //   x: 'YTD',
-        //   y: '50000',
-        //   text: 'Test',
-        //   textAnchor: 'start',
-        // }],
-        points: [
-          {
-            x: 'YTD',
-            y:
-              Math.min(
-                this.sumTotalYTD(salesMonthIdr2022),
-                this.sumTotalYTD(salesMonthIdr2022)
-              ) / 12,
-            seriesIndex: 0,
-            label: {
-              borderColor: '#FFAB91',
-              borderWidth: 1,
-              offsetY: -100,
-              style: {
-                color: '#E64A19',
-                fontSize: '13px',
-                fontWeight: 600,
-                background: 'white',
-                padding: {
-                  left: 5,
-                  right: 5,
-                  top: 5,
-                  bottom: 5,
-                },
-              },
-              text: [
-                (
-                  (this.sumTotalYTD(salesMonthIdr2023) /
-                    this.sumTotalYTD(salesMonthIdr2022)) *
-                  100
-                ).toFixed(1) + '%',
-                'Ach from YTD This Year vs Last Year',
-              ],
-            },
-          },
-        ],
-      },
+      // annotations: {
+      //   // texts: [{
+      //   //   x: 'YTD',
+      //   //   y: '50000',
+      //   //   text: 'Test',
+      //   //   textAnchor: 'start',
+      //   // }],
+      //   points: [
+      //     {
+      //       x: 'YTD',
+      //       y:
+      //         Math.min(
+      //           this.sumTotalYTD(salesMonthIdr2022),
+      //           this.sumTotalYTD(salesMonthIdr2022)
+      //         ) / 12,
+      //       seriesIndex: 0,
+      //       label: {
+      //         borderColor: '#FFAB91',
+      //         borderWidth: 1,
+      //         offsetY: -100,
+      //         style: {
+      //           color: '#E64A19',
+      //           fontSize: '13px',
+      //           fontWeight: 600,
+      //           background: 'white',
+      //           padding: {
+      //             left: 5,
+      //             right: 5,
+      //             top: 5,
+      //             bottom: 5,
+      //           },
+      //         },
+      //         text: [
+      //           (
+      //             (this.sumTotalYTD(salesMonthIdr2023) /
+      //               this.sumTotalYTD(salesMonthIdr2022)) *
+      //             100
+      //           ).toFixed(1) + '%',
+      //           'Ach from YTD This Year vs Last Year',
+      //         ],
+      //       },
+      //     },
+      //   ],
+      // },
       xaxis: {
         labels: {
           show: true,
@@ -797,50 +816,50 @@ export class DashboardSalesComponent {
         },
       },
 
-      annotations: {
-        // texts: [{
-        //   x: 'YTD',
-        //   y: '50000',
-        //   text: 'Test',
-        //   textAnchor: 'start',
-        // }],
-        points: [
-          {
-            x: 'YTD',
-            y:
-              Math.min(
-                this.sumTotalYTD(salesMonthIdr2022),
-                this.sumTotalYTD(salesMonthIdr2022)
-              ) / 12,
-            seriesIndex: 0,
-            label: {
-              borderColor: '#FFAB91',
-              borderWidth: 1,
-              offsetY: -100,
-              style: {
-                color: '#E64A19',
-                fontSize: '13px',
-                fontWeight: 600,
-                background: 'white',
-                padding: {
-                  left: 5,
-                  right: 5,
-                  top: 5,
-                  bottom: 5,
-                },
-              },
-              text: [
-                (
-                  (this.sumTotalYTD(salesMonthIdr2023) /
-                    this.sumTotalYTD(salesMonthIdr2022)) *
-                  100
-                ).toFixed(1) + '%',
-                'Ach from YTD This Year vs Last Year',
-              ],
-            },
-          },
-        ],
-      },
+      // annotations: {
+      //   // texts: [{
+      //   //   x: 'YTD',
+      //   //   y: '50000',
+      //   //   text: 'Test',
+      //   //   textAnchor: 'start',
+      //   // }],
+      //   points: [
+      //     {
+      //       x: 'YTD',
+      //       y:
+      //         Math.min(
+      //           this.sumTotalYTD(salesMonthIdr2022),
+      //           this.sumTotalYTD(salesMonthIdr2022)
+      //         ) / 12,
+      //       seriesIndex: 0,
+      //       label: {
+      //         borderColor: '#FFAB91',
+      //         borderWidth: 1,
+      //         offsetY: -100,
+      //         style: {
+      //           color: '#E64A19',
+      //           fontSize: '13px',
+      //           fontWeight: 600,
+      //           background: 'white',
+      //           padding: {
+      //             left: 5,
+      //             right: 5,
+      //             top: 5,
+      //             bottom: 5,
+      //           },
+      //         },
+      //         text: [
+      //           (
+      //             (this.sumTotalYTD(salesMonthIdr2023) /
+      //               this.sumTotalYTD(salesMonthIdr2022)) *
+      //             100
+      //           ).toFixed(1) + '%',
+      //           'Ach from YTD This Year vs Last Year',
+      //         ],
+      //       },
+      //     },
+      //   ],
+      // },
       xaxis: {
         labels: {
           show: true,

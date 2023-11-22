@@ -77,6 +77,9 @@ export class ApiService {
   salesCategoryBetweenGet(from: any, to: any): Observable<any> {
     return this.http.get(this.baseUrl + 'sales/category/' + from + '/' + to);
   }
+  salesCategoryYearGet(year:any): Observable<any> {
+    return this.http.get(this.baseUrl + 'sales/category/' + year);
+  }
   salesYearlyGet(): Observable<any> {
     return this.http.get(this.baseUrl + 'sales/yearly');
   }
