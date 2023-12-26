@@ -314,15 +314,6 @@
                 <table class="min-w-full divide-y divide-gray-200">
                   <thead class="bg-gray-50 text-center">
                     <tr>
-                      <!-- <th scope="col" class="w-1/12 px-4 py-3 text-left">
-                        <div class="flex items-center justify-center gap-x-2">
-                          <span
-                            class="text-xs text-center font-semibold uppercase tracking-wide text-gray-800"
-                          >
-                            ID Transaksi Out
-                          </span>
-                        </div>
-                      </th> -->
                       <th scope="col" class="px-4 py-3 text-left">
                         <div class="flex items-center justify-center gap-x-2">
                           <span
@@ -332,35 +323,6 @@
                           </span>
                         </div>
                       </th>
-                      <!-- <th scope="col" class="w-1/5 px-4 py-3 text-left">
-                        <div class="flex items-center justify-center gap-x-2">
-                          <span
-                            class="text-xs font-semibold uppercase tracking-wide text-gray-800"
-                          >
-                            Nama Barang
-                          </span>
-                        </div>
-                      </th>
-
-                      <th scope="col" class="w-1/12 px-4 py-3 text-left">
-                        <div class="flex items-center justify-center gap-x-2">
-                          <span
-                            class="text-xs font-semibold uppercase tracking-wide text-gray-800"
-                          >
-                            Quantity
-                          </span>
-                        </div>
-                      </th>
-
-                      <th scope="col" class="w-1/12 px-4 py-3 text-left">
-                        <div class="flex items-center justify-center gap-x-2">
-                          <span
-                            class="text-xs font-semibold uppercase tracking-wide text-gray-800"
-                          >
-                            Satuan
-                          </span>
-                        </div>
-                      </th> -->
                       <th scope="col" class="px-4 py-3 text-left">
                         <div class="flex items-center justify-center gap-x-2">
                           <span
@@ -401,21 +363,9 @@
                       "
                       class="bg-white hover:bg-gray-50 text-center"
                     >
-                      <!-- <td class="h-px w-px whitespace-nowrap">
-                        <h1 class="text-sm py-2">{{ i+1 }}</h1>
-                      </td> -->
                       <td class="h-px w-px whitespace-nowrap">
                         <h1 class="text-sm py-2">{{ item.date }}</h1>
                       </td>
-                      <!-- <td class="h-px w-px whitespace-nowrap">
-                        <h1 class="text-sm py-2">{{ item.name }}</h1>
-                      </td>
-                      <td class="h-px w-px whitespace-nowrap">
-                        <h1 class="text-sm py-2">{{ item.qty }}</h1>
-                      </td>
-                      <td class="h-px w-px whitespace-nowrap">
-                        <h1 class="text-sm py-2">{{ item.unit }}</h1>
-                      </td> -->
                       <td class="h-px w-px whitespace-nowrap">
                         <h1 class="text-sm py-2">
                           Rp {{ item.total_price.toLocaleString() }}
@@ -431,7 +381,7 @@
                         <a
                           [routerLink]="['/transaction-in/print/', item.date]"
                           [state]="item"
-                          class="text-sm cursor-pointer px-4 py-2 bg-lime-500 hover:bg-lime-600 text-white rounded-lg font-medium"
+                          class="text-sm cursor-pointer px-3 py-1.5 bg-green-500 hover:bg-green-600 text-white rounded-lg font-medium"
                           >Cetak</a
                         >
                         <!-- <h1 class="text-sm py-2">Cetak</h1> -->

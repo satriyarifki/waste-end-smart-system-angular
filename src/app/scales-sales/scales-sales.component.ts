@@ -54,7 +54,7 @@ export class ScalesSalesComponent {
         // this.passboxApi = passboxOc2;
         this.tpsApi = tps;
         this.salesGroupApi = salesGroup;
-        console.log(salesGroup);
+        // console.log(salesGroup);
 
         this.tpsApi = this.tpsApi.sort((b, a) => {
           return (

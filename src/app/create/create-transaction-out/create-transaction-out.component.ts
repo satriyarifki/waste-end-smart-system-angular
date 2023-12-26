@@ -13,6 +13,7 @@ import { ApiService } from 'src/app/services/api.service';
 })
 export class CreateTransactionOutComponent {
   params = history.state
+  paramForm:any
   //FORM
   form!: FormGroup;
 
@@ -20,6 +21,7 @@ export class CreateTransactionOutComponent {
   arrayItem: any[] = [];
   vendorsApi: any[] = [];
   pricesApi: any[] = [];
+  productGroupApi: any[] = [];
   salesApi: any;
   constructor(
     private apiService: ApiService,
@@ -27,38 +29,36 @@ export class CreateTransactionOutComponent {
     private alertService: AlertService,
     private formBuilder: FormBuilder
   ) {
-    console.log(this.params);
     spinner.show();
-    let paramForm
     if (this.params.total_qty) {
-      console.log(this.params);
       
-      console.log(new Date(this.params.created_at).toISOString().slice(0,10));
       const id = this.params.customer_name.includes('DESA')? 3 : this.params.customer_name.includes('TPS')? 1 : 2
-      paramForm = {
+      this.paramForm = {
         date: new Date(this.params.created_at).toISOString().slice(0,10),
         vendorId: id,
         preform: this.params.total_qty
       }
       
     } else {
-      console.log('e');
-      paramForm = {
+      this.paramForm = {
         date: new Date().toISOString().slice(0,10),
         vendorId: 0,
         preform: 0
       }
     }
-    this.initialForm(paramForm);
+    this.initialForm();
     forkJoin(
       apiService.salesIdGet(1),
       apiService.vendorGet(),
-      apiService.priceGet()
+      apiService.priceGet(),
+      apiService.tpsOnSalesGroupProductGet(this.params.global_variable_2)
     ).subscribe(
-      ([sales, vendor, price]) => {
-        this.salesApi = sales;
-        this.vendorsApi = vendor;
-        this.pricesApi = price;
+      (res) => {
+        this.salesApi = res[0];
+        this.vendorsApi = res[1];
+        this.pricesApi = res[2];
+        this.productGroupApi = res[3]
+        this.initialForm()
         spinner.hide();
         // console.log(this.filterVendorById(2).price['resin']);
       },
@@ -78,34 +78,34 @@ export class CreateTransactionOutComponent {
     return this.form.value;
   }
 
-  initialForm(param:any) {
+  initialForm() {
+    
     this.form = this.formBuilder.group({
-      date: [param.date, Validators.required],
-      vendorId: [param.vendorId, Validators.required],
-      alumunium: [0, Validators.min(0)],
-      balok: [0, Validators.min(0)],
-      besi: [0, Validators.min(0)],
-      botol_plastik: [0],
-      cap: [0],
-      drum: [0],
-      jerigen: [0],
-      karton: [0],
-      kertas: [0],
-      pallet_kayu: [0],
-      pallet_plastik: [0],
-      plastik: [0],
-      preform: [param.preform],
-      resin: [0],
-      sak_besar: [0],
-      sak_kecil: [0],
-      seng: [0],
-      tembaga: [0],
-      total_price: [0, Validators.required],
+      date: [this.paramForm.date, Validators.required],
+      vendorId: [this.paramForm.vendorId, Validators.required],
+      alumunium: [this.productData?.alumunium | 0, Validators.min(0)],
+      balok: [this.productData?.balok | 0, Validators.min(0)],
+      besi: [this.productData?.besi | 0, Validators.min(0)],
+      botol_plastik: [this.productData?.botol_plastik | 0],
+      cap: [this.productData?.cap | 0],
+      drum: [this.productData?.drum | 0],
+      jerigen: [this.productData?.jerigen | 0],
+      karton: [this.productData?.karton | 0],
+      kertas: [this.productData?.kertas | 0],
+      pallet_kayu: [this.productData?.pallet_kayu | 0],
+      pallet_plastik: [this.productData?.pallet_plastik | 0],
+      plastik: [this.productData?.plastik | 0],
+      preform: [this.productData?.preform | 0],
+      resin: [this.productData?.resin | 0],
+      sak_besar: [this.productData?.sak_besar | 0],
+      sak_kecil: [this.productData?.sak_kecil | 0],
+      seng: [this.productData?.seng | 0],
+      tembaga: [this.productData?.tembaga | 0],
+      total_price: [ 0, Validators.required],
     });
   }
 
   get salesToArray(): any[] {
-    // let {dataFilter = this.dataSales.filter((val) => val.date == date)[0];
     let dataArray: any[] = [];
     dataArray.push(
       {
@@ -250,5 +250,18 @@ export class CreateTransactionOutComponent {
     const t = this.arrayItem.pop();
 
     console.log(this.arrayItem);
+  }
+
+  get productData(){
+    let data: any = {}
+    this.productGroupApi.forEach(elem=>{
+      Object.assign(data,{[this.getFormName(elem.product_name)] : elem.total_qty})
+    })
+    console.log(data);
+    return data
+  }
+
+  getFormName(name:any){
+    return this.salesToArray.filter(data=>data.name.toLowerCase().includes(name.toLowerCase()))[0]?.formName
   }
 }

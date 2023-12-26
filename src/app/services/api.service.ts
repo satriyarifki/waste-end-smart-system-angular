@@ -42,6 +42,9 @@ export class ApiService {
   tpsOnSalesByDateGet(date: any): Observable<any> {
     return this.http.get(this.baseUrl + 'reports/tps/sales/' + date);
   }
+  tpsOnSalesGroupProductGet(date: any): Observable<any> {
+    return this.http.get(this.baseUrl + 'reports/tps/sales-group/' + date);
+  }
   tpsOnSalesGroupGet(): Observable<any> {
     return this.http.get(this.baseUrl + 'reports/tps/sales-group');
   }
