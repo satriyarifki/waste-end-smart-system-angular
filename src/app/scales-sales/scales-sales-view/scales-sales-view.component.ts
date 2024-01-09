@@ -39,15 +39,15 @@ export class ScalesSalesViewComponent {
     private apiService: ApiService,
     private actRouter: ActivatedRoute
   ) {
-    console.log(this.dataParams.get('date'));
-    console.log(this.dataParams.get('lot'));
+    // console.log(this.dataParams.get('date'));
+    // console.log(this.dataParams.get('lot'));
 
     forkJoin(
       apiService.tpsOnSalesByDateGet(this.dataParams.get('date'))
     ).subscribe(([sales]) => {
       this.salesApi = sales;
       this.config.totalItems = this.salesApi.length;
-      console.log(this.salesApi);
+      // console.log(this.salesApi);
       
       // console.log(tpsFilter);
       // console.log(this.filterTpsByBag('bag3'));

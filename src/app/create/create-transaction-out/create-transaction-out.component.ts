@@ -12,8 +12,8 @@ import { ApiService } from 'src/app/services/api.service';
   styleUrls: ['./create-transaction-out.component.css'],
 })
 export class CreateTransactionOutComponent {
-  params = history.state
-  paramForm:any
+  params = history.state;
+  paramForm: any;
   //FORM
   form!: FormGroup;
 
@@ -31,20 +31,22 @@ export class CreateTransactionOutComponent {
   ) {
     spinner.show();
     if (this.params.total_qty) {
-      
-      const id = this.params.customer_name.includes('DESA')? 3 : this.params.customer_name.includes('TPS')? 1 : 2
+      const id = this.params.customer_name.includes('DESA')
+        ? 3
+        : this.params.customer_name.includes('TPS')
+        ? 1
+        : 2;
       this.paramForm = {
-        date: new Date(this.params.created_at).toISOString().slice(0,10),
+        date: new Date(this.params.created_at).toISOString().slice(0, 10),
         vendorId: id,
-        preform: this.params.total_qty
-      }
-      
+        preform: this.params.total_qty,
+      };
     } else {
       this.paramForm = {
-        date: new Date().toISOString().slice(0,10),
+        date: new Date().toISOString().slice(0, 10),
         vendorId: 0,
-        preform: 0
-      }
+        preform: 0,
+      };
     }
     this.initialForm();
     forkJoin(
@@ -57,8 +59,8 @@ export class CreateTransactionOutComponent {
         this.salesApi = res[0];
         this.vendorsApi = res[1];
         this.pricesApi = res[2];
-        this.productGroupApi = res[3]
-        this.initialForm()
+        this.productGroupApi = res[3];
+        this.initialForm();
         spinner.hide();
         // console.log(this.filterVendorById(2).price['resin']);
       },
@@ -79,7 +81,6 @@ export class CreateTransactionOutComponent {
   }
 
   initialForm() {
-    
     this.form = this.formBuilder.group({
       date: [this.paramForm.date, Validators.required],
       vendorId: [this.paramForm.vendorId, Validators.required],
@@ -101,7 +102,7 @@ export class CreateTransactionOutComponent {
       sak_kecil: [this.productData?.sak_kecil | 0],
       seng: [this.productData?.seng | 0],
       tembaga: [this.productData?.tembaga | 0],
-      total_price: [ 0, Validators.required],
+      total_price: [0, Validators.required],
     });
   }
 
@@ -208,19 +209,13 @@ export class CreateTransactionOutComponent {
     this.f.total_price = total;
     // console.log(this.f);
 
-    if (
-      this.form.invalid
-    ) {
-      console.log(this.form);
-
+    if (this.form.invalid) {
       return;
     }
-    console.log(this.f);
-    // return
     this.apiService.salesPost(this.f).subscribe(
       (data) => {
         console.log('success');
-        this.alertService.onCallAlert('Create Success!!',AlertType.Success)
+        this.alertService.onCallAlert('Create Success!!', AlertType.Success);
       },
       (err) => {
         console.log(err);
@@ -231,15 +226,15 @@ export class CreateTransactionOutComponent {
   plusItemLoop() {
     // this.itemLoop++;
     this.arrayItem.push('item');
-    console.log(this.arrayItem);
+    // console.log(this.arrayItem);
   }
 
   deleteItemLoop(index: number) {
     // this.itemLoop--;
-    console.log(index);
+    // console.log(index);
     const t = this.arrayItem.splice(index, index);
 
-    console.log(this.arrayItem);
+    // console.log(this.arrayItem);
   }
   filterVendorById(id: any) {
     return this.vendorsApi.filter((data) => data.id == id)[0];
@@ -249,19 +244,23 @@ export class CreateTransactionOutComponent {
 
     const t = this.arrayItem.pop();
 
-    console.log(this.arrayItem);
+    // console.log(this.arrayItem);
   }
 
-  get productData(){
-    let data: any = {}
-    this.productGroupApi.forEach(elem=>{
-      Object.assign(data,{[this.getFormName(elem.product_name)] : elem.total_qty})
-    })
-    console.log(data);
-    return data
+  get productData() {
+    let data: any = {};
+    this.productGroupApi.forEach((elem) => {
+      Object.assign(data, {
+        [this.getFormName(elem.product_name)]: elem.total_qty,
+      });
+    });
+    // console.log(data);
+    return data;
   }
 
-  getFormName(name:any){
-    return this.salesToArray.filter(data=>data.name.toLowerCase().includes(name.toLowerCase()))[0]?.formName
+  getFormName(name: any) {
+    return this.salesToArray.filter((data) =>
+      data.name.toLowerCase().includes(name.toLowerCase())
+    )[0]?.formName;
   }
 }

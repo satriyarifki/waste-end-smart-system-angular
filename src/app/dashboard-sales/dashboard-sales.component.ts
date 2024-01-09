@@ -236,14 +236,14 @@ export class DashboardSalesComponent {
   salesCategoryChart() {
     // console.log(this.categoryBetweenApi);
     const category = [
-      this.categoryBetweenApi.preform,
-      this.categoryBetweenApi.botol_plastik,
-      this.categoryBetweenApi.karton,
-      this.categoryBetweenApi.balok,
-      this.categoryBetweenApi.sak_kecil,
-      this.categoryBetweenApi.sak_besar,
-      this.categoryBetweenApi.resin,
-      this.categoryBetweenApi.pallet_plastik,
+      this.categoryBetweenApi.preform | 0,
+      this.categoryBetweenApi.botol_plastik | 0,
+      this.categoryBetweenApi.karton | 0,
+      this.categoryBetweenApi.balok | 0,
+      this.categoryBetweenApi.sak_kecil | 0,
+      this.categoryBetweenApi.sak_besar | 0,
+      this.categoryBetweenApi.resin | 0,
+      this.categoryBetweenApi.pallet_plastik | 0,
     ];
     // console.log(category);
     this.chartSalesCategory = {
@@ -377,11 +377,11 @@ export class DashboardSalesComponent {
   bigFiveSalesChart() {
     this.chartBigFiveSales = {
       series: [
-        Number(this.bigFiveApi.preform),
-        Number(this.bigFiveApi.botol_plastik),
-        Number(this.bigFiveApi.karton),
-        Number(this.bigFiveApi.balok),
-        Number(this.bigFiveApi.sak_kecil),
+        Number(this.bigFiveApi?.preform | 0),
+        Number(this.bigFiveApi?.botol_plastik | 0),
+        Number(this.bigFiveApi?.karton | 0),
+        Number(this.bigFiveApi?.balok | 0),
+        Number(this.bigFiveApi?.sak_kecil | 0),
       ],
       chart: {
         type: 'donut',
