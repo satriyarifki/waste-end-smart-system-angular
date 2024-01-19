@@ -26,8 +26,12 @@ export class ScalesTpsViewComponent {
   passboxApi: any[] = [];
   tpsApi: any[] = [];
 
+  //
+  editData:any
+
   // Boolean
   exportBool: Boolean = false;
+  editModal:Boolean = false;
 
   config = {
     id: 'custom',
@@ -40,8 +44,8 @@ export class ScalesTpsViewComponent {
     private apiService: ApiService,
     private actRouter: ActivatedRoute
   ) {
-    console.log(this.dataParams.get('line'));
-    console.log(this.dataParams.get('lot'));
+    // console.log(this.dataParams.get('line'));
+    // console.log(this.dataParams.get('lot'));
 
     forkJoin(
       apiService.passboxByLotGet(
@@ -79,6 +83,8 @@ export class ScalesTpsViewComponent {
     // });
   }
 
+
+
   filterTpsByBag(bag: any) {
     return this.tpsApi.filter(
       (value: any) =>
@@ -99,5 +105,16 @@ export class ScalesTpsViewComponent {
   onPageChange(event: any) {
     // console.log(event);
     this.config.currentPage = event;
+  }
+
+  editModalChange(item:any){
+    this.editData = item
+    console.log(this.editData);
+    
+    if (item) {
+      this.editModal = true
+    } else {
+      this.editModal = false
+    }
   }
 }

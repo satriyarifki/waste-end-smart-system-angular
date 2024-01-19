@@ -1,4 +1,11 @@
-<div class="bg-gray-50 lg:pt-16 space-y-5">
+<ngx-spinner
+  color="white"
+  type="ball-scale-ripple"
+  [fullScreen]="true"
+  size="medium"
+  ><p style="color: white">Loading...</p></ngx-spinner
+>
+<body class="bg-gray-50 lg:pt-16 space-y-5">
   <!-- ========== MAIN CONTENT ========== -->
 
   <!-- Content -->
@@ -6,52 +13,32 @@
     <!-- Page Heading -->
     <header class="w-full flex justify-between items-center pr-3">
       <div class="flex space-x-3 items-center">
-        <button
-          [routerLink]="['/scales-tps']"
-          type="button"
-          class="h-2/3 bg-gray-800 text-white rounded-l-md border-r border-gray-100 py-2 hover:bg-red-900 hover:text-white px-3"
-        >
-          <div class="flex flex-row align-middle">
-            <svg
-              class="w-5"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M7.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l2.293 2.293a1 1 0 010 1.414z"
-                clip-rule="evenodd"
-              ></path>
-            </svg>
-          </div>
-        </button>
         <div>
           <div
             class="flex flex-row gap-x-3 items-center text-2xl font-bold text-gray-800 sm:text-3xl"
           >
-            <h1 class="">TPS</h1>
-            <div class="flex flex-col text-blue-600">
-              <h1 class="text-lg sm:text-xl">
-                Line : {{ dataParams.get("line") }}
-              </h1>
-              <h1 class="text-lg sm:text-xl">
-                Lot : {{ dataParams.get("lot") }}
-              </h1>
-            </div>
+            <h1 class="">Tabel Write Off</h1>
+            <!-- <div class="flex flex-col text-blue-600">
+                <h1 class="text-lg sm:text-xl">
+                  Line : {{ dataParams.get("line") }}
+                </h1>
+                <h1 class="text-lg sm:text-xl">
+                  Lot : {{ dataParams.get("lot") }}
+                </h1>
+              </div> -->
           </div>
 
           <!-- <p class="mb-1 text-sm font-semibold text-blue-600">Pages</p> -->
         </div>
       </div>
-      <!-- <div>
+      <div>
         <a
-          [routerLink]="['/transaction-in/create']"
+          [routerLink]="['/write-off/create']"
           class="px-7 py-4 font-medium bg-blue-50 hover:bg-blue-100 hover:text-blue-600 text-blue-500 rounded-lg text-sm"
         >
-          Tambah Timbangan
+          Tambah Write Off
         </a>
-      </div> -->
+      </div>
     </header>
     <div class="px-10 py-6">
       <!-- Table Section -->
@@ -136,54 +123,54 @@
                           class="absolute transition-[opacity,margin] duration divide-y divide-gray-200 min-w-[12rem] z-10 bg-white shadow-md rounded-lg p-2 mt-2 right-0 border"
                         >
                           <!-- <div class="py-2 first:pt-0 last:pb-0">
-                                  <span
-                                    class="block py-2 px-3 text-xs font-medium uppercase text-gray-400 text-gray-600"
-                                  >
-                                    Options
-                                  </span>
-                                  <a
-                                    class="flex items-center gap-x-3 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 text-gray-400 hover:bg-gray-700 hover:text-gray-300"
-                                    href="#"
-                                  >
-                                    <svg
-                                      class="w-4 h-4"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      width="16"
-                                      height="16"
-                                      fill="currentColor"
-                                      viewBox="0 0 16 16"
+                                    <span
+                                      class="block py-2 px-3 text-xs font-medium uppercase text-gray-400 text-gray-600"
                                     >
-                                      <path
-                                        d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"
-                                      />
-                                      <path
-                                        d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"
-                                      />
-                                    </svg>
-                                    Copy
-                                  </a>
-                                  <a
-                                    class="flex items-center gap-x-3 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 text-gray-400 hover:bg-gray-700 hover:text-gray-300"
-                                    href="#"
-                                  >
-                                    <svg
-                                      class="w-4 h-4"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      width="16"
-                                      height="16"
-                                      fill="currentColor"
-                                      viewBox="0 0 16 16"
+                                      Options
+                                    </span>
+                                    <a
+                                      class="flex items-center gap-x-3 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 text-gray-400 hover:bg-gray-700 hover:text-gray-300"
+                                      href="#"
                                     >
-                                      <path
-                                        d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"
-                                      />
-                                      <path
-                                        d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"
-                                      />
-                                    </svg>
-                                    Print
-                                  </a>
-                                </div> -->
+                                      <svg
+                                        class="w-4 h-4"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="16"
+                                        height="16"
+                                        fill="currentColor"
+                                        viewBox="0 0 16 16"
+                                      >
+                                        <path
+                                          d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"
+                                        />
+                                        <path
+                                          d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"
+                                        />
+                                      </svg>
+                                      Copy
+                                    </a>
+                                    <a
+                                      class="flex items-center gap-x-3 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 text-gray-400 hover:bg-gray-700 hover:text-gray-300"
+                                      href="#"
+                                    >
+                                      <svg
+                                        class="w-4 h-4"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="16"
+                                        height="16"
+                                        fill="currentColor"
+                                        viewBox="0 0 16 16"
+                                      >
+                                        <path
+                                          d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"
+                                        />
+                                        <path
+                                          d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"
+                                        />
+                                      </svg>
+                                      Print
+                                    </a>
+                                  </div> -->
                           <div class="py-2 first:pt-0 last:pb-0">
                             <span
                               class="block py-2 px-3 text-xs font-medium uppercase text-gray-400"
@@ -338,97 +325,70 @@
 
                 <!-- Table -->
                 <table
-                  id="stockTable"
+                  id="writeOff"
                   class="min-w-full divide-y divide-gray-200"
                 >
                   <thead class="bg-gray-50 text-center">
                     <tr>
+                      <th scope="col" class="px-6 py-3 text-left">
+                        <div class="flex items-center justify-center gap-x-2">
+                          <span
+                            class="text-xs font-semibold uppercase text-center tracking-wide text-gray-800"
+                          >
+                            No
+                          </span>
+                        </div>
+                      </th>
+
+                      <th scope="col" class="px-6 py-3 text-left">
+                        <div class="flex items-center justify-center gap-x-2">
+                          <span
+                            class="text-xs font-semibold uppercase tracking-wide text-gray-800"
+                          >
+                            Nama
+                          </span>
+                        </div>
+                      </th>
+
+                      <th scope="col" class="px-6 py-3 text-left">
+                        <div class="flex items-center justify-center gap-x-2">
+                          <span
+                            class="text-center text-xs font-semibold uppercase tracking-wide text-gray-800"
+                          >
+                            Tipe
+                          </span>
+                        </div>
+                      </th>
+                      <th scope="col" class="px-6 py-3 text-left">
+                        <div class="flex items-center justify-center gap-x-2">
+                          <span
+                            class="text-center text-xs font-semibold uppercase tracking-wide text-gray-800"
+                          >
+                            QTY
+                          </span>
+                        </div>
+                      </th>
+
+                      <th scope="col" class="px-6 py-3 text-left">
+                        <div class="flex items-center justify-center gap-x-2">
+                          <span
+                            class="text-center text-xs font-semibold uppercase tracking-wide text-gray-800"
+                          >
+                            Write Off <br> Status
+                          </span>
+                        </div>
+                      </th>
+
+                      <th scope="col" class="px-6 py-3 text-left">
+                        <div class="flex items-center justify-center gap-x-2">
+                          <span
+                            class="text-center text-xs font-semibold uppercase tracking-wide text-gray-800"
+                          >
+                            Diterima
+                          </span>
+                        </div>
+                      </th>
                       <!-- <th scope="col" class="px-6 py-3 text-left">
-                        <div class="flex items-center justify-center gap-x-2">
-                          <span
-                            class="text-xs font-semibold uppercase tracking-wide text-gray-800"
-                          >
-                            Tanggal Timbang
-                          </span>
-                        </div>
-                      </th> -->
-
-                      <!-- <th scope="col" class="px-6 py-3 text-left">
-                        <div class="flex items-center justify-center gap-x-2">
-                          <span
-                            class="text-xs font-semibold uppercase tracking-wide text-gray-800"
-                          >
-                            Line
-                          </span>
-                        </div>
-                      </th> -->
-
-                      <th scope="col" class="px-6 py-3 text-left">
-                        <div class="flex items-center justify-center gap-x-2">
-                          <span
-                            class="text-xs font-semibold uppercase tracking-wide text-gray-800"
-                          >
-                            Aksi
-                          </span>
-                        </div>
-                      </th>
-
-                      <th scope="col" class="px-6 py-3 text-left">
-                        <div class="flex items-center justify-center gap-x-2">
-                          <span
-                            class="text-center text-xs font-semibold uppercase tracking-wide text-gray-800"
-                          >
-                            Nama Barang
-                          </span>
-                        </div>
-                      </th>
-                      <th scope="col" class="px-6 py-3 text-left">
-                        <div class="flex items-center justify-center gap-x-2">
-                          <span
-                            class="text-center text-xs font-semibold uppercase tracking-wide text-gray-800"
-                          >
-                            No Bag
-                          </span>
-                        </div>
-                      </th>
-
-                      <th scope="col" class="px-6 py-3 text-left">
-                        <div class="flex items-center justify-center gap-x-2">
-                          <span
-                            class="text-center text-xs font-semibold uppercase tracking-wide text-gray-800"
-                          >
-                            Qty Passbox
-                          </span>
-                        </div>
-                      </th>
-                      <th scope="col" class="px-6 py-3 text-left">
-                        <div class="flex items-center justify-center gap-x-2">
-                          <span
-                            class="text-center text-xs font-semibold uppercase tracking-wide text-gray-800"
-                          >
-                            Qty TPS
-                          </span>
-                        </div>
-                      </th>
-                      <th scope="col" class="px-6 py-3 text-left">
-                        <div class="flex items-center justify-center gap-x-2">
-                          <span
-                            class="text-center text-xs font-semibold uppercase tracking-wide text-gray-800"
-                          >
-                            Deviation
-                          </span>
-                        </div>
-                      </th>
-                      <th scope="col" class="px-6 py-3 text-left">
-                        <div class="flex items-center justify-center gap-x-2">
-                          <span
-                            class="text-center text-xs font-semibold uppercase tracking-wide text-gray-800"
-                          >
-                            Satuan
-                          </span>
-                        </div>
-                      </th>
-                      <th scope="col" class="px-6 py-3 text-left">
                         <div class="flex items-center justify-center gap-x-2">
                           <span
                             class="text-center text-xs font-semibold uppercase tracking-wide text-gray-800"
@@ -436,13 +396,22 @@
                             PIC
                           </span>
                         </div>
+                      </th> -->
+                      <th scope="col" class="px-6 py-3 text-left">
+                        <div class="flex items-center justify-center gap-x-2">
+                          <span
+                            class="text-center text-xs font-semibold uppercase tracking-wide text-gray-800"
+                          >
+                            Gambar
+                          </span>
+                        </div>
                       </th>
                       <th scope="col" class="px-6 py-3 text-left">
                         <div class="flex items-center justify-center gap-x-2">
                           <span
                             class="text-center text-xs font-semibold uppercase tracking-wide text-gray-800"
                           >
-                            Note
+                            Keterangan
                           </span>
                         </div>
                       </th>
@@ -450,86 +419,7 @@
                   </thead>
 
                   <tbody class="divide-y divide-gray-200">
-                    <tr
-                      *ngFor="
-                        let item of passboxApi
-                          | customFilter : searchInput
-                          | paginate : config
-                      "
-                      class="bg-white hover:bg-gray-50 text-center"
-                    >
-                      <!-- <td class="h-px w-px whitespace-nowrap py-2.5">
-                        <h1 class="text-sm">
-                          {{ item.created_at | date : "mediumDate" }}
-                        </h1>
-                      </td> -->
-                      <!-- <td class="h-px w-px whitespace-nowrap py-2.5">
-                        <h1 class="text-sm">
-                          {{ item.line_name }}
-                        </h1>
-                      </td> -->
-                      <td class="h-px w-px whitespace-nowrap">
-                        <button
-                        (click)="editModalChange(filterTpsByBag(item.global_variable_1)[0])"
-                          class="inline-flex items-center justify-center w-8 h-8 mr-2 text-gray-700 transition-colors duration-150 bg-white rounded-full focus:shadow-outline hover:bg-gray-200"
-                        >
-                          <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                            <path
-                              d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"
-                            ></path>
-                          </svg>
-                        </button>
-                        <!-- <h1 class="text-sm">{{ item.global_variable_1 }}</h1> -->
-                      </td>
-                      <td class="h-px w-px whitespace-nowrap">
-                        <h1 class="text-sm">
-                          {{ item.product_name }}
-                        </h1>
-                      </td>
-                      <td class="h-px w-px whitespace-nowrap">
-                        <h1 class="text-sm">{{ item.global_variable_1 }}</h1>
-                      </td>
-                      <td class="h-px w-px whitespace-nowrap py-2">
-                        <h1 class="text-sm">{{ item.netto }}</h1>
-                      </td>
-                      <td class="h-px w-px whitespace-nowrap">
-                        <h1 class="text-sm">
-                          {{ filterTpsByBag(item.global_variable_1)[0]?.netto }}
-                        </h1>
-                      </td>
-                      <td class="h-px w-px whitespace-nowrap">
-                        <h1
-                          class="text-sm"
-                          [ngClass]="
-                            item.netto -
-                              filterTpsByBag(item.global_variable_2)[0]
-                                ?.netto !=
-                            0
-                              ? 'text-red-500'
-                              : 'text-green-500'
-                          "
-                        >
-                          {{
-                            filterTpsByBag(item.global_variable_1)[0]?.netto -
-                              item.netto | number
-                          }}
-                        </h1>
-                      </td>
-                      <td class="h-px w-px whitespace-nowrap">
-                        <h1 class="text-sm">{{ item.unit }}</h1>
-                      </td>
-                      <td class="h-px w-px whitespace-nowrap">
-                        <h1 class="text-sm">{{ item.customer_name }}</h1>
-                      </td>
-                      <td class="h-px w-px whitespace-nowrap">
-                        <h1 class="text-sm">
-                          {{
-                            filterTpsByBag(item.global_variable_1)[0]
-                              ?.customer_remark
-                          }}
-                        </h1>
-                      </td>
-                    </tr>
+                    
                   </tbody>
                 </table>
                 <!-- End Table -->
@@ -546,8 +436,8 @@
                     <div class="custom-pagination flex gap-1">
                       <div class="pagination-previous">
                         <!-- <span *ngIf="!p.isFirstPage()" (click)="p.previous()">
-                                  <
-                                </span> -->
+                                    <
+                                  </span> -->
                         <button
                           (click)="p.previous()"
                           [disabled]="p.isFirstPage()"
@@ -593,8 +483,8 @@
                       </div>
                       <div class="pagination-next">
                         <!-- <span *ngIf="!p.isLastPage()" (click)="p.next()">
-                                  >
-                                </span> -->
+                                    >
+                                  </span> -->
                         <button
                           (click)="p.next()"
                           type="button"
@@ -643,48 +533,48 @@
                   </div>
 
                   <!-- <div>
-                            <div class="inline-flex gap-x-2">
-                              <button
-                                type="button"
-                                class="py-2 px-3 inline-flex justify-center items-center gap-2 rounded-md border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm bg-slate-900 hover:bg-slate-800 border-gray-700 text-gray-400 hover:text-white focus:ring-offset-gray-800"
-                              >
-                                <svg
-                                  class="w-3 h-3"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  width="16"
-                                  height="16"
-                                  fill="currentColor"
-                                  viewBox="0 0 16 16"
+                              <div class="inline-flex gap-x-2">
+                                <button
+                                  type="button"
+                                  class="py-2 px-3 inline-flex justify-center items-center gap-2 rounded-md border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm bg-slate-900 hover:bg-slate-800 border-gray-700 text-gray-400 hover:text-white focus:ring-offset-gray-800"
                                 >
-                                  <path
-                                    fill-rule="evenodd"
-                                    d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"
-                                  />
-                                </svg>
-                                Prev
-                              </button>
-        
-                              <button
-                                type="button"
-                                class="py-2 px-3 inline-flex justify-center items-center gap-2 rounded-md border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm bg-slate-900 hover:bg-slate-800 border-gray-700 text-gray-400 hover:text-white focus:ring-offset-gray-800"
-                              >
-                                Next
-                                <svg
-                                  class="w-3 h-3"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  width="16"
-                                  height="16"
-                                  fill="currentColor"
-                                  viewBox="0 0 16 16"
+                                  <svg
+                                    class="w-3 h-3"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="16"
+                                    height="16"
+                                    fill="currentColor"
+                                    viewBox="0 0 16 16"
+                                  >
+                                    <path
+                                      fill-rule="evenodd"
+                                      d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"
+                                    />
+                                  </svg>
+                                  Prev
+                                </button>
+          
+                                <button
+                                  type="button"
+                                  class="py-2 px-3 inline-flex justify-center items-center gap-2 rounded-md border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm bg-slate-900 hover:bg-slate-800 border-gray-700 text-gray-400 hover:text-white focus:ring-offset-gray-800"
                                 >
-                                  <path
-                                    fill-rule="evenodd"
-                                    d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"
-                                  />
-                                </svg>
-                              </button>
-                            </div>
-                          </div> -->
+                                  Next
+                                  <svg
+                                    class="w-3 h-3"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="16"
+                                    height="16"
+                                    fill="currentColor"
+                                    viewBox="0 0 16 16"
+                                  >
+                                    <path
+                                      fill-rule="evenodd"
+                                      d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"
+                                    />
+                                  </svg>
+                                </button>
+                              </div>
+                            </div> -->
                 </div>
                 <!-- End Footer -->
               </div>
@@ -699,8 +589,4 @@
   </div>
   <!-- End Content -->
   <!-- ========== END MAIN CONTENT ========== -->
-</div>
-
-
-
-<app-scales-tps-edit *ngIf="editModal" (editModalEvent)="editModal = $event" [dataScales]="editData"></app-scales-tps-edit>
+</body>

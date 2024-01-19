@@ -1,0 +1,125 @@
+<div
+  class="fixed z-40 top-0 w-screen h-screen bg-slate-800 bg-opacity-20 flex justify-center items-center"
+>
+  <div
+    class="h-[40vh] w-[70vw] py-3 px-4 flex flex-col gap-3 bg-white shadow-sm rounded-lg my-auto mx-auto"
+  >
+    <div>
+      <h1 class="font-medium text-xl">
+        Edit Penimbangan TPS {{ dataScales.id }}
+      </h1>
+    </div>
+    <div>
+      <form [formGroup]="form">
+        <div class="grid gap-4 mx-10">
+          <!-- Grid -->
+          <div class="grid grid-cols-1 sm:grid-cols-4 gap-4 lg:gap-6">
+            <div>
+              <label
+                for="hs-firstname-hire-us-2"
+                class="block text-sm text-gray-700 font-medium"
+                >Product</label
+              >
+              <Select
+                class="py-2 px-3 block w-full border border-gray-300 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
+              >
+                <option value="0">Choose Product</option>
+              </Select>
+              <!-- <input
+                      type="text"
+                      name="hs-firstname-hire-us-2"
+                      id="hs-firstname-hire-us-2"
+                      class="py-2 px-3 block w-full border border-gray-300 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 "
+                    /> -->
+            </div>
+
+            <div>
+              <label
+                for="hs-lastname-hire-us-2"
+                class="block text-sm text-gray-700 font-medium"
+                >PIC</label
+              >
+              <Select
+                class="py-2 px-3 block w-full border border-gray-300 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
+              >
+                <option value="0">Choose PIC</option>
+              </Select>
+            </div>
+            <div>
+              <label
+                for="hs-company-hire-us-2"
+                class="block text-sm text-gray-700 font-medium"
+                >No Bag</label
+              >
+
+              <input
+                type="text"
+                name="hs-company-hire-us-2"
+                formControlName="noBag"
+                id="hs-company-hire-us-2"
+                class="py-2 px-3 block w-full border border-gray-300 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
+              />
+            </div>
+            <div>
+              <label
+                for="hs-company-hire-us-2"
+                class="block text-sm text-gray-700 font-medium"
+                >Lot Number</label
+              >
+
+              <input
+                type="text"
+                name="hs-company-hire-us-2"
+                formControlName="lot"
+                id="hs-company-hire-us-2"
+                class="py-2 px-3 block w-full border border-gray-300 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
+              />
+            </div>
+
+            <div>
+              <label
+                for="hs-company-website-hire-us-2"
+                class="block text-sm text-gray-700 font-medium"
+                >QTY (Kg)</label
+              >
+              <input
+                type="number"
+                name="hs-firstname-hire-us-2"
+                formControlName="netto"
+                id="hs-firstname-hire-us-2"
+                class="py-2 px-3 block w-full border border-gray-300 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
+              />
+              <!-- <Select
+                        class="py-2 px-3 block w-full border border-gray-300 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 "
+                      >
+                        <option value="0">Choose Lot</option>
+                      </Select> -->
+            </div>
+          </div>
+          <!-- End Grid -->
+
+          <!-- Grid -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-6"></div>
+          <!-- End Grid -->
+        </div>
+
+        <!-- End Grid -->
+
+        <div class="mt-6 flex justify-center gap-4">
+          <button
+            type="submit"
+            class="w-1/4 inline-flex justify-center items-center gap-x-3 text-center bg-blue-600 hover:bg-blue-700 border border-transparent text-sm text-white font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white transition py-1.5 px-4"
+          >
+            Update
+          </button>
+          <button
+            (click)="closeModal()"
+            class="w-1/4 inline-flex justify-center items-center gap-x-3 text-center bg-white hover:bg-blue-100 border border-blue-300 text-sm text-blue-600 font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white transition py-1.5 px-4"
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

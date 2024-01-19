@@ -34,6 +34,8 @@ import { ScalesSalesComponent } from './scales-sales/scales-sales.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { AlertComponent } from './layouts/alert/alert.component';
 import { ScalesSalesViewComponent } from './scales-sales/scales-sales-view/scales-sales-view.component';
+import { WriteOffComponent } from './write-off/write-off.component';
+import { ScalesTpsEditComponent } from './scales-tps/scales-tps-view/scales-tps-edit/scales-tps-edit.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +64,8 @@ import { ScalesSalesViewComponent } from './scales-sales/scales-sales-view/scale
     ScalesSalesComponent,
     AlertComponent,
     ScalesSalesViewComponent,
+    WriteOffComponent,
+    ScalesTpsEditComponent,
   ],
   imports: [
     BrowserModule,

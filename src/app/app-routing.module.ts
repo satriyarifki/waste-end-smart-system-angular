@@ -20,6 +20,7 @@ import { StockBarangComponent } from './stock-barang/stock-barang.component';
 import { SystemFlowComponent } from './system-flow/system-flow.component';
 import { TransactionInComponent } from './transaction-in/transaction-in.component';
 import { TransactionOutComponent } from './transaction-out/transaction-out.component';
+import { WriteOffComponent } from './write-off/write-off.component';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent },
@@ -39,6 +40,7 @@ const routes: Routes = [
   { path: 'scales-tps/view', component: ScalesTpsViewComponent },
   { path: 'scales-sales', component: ScalesSalesComponent },
   { path: 'scales-sales/view', component: ScalesSalesViewComponent },
+  { path: 'write-off', component: WriteOffComponent },
   { path: 'system-flow', component: SystemFlowComponent },
 ];
 
