@@ -1,9 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
 import { PaginationControlsDirective } from 'ngx-pagination';
 import { forkJoin } from 'rxjs';
 import { ApiService } from 'src/app/services/api.service';
+import { EditReportService } from 'src/app/services/edit-report/edit-report.service';
 
 @Component({
   selector: 'app-scales-sales-view',
@@ -37,11 +38,15 @@ export class ScalesSalesViewComponent {
   constructor(
     private exportAsService: ExportAsService,
     private apiService: ApiService,
-    private actRouter: ActivatedRoute
+    private actRouter: ActivatedRoute,
+    private router: Router,
+    private editReportService: EditReportService
   ) {
     // console.log(this.dataParams.get('date'));
     // console.log(this.dataParams.get('lot'));
-
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+    };
     forkJoin(
       apiService.tpsOnSalesByDateGet(this.dataParams.get('date'))
     ).subscribe(([sales]) => {
@@ -83,5 +88,16 @@ export class ScalesSalesViewComponent {
   onPageChange(event: any) {
     // console.log(event);
     this.config.currentPage = event;
+  }
+
+  editModalChange(item:any){
+    this.editReportService.onCallEdit({data:item,name:'Sales'})
+
+    
+    // if (item) {
+    //   this.editModal = true
+    // } else {
+    //   this.editModal = false
+    // }
   }
 }

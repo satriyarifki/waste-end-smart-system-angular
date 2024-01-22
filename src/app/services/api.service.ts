@@ -54,6 +54,9 @@ export class ApiService {
   tpsApproved(body: any): Observable<any> {
     return this.http.post(this.baseUrl + 'reports/approved', body);
   }
+  updateReport(body: any): Observable<any> {
+    return this.http.put(this.baseUrl + 'reports', body);
+  }
 
   //----SALES
   salesGet(): Observable<any> {
@@ -98,5 +101,25 @@ export class ApiService {
   //-----PRICE
   priceGet(): Observable<any> {
     return this.http.get(this.baseUrl + 'price');
+  }
+
+  //-----PRODUCT
+  productsGet(): Observable<any> {
+    return this.http.get(this.baseUrl + 'products');
+  }
+
+  //-----SUPPLIER
+  suppliersGet(): Observable<any> {
+    return this.http.get(this.baseUrl + 'suppliers');
+  }
+
+  //-----CUSTOMER
+  customersGet(): Observable<any> {
+    return this.http.get(this.baseUrl + 'customers');
+  }
+
+  //-----SUPPLIER
+  linesGet(): Observable<any> {
+    return this.http.get(this.baseUrl + 'lines');
   }
 }

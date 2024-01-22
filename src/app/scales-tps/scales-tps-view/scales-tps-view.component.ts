@@ -1,9 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
 import { PaginationControlsDirective } from 'ngx-pagination';
 import { forkJoin } from 'rxjs';
 import { ApiService } from 'src/app/services/api.service';
+import { EditReportService } from 'src/app/services/edit-report/edit-report.service';
 
 @Component({
   selector: 'app-scales-tps-view',
@@ -40,13 +41,17 @@ export class ScalesTpsViewComponent {
     totalItems: this.passboxApi.length,
   };
   constructor(
+    private router:Router,
     private exportAsService: ExportAsService,
     private apiService: ApiService,
-    private actRouter: ActivatedRoute
+    private actRouter: ActivatedRoute,
+    private editReportService: EditReportService
   ) {
     // console.log(this.dataParams.get('line'));
     // console.log(this.dataParams.get('lot'));
-
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+    };
     forkJoin(
       apiService.passboxByLotGet(
         this.dataParams.get('line'),
@@ -60,8 +65,8 @@ export class ScalesTpsViewComponent {
       this.passboxApi = passboxOc2;
       this.tpsApi = tpsFilter;
       this.config.totalItems = this.passboxApi.length;
-      console.log(tpsFilter);
-      console.log(this.passboxApi);
+      // console.log(tpsFilter);
+      // console.log(this.passboxApi);
       
       // console.log(this.filterTpsByBag('bag3'));
     });
@@ -110,11 +115,13 @@ export class ScalesTpsViewComponent {
   editModalChange(item:any){
     this.editData = item
     console.log(this.editData);
+    this.editReportService.onCallEdit({data:item,name:'TPS'})
+
     
-    if (item) {
-      this.editModal = true
-    } else {
-      this.editModal = false
-    }
+    // if (item) {
+    //   this.editModal = true
+    // } else {
+    //   this.editModal = false
+    // }
   }
 }

@@ -1,4 +1,5 @@
 <div
+*ngIf="show"
   class="fixed z-40 top-0 w-screen h-screen bg-slate-800 bg-opacity-20 flex justify-center items-center"
 >
   <div
@@ -6,14 +7,14 @@
   >
     <div>
       <h1 class="font-medium text-xl">
-        Edit Penimbangan TPS ({{ dataScales.id }})
+        Edit Penimbangan {{modalName}} ({{ dataParams.id }})
       </h1>
     </div>
     <div>
       <form [formGroup]="form" (submit)="onUpdate()">
         <div class="grid gap-4 mx-10">
           <!-- Grid -->
-          <div class="grid grid-cols-1 sm:grid-cols-4 gap-4 lg:gap-6">
+          <div class="grid grid-cols-1 sm:grid-cols-4 gap-4 lg:gap-4">
             <div>
               <label
                 for="hs-firstname-hire-us-2"
@@ -24,7 +25,6 @@
                 formControlName="product_code"
                 class="py-2 px-3 block w-full border border-gray-300 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
               >
-                <!-- <option value="0">Choose Product</option> -->
                 <option *ngFor="let item of productsApi" [value]="item.code">{{item.name}}</option>
               </select>
             </div>
@@ -39,8 +39,20 @@
                 formControlName="supplier_code"
                 class="py-2 px-3 block w-full border border-gray-300 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
               >
-                <!-- <option value="0">Choose PIC</option> -->
                 <option *ngFor="let item of suppliersApi" [value]="item.code">{{item.name}}</option>
+              </select>
+            </div>
+            <div>
+              <label
+                for="hs-lastname-hire-us-2"
+                class="block text-sm text-gray-700 font-medium"
+                >Customer</label
+              >
+              <select
+                formControlName="customer_code"
+                class="py-2 px-3 block w-full border border-gray-300 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
+              >
+                <option *ngFor="let item of customersApi" [value]="item.code">{{item.name}}</option>
               </select>
             </div>
             <div>
@@ -53,7 +65,6 @@
                 formControlName="line_code"
                 class="py-2 px-3 block w-full border border-gray-300 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
               >
-                <!-- <option value="0">Choose PIC</option> -->
                 <option *ngFor="let item of linesApi" [value]="item.code">{{item.name}}</option>
               </select>
             </div>
@@ -92,7 +103,7 @@
               <label
                 for="hs-company-website-hire-us-2"
                 class="block text-sm text-gray-700 font-medium"
-                >QTY (Kg)</label
+                >Qty</label
               >
               <input
                 type="number"
@@ -102,12 +113,20 @@
                 id="hs-firstname-hire-us-2"
                 class="py-2 px-3 block w-full border border-gray-300 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
               />
-              <!-- <Select
-                        class="py-2 px-3 block w-full border border-gray-300 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 "
-                      >
-                        <option value="0">Choose Lot</option>
-                      </Select> -->
             </div>
+            <div>
+                <label
+                  for="hs-lastname-hire-us-2"
+                  class="block text-sm text-gray-700 font-medium"
+                  >Unit</label
+                >
+                <select
+                  formControlName="unit"
+                  class="py-2 px-3 block w-full border border-gray-300 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
+                >  
+                  <option *ngFor="let item of units" [value]="item">{{item}}</option>
+                </select>
+              </div>
           </div>
           <!-- End Grid -->
 
@@ -126,7 +145,7 @@
             Update
           </button>
           <button
-            (click)="closeModal()"
+            (click)="closeEdit()"
             class="w-1/4 inline-flex justify-center items-center gap-x-3 text-center bg-white hover:bg-blue-100 border border-blue-300 text-sm text-blue-600 font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white transition py-1.5 px-4"
           >
             Cancel

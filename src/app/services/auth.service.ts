@@ -45,7 +45,7 @@ export class AuthService {
     localStorage.removeItem(TOKEN_KEY);
     localStorage.setItem(TOKEN_KEY, token);
     document.cookie = 'TOKEN_KEY=' + token + ';expires=' + new Date() + ';';
-    console.log(document.cookie);
+    // console.log(document.cookie);
     
   }
 
@@ -54,16 +54,16 @@ export class AuthService {
   }
 
   public saveUser(user: any): void {
-    window.sessionStorage.removeItem(USER_KEY);
-    window.sessionStorage.removeItem(USER_DATA_KEY);
-    window.sessionStorage.setItem(USER_KEY, JSON.stringify(user));
+    localStorage.removeItem(USER_KEY);
+    localStorage.removeItem(USER_DATA_KEY);
+    localStorage.setItem(USER_KEY, JSON.stringify(user));
     this.employeesGetById(this.getUser().lg_nik).subscribe((data) => {
-      window.sessionStorage.setItem(USER_DATA_KEY, JSON.stringify(data[0]));
+      localStorage.setItem(USER_DATA_KEY, JSON.stringify(data[0]));
     });
   }
 
   public getUser(): any {
-    const user = window.sessionStorage.getItem(USER_KEY);
+    const user = localStorage.getItem(USER_KEY);
     if (user) {
       return JSON.parse(user)[0];
     }
@@ -71,7 +71,7 @@ export class AuthService {
     return {};
   }
   public getUserData(): any {
-    const user = window.sessionStorage.getItem(USER_DATA_KEY);
+    const user = localStorage.getItem(USER_DATA_KEY);
 
     if (user) {
       return JSON.parse(user);

@@ -30,10 +30,12 @@ export class CreateTransactionOutComponent {
     private formBuilder: FormBuilder
   ) {
     spinner.show();
+    console.log(this.params);
+    
     if (this.params.total_qty) {
       const id = this.params.customer_name.includes('DESA')
         ? 3
-        : this.params.customer_name.includes('TPS')
+        : this.params.customer_name.includes('TRI')
         ? 1
         : 2;
       this.paramForm = {
