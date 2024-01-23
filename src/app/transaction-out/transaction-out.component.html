@@ -377,13 +377,42 @@
                           {{ item.vendor }}
                         </h1>
                       </td>
-                      <td class="h-px w-px whitespace-nowrap py-2.5 px-2.5">
-                        <a
-                          [routerLink]="['/transaction-in/print/', item.date]"
-                          [state]="item"
-                          class="text-sm cursor-pointer px-3 py-1.5 bg-green-500 hover:bg-green-600 text-white rounded-lg font-medium"
-                          >Cetak</a
-                        >
+                      <td class="h-px w-px py-2.5 px-2.5">
+                        <div class="flex flex-row w-fit mx-auto gap-3">
+                          <a
+                            [routerLink]="['/transaction-in/print/', item.date]"
+                            [state]="item"
+                            class="text-sm cursor-pointer px-3 py-1.5 bg-green-500 hover:bg-green-600 text-white rounded-lg font-medium"
+                            >Cetak
+                          </a>
+                          <button
+                            (click)="
+                              deleteRow({
+                                id: item.id,
+                                name: 'Sales',
+                                date: item.date,
+                                vendor: item.vendor,
+                              })
+                            "
+                            class="items-center px-2 py-2 bg-red-50 hover:bg-red-100 text-rose-700 text-sm font-medium rounded-full"
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              class="h-4 w-4"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                            >
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                              />
+                            </svg>
+                          </button>
+                        </div>
+
                         <!-- <h1 class="text-sm py-2">Cetak</h1> -->
                       </td>
                     </tr>

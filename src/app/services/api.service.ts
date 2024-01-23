@@ -92,6 +92,9 @@ export class ApiService {
   salesMonthlyGet(): Observable<any> {
     return this.http.get(this.baseUrl + 'sales/monthly');
   }
+  salesDelete(id: any): Observable<any> {
+    return this.http.delete(this.baseUrl + 'sales/' + id);
+  }
 
   //-----VENDOR
   vendorGet(): Observable<any> {

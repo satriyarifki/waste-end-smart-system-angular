@@ -1,4 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { PaginationControlsDirective } from 'ngx-pagination';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { forkJoin } from 'rxjs';
@@ -6,6 +7,7 @@ import { ActualAug, harga } from '../dashboard-sales/db_sales';
 import { AlertType } from '../services/alert/alert.model';
 import { AlertService } from '../services/alert/alert.service';
 import { ApiService } from '../services/api.service';
+import { DeleteApiService } from '../services/delete-api/delete-api.service';
 
 @Component({
   selector: 'app-transaction-out',
@@ -42,8 +44,13 @@ export class TransactionOutComponent {
   constructor(
     private apiService: ApiService,
     private spinner: NgxSpinnerService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private deleteService:DeleteApiService,
+    private router:Router,
   ) {
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+    };
     spinner.show();
 
     forkJoin(apiService.salesViewGet()).subscribe(
@@ -217,5 +224,24 @@ export class TransactionOutComponent {
   }
   exportDropdown() {
     this.exportBool = !this.exportBool;
+  }
+
+  deleteSales(id:any){
+    this.apiService.salesDelete(id).subscribe(res=>{
+      this.alertService.onCallAlert('Delete Data ('+ id +') Success!', AlertType.Success)
+    }, err => {
+      this.alertService.onCallAlert('Delete Data ('+ id +') Failed!', AlertType.Error)
+    })
+  }
+
+  deleteRow(data: any) {
+    const fun =
+      'this.apiService.salesDelete(' +
+      JSON.stringify(data.id) +
+      ')';
+    this.deleteService.onCallDelete({
+      dataName:  ' (' + data.date + ') ' + data.vendor,
+      func: fun,
+    });
   }
 }

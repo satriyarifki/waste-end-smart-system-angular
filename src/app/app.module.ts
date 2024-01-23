@@ -37,6 +37,7 @@ import { ScalesSalesViewComponent } from './scales-sales/scales-sales-view/scale
 import { WriteOffComponent } from './write-off/write-off.component';
 import { ScalesTpsEditComponent } from './scales-tps/scales-tps-view/scales-tps-edit/scales-tps-edit.component';
 import { EditReportComponent } from './edit/edit-report/edit-report.component';
+import { DeleteApiComponent } from './layouts/delete-api/delete-api.component';
 
 @NgModule({
   declarations: [
@@ -68,6 +69,7 @@ import { EditReportComponent } from './edit/edit-report/edit-report.component';
     WriteOffComponent,
     ScalesTpsEditComponent,
     EditReportComponent,
+    DeleteApiComponent,
   ],
   imports: [
     BrowserModule,
