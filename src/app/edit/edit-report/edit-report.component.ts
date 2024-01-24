@@ -91,7 +91,7 @@ export class EditReportComponent {
     this.form.controls['customer_name'].setValue(this.filterDataByCode(this.form.value.customer_code,'customer').name)
     this.form.controls['global_variable_3'].setValue(this.form.value.global_variable_2!)
     this.form.controls['gross'].setValue(this.form.value.netto!)
-    console.log(this.form.value);
+    // console.log(this.form.value);
     this.apiService.updateReport(this.form.value).subscribe(res=>{
       // console.log(res);
       this.router.onSameUrlNavigation = 'reload';

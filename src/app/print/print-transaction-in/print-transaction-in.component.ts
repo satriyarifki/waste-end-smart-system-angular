@@ -37,7 +37,7 @@ export class PrintTransactionInComponent {
   salesViewApi: any[] = [];
 
   constructor(private router: Router, private apiService: ApiService) {
-    console.log(history.state);
+    // console.log(history.state);
 
     // console.log(location.getState());
 
@@ -76,20 +76,13 @@ export class PrintTransactionInComponent {
     //   // doc.output('dataurlnewwindow');
     // });
 
-    // doc.addFileToVFS("src/assets/fonts/outfit/Outfit-Regular.ttf", 'outfit');
-    // doc.addFileToVFS('Outfit-normal.ttf', font);
-    // doc.addFont('Outfit-normal.ttf', 'Outfit', 'normal');
     doc.addFileToVFS('Outfit-normal.ttf', font);
     doc.addFont('Outfit-normal.ttf', 'Outfit', 'normal');
-
-    console.log();
-    console.log(doc.getFont());
 
     doc.html(this.content.nativeElement, {
       callback: (doc) => {
         // doc.setPage(1)
         doc.setFont('Outfit');
-        console.log(doc.getFont());
         doc.output('dataurlnewwindow');
         // doc.save(this.paramSales.date);
       },
