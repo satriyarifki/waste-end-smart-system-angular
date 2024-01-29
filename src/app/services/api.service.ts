@@ -133,4 +133,7 @@ export class ApiService {
   writeOffUpdate(body:any): Observable<any> {
     return this.http.put(this.baseUrl + 'write-off',body);
   }
+  writeOffImage(id:any){
+    return this.http.get(this.baseUrl + 'write-off/picture/'+id)
+  }
 }

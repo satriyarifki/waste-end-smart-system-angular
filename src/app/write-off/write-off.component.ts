@@ -1,17 +1,18 @@
 import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
 import { PaginationControlsDirective } from 'ngx-pagination';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { forkJoin } from 'rxjs';
+import { AlertType } from '../services/alert/alert.model';
 import { AlertService } from '../services/alert/alert.service';
 import { ApiService } from '../services/api.service';
 
 @Component({
   selector: 'app-write-off',
   templateUrl: './write-off.component.html',
-  styleUrls: ['./write-off.component.css']
+  styleUrls: ['./write-off.component.css'],
 })
 export class WriteOffComponent {
   exportAsConfig: ExportAsConfig = {
@@ -31,13 +32,15 @@ export class WriteOffComponent {
   exportBool: Boolean = false;
   uploadBool: Boolean = false;
 
+
   // Form
   receiveForm = this.formBuilder.group({
-    id: 0,
+    id: '0',
     received: null,
     picture: null,
-    note: ''
-  })
+    note: '',
+  });
+  inputPicture:any
 
   config = {
     id: 'custom',
@@ -51,12 +54,15 @@ export class WriteOffComponent {
     private actRouter: ActivatedRoute,
     private spinner: NgxSpinnerService,
     private alertService: AlertService,
-    private formBuilder:FormBuilder
+    private formBuilder: FormBuilder,
+    private router:Router
   ) {
-    forkJoin(apiService.writeOffGet()).subscribe(res=>{
-      this.writeOffApi = res[0]
-      
-    })
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+    };
+    forkJoin(apiService.writeOffGet()).subscribe((res) => {
+      this.writeOffApi = res[0];
+    });
   }
   export(type: any) {
     this.exportAsConfig.type = type;
@@ -74,12 +80,9 @@ export class WriteOffComponent {
     // });
   }
 
-  changeReceived(data:any){
-    console.log(data);
-    this.receiveForm.patchValue({picture:data.target.files[0]})
+  changeReceived(data: any) {
+    this.receiveForm.patchValue({ picture: data.target.files[0] });
     console.log(this.receiveForm.value);
-    
-    
   }
   changeItemPerPageSelect(value: any) {
     this.config.itemsPerPage = value;
@@ -89,16 +92,18 @@ export class WriteOffComponent {
     this.exportBool = !this.exportBool;
   }
 
-  uploadModal(data:any){
+  uploadModal(data: any) {
     console.log(data);
-    if (data!=null) {
-      this.uploadBool = true
-      this.receiveForm.controls['id'].setValue(data.id)
-      this.receiveForm.controls['received'].setValue(data.received)
+    if (data != null) {
+      this.uploadBool = true;
+      this.receiveForm.controls['id'].setValue(data.id);
+      this.receiveForm.controls['received'].setValue(data.received);
+      
+      this.inputPicture = ('http://127.0.0.1:3881/api/write-off/picture/'+ data.id)
+      console.log(this.inputPicture);
       
     } else {
-
-      this.uploadBool = false
+      this.uploadBool = false;
     }
   }
 
@@ -106,11 +111,19 @@ export class WriteOffComponent {
     // console.log(event);
     this.config.currentPage = event;
   }
-  submitUpload(){
-    console.log(this.receiveForm.value);
-    this.apiService.writeOffUpdate(this.receiveForm.value).subscribe(res=>{
+  submitUpload() {
+    const formData = new FormData();
+    formData.append('id', this.receiveForm.value.id!);
+    formData.append('note', this.receiveForm.value.note!);
+    formData.append('picture', this.receiveForm.value.picture!);
+    formData.append('received', this.receiveForm.value.received!);
+    console.log(formData.getAll('picture'));
+    this.apiService.writeOffUpdate(formData).subscribe((res) => {
       console.log(res);
-      
-    })
+      this.alertService.onCallAlert('Update Write Off Success!', AlertType.Success)
+      this.router.onSameUrlNavigation = 'reload';
+        this.router.navigateByUrl(this.router.url);
+      this.uploadModal(null)
+    });
   }
 }

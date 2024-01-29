@@ -89,7 +89,7 @@
           <div class="grid md:grid-cols-2 gap-x-4 gap-y-2 lg:gap-x-6 py-3 px-5">
             <!-- Grid -->
             <div
-              *ngFor="let item of salesToArray; index as i"
+              *ngFor="let item of tes; index as i"
               class="flex items-end justify-center gap-x-4 lg:gap-1.5"
             >
               <div>
@@ -105,7 +105,7 @@
                   disabled
                   name="hs-lastname-hire-us-2"
                   id="hs-lastname-hire-us-2"
-                  [value]="item.name"
+                  [value]="salesToArray[i].name"
                   class="py-1.5 px-2 block w-full border border-gray-300 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
                 />
               </div>
@@ -118,7 +118,7 @@
                   >Qty</label
                 >
                 <input
-                [formControlName]="item.formName"
+                [formControlName]="salesToArray[i].formName"
                   type="number"
                   min="0"
                   name="hs-company-hire-us-2"
@@ -139,7 +139,7 @@
                   type="text"
                   id="hs-company-website-hire-us-2"
                   disabled
-                  [value]="item.satuan"
+                  [value]="salesToArray[i].satuan"
                   class="py-1.5 px-2 block w-full border border-gray-300 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
                 />
                 <!-- <Select
@@ -159,7 +159,7 @@
                 <input
                 disabled
                   type="text"
-                  [value]="(filterVendorById(this.f.vendorId)?.price[item.formName] * f[item.formName]).toLocaleString()"
+                  [value]="(filterVendorById(this.f.vendorId)?.price[salesToArray[i].formName] * f[salesToArray[i].formName]).toLocaleString()"
                   name="hs-company-website-hire-us-2"
                   id="hs-company-website-hire-us-2"
                   class="py-1.5 px-2 block w-full border border-gray-300 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"

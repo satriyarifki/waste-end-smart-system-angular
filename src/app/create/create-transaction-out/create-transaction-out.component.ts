@@ -17,6 +17,8 @@ export class CreateTransactionOutComponent {
   //FORM
   form!: FormGroup;
 
+  tes:any[]= [0,0,0,0,0,0,0,0,0,0,0,0]
+
   //API
   arrayItem: any[] = [];
   vendorsApi: any[] = [];
