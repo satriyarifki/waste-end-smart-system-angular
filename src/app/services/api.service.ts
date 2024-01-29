@@ -125,4 +125,12 @@ export class ApiService {
   linesGet(): Observable<any> {
     return this.http.get(this.baseUrl + 'lines');
   }
+
+  //-----WRITE OFF
+  writeOffGet(): Observable<any> {
+    return this.http.get(this.baseUrl + 'write-off');
+  }
+  writeOffUpdate(body:any): Observable<any> {
+    return this.http.put(this.baseUrl + 'write-off',body);
+  }
 }

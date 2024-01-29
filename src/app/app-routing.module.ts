@@ -32,6 +32,7 @@ const routes: Routes = [
   { path: 'transaction-in/create', component: CreateTransactionInComponent, canActivate: [onAuthGuard]},
   { path: 'transaction-out/create', component: CreateTransactionOutComponent, canActivate: [onAuthGuard] },
   { path: 'transaction-in/print/:id', component: PrintTransactionInComponent },
+  { path: 'transaction-in/print', component: PrintTransactionInComponent },
   // { path: 'scales-passbox', component: ScalesPassboxComponent },
   { path: 'scales-passbox/create', component: CreatePassboxComponent, canActivate: [onAuthGuard] },
   { path: 'scales-passbox/oc1', component: ScalesPassboxOc1Component },

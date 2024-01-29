@@ -1,8 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
 import { PaginationControlsDirective } from 'ngx-pagination';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { forkJoin } from 'rxjs';
 import { AlertService } from '../services/alert/alert.service';
 import { ApiService } from '../services/api.service';
 
@@ -27,6 +29,15 @@ export class WriteOffComponent {
 
   // Boolean
   exportBool: Boolean = false;
+  uploadBool: Boolean = false;
+
+  // Form
+  receiveForm = this.formBuilder.group({
+    id: 0,
+    received: null,
+    picture: null,
+    note: ''
+  })
 
   config = {
     id: 'custom',
@@ -39,9 +50,13 @@ export class WriteOffComponent {
     private apiService: ApiService,
     private actRouter: ActivatedRoute,
     private spinner: NgxSpinnerService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private formBuilder:FormBuilder
   ) {
-
+    forkJoin(apiService.writeOffGet()).subscribe(res=>{
+      this.writeOffApi = res[0]
+      
+    })
   }
   export(type: any) {
     this.exportAsConfig.type = type;
@@ -58,6 +73,14 @@ export class WriteOffComponent {
     //   console.log(content);
     // });
   }
+
+  changeReceived(data:any){
+    console.log(data);
+    this.receiveForm.patchValue({picture:data.target.files[0]})
+    console.log(this.receiveForm.value);
+    
+    
+  }
   changeItemPerPageSelect(value: any) {
     this.config.itemsPerPage = value;
     // console.log(this.config.itemsPerPage);
@@ -66,8 +89,28 @@ export class WriteOffComponent {
     this.exportBool = !this.exportBool;
   }
 
+  uploadModal(data:any){
+    console.log(data);
+    if (data!=null) {
+      this.uploadBool = true
+      this.receiveForm.controls['id'].setValue(data.id)
+      this.receiveForm.controls['received'].setValue(data.received)
+      
+    } else {
+
+      this.uploadBool = false
+    }
+  }
+
   onPageChange(event: any) {
     // console.log(event);
     this.config.currentPage = event;
+  }
+  submitUpload(){
+    console.log(this.receiveForm.value);
+    this.apiService.writeOffUpdate(this.receiveForm.value).subscribe(res=>{
+      console.log(res);
+      
+    })
   }
 }

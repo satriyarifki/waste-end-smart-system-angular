@@ -380,8 +380,8 @@
                       <td class="h-px w-px py-2.5 px-2.5">
                         <div class="flex flex-row w-fit mx-auto gap-3">
                           <a
-                            [routerLink]="['/transaction-in/print/', item.date]"
-                            [state]="item"
+                            (click)="cetak(item)"
+                            
                             class="text-sm cursor-pointer px-3 py-1.5 bg-green-500 hover:bg-green-600 text-white rounded-lg font-medium"
                             >Cetak
                           </a>

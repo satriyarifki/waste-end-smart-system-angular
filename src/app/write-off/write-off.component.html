@@ -5,7 +5,7 @@
   size="medium"
   ><p style="color: white">Loading...</p></ngx-spinner
 >
-<body class="bg-gray-50 lg:pt-16 space-y-5">
+<div class="bg-gray-50 lg:pt-16 space-y-5">
   <!-- ========== MAIN CONTENT ========== -->
 
   <!-- Content -->
@@ -40,7 +40,7 @@
         </a>
       </div>
     </header>
-    <div class="px-10 py-6">
+    <div class="px-8 py-6">
       <!-- Table Section -->
       <div class="max-w-[85rem] mx-auto">
         <!-- Card -->
@@ -335,7 +335,7 @@
                           <span
                             class="text-xs font-semibold uppercase text-center tracking-wide text-gray-800"
                           >
-                            No
+                            DIC
                           </span>
                         </div>
                       </th>
@@ -350,7 +350,7 @@
                         </div>
                       </th>
 
-                      <th scope="col" class="px-6 py-3 text-left">
+                      <!-- <th scope="col" class="px-6 py-3 text-left">
                         <div class="flex items-center justify-center gap-x-2">
                           <span
                             class="text-center text-xs font-semibold uppercase tracking-wide text-gray-800"
@@ -358,7 +358,7 @@
                             Tipe
                           </span>
                         </div>
-                      </th>
+                      </th> -->
                       <th scope="col" class="px-6 py-3 text-left">
                         <div class="flex items-center justify-center gap-x-2">
                           <span
@@ -369,16 +369,26 @@
                         </div>
                       </th>
 
+                      <!-- <th scope="col" class="px-6 py-3 text-left">
+                        <div class="flex items-center justify-center gap-x-2">
+                          <span
+                            class="text-center text-xs font-semibold uppercase tracking-wide text-gray-800"
+                          >
+                            Write Off <br />
+                            Status
+                          </span>
+                        </div>
+                      </th> -->
+
                       <th scope="col" class="px-6 py-3 text-left">
                         <div class="flex items-center justify-center gap-x-2">
                           <span
                             class="text-center text-xs font-semibold uppercase tracking-wide text-gray-800"
                           >
-                            Write Off <br> Status
+                            Year
                           </span>
                         </div>
                       </th>
-
                       <th scope="col" class="px-6 py-3 text-left">
                         <div class="flex items-center justify-center gap-x-2">
                           <span
@@ -388,15 +398,6 @@
                           </span>
                         </div>
                       </th>
-                      <!-- <th scope="col" class="px-6 py-3 text-left">
-                        <div class="flex items-center justify-center gap-x-2">
-                          <span
-                            class="text-center text-xs font-semibold uppercase tracking-wide text-gray-800"
-                          >
-                            PIC
-                          </span>
-                        </div>
-                      </th> -->
                       <th scope="col" class="px-6 py-3 text-left">
                         <div class="flex items-center justify-center gap-x-2">
                           <span
@@ -419,7 +420,75 @@
                   </thead>
 
                   <tbody class="divide-y divide-gray-200">
-                    
+                    <tr
+                      *ngFor="
+                        let item of writeOffApi
+                          | customFilter : searchInput
+                          | paginate : config
+                      "
+                      class="bg-white hover:bg-gray-50 text-center"
+                    >
+                      <td class="h-px w-px whitespace-nowrap px-2">
+                        <h1 class="text-sm py-2">{{ item.dic }}</h1>
+                      </td>
+                      <td class="h-px w-px whitespace-nowrap px-2">
+                        <h1 class="text-sm py-2">{{ item.asset }}</h1>
+                      </td>
+                      <td class="h-px w-px whitespace-nowrap px-2">
+                        <h1 class="text-sm py-2">{{ item.qty }}</h1>
+                      </td>
+                      <td class="h-px w-px whitespace-nowrap px-2">
+                        <h1 class="text-sm py-2">{{ item.year }}</h1>
+                      </td>
+                      <td class="h-px w-px whitespace-nowrap px-2">
+                        <h1
+                          [ngClass]="
+                            item.received.includes('Yes')
+                              ? 'bg-green-100'
+                              : 'bg-red-100'
+                          "
+                          class="text-sm py-2 rounded-lg"
+                        >
+                          {{ item.received }}
+                        </h1>
+                        <!-- <select
+                          name="select"
+                          (change)="changeReceived(item.received)"
+                          id=""
+                          [(ngModel)]="item.received"
+                          [ngClass]="
+                            item.received.includes('Yes')
+                              ? 'bg-green-100'
+                              : 'bg-red-100'
+                          "
+                          class="rounded-lg py-1 px-2"
+                        >
+                          <option value="Yes" class="bg-green-100 rounded-lg">
+                            Yes
+                          </option>
+                          <option value="No" class="bg-red-100 rounded-lg">
+                            No
+                          </option>
+                        </select> -->
+                      </td>
+                      <td class="h-px w-px whitespace-nowrap px-2">
+                        <h1 *ngIf="item.picture != null" class="text-sm py-2">
+                          {{ item.picture }}
+                        </h1>
+                        <div *ngIf="item.picture == null">
+                          <button
+                            (click)="uploadModal(item)"
+                            type="button"
+                            class="text-sm bg-indigo-50 hover:bg-indigo-100 py-1 px-2 rounded-md"
+                          >
+                            Added
+                          </button>
+                        </div>
+                      </td>
+                      <td class="h-px w-px whitespace-nowrap px-2">
+                        <h1 class="text-sm py-2">{{ item.note }}</h1>
+                      </td>
+                    </tr>
                   </tbody>
                 </table>
                 <!-- End Table -->
@@ -589,4 +658,67 @@
   </div>
   <!-- End Content -->
   <!-- ========== END MAIN CONTENT ========== -->
-</body>
+</div>
+
+<div
+  [ngClass]="uploadBool ? '' : 'hidden'"
+  class="fixed flex items-center bg-slate-700 bg-opacity-25 top-0 z-40 w-screen h-screen"
+>
+  <div
+    class="mx-auto my-auto w-2/3 h-fit bg-white rounded-md px-7 py-4 space-y-2"
+  >
+    <div class="font-semibold text-lg flex justify-between">
+      <h1>Edit</h1>
+      <button (click)="uploadModal(null)" class="p-1 rounded-full hover:bg-slate-50">
+        X
+      </button>
+    </div>
+
+    <form
+      [formGroup]="receiveForm"
+      (submit)="submitUpload()"
+      class="px-3 space-y-2 py-2"
+    >
+      <div class="flex flex-col gap-1">
+        <label for="formFile">Diterima</label>
+        <select
+          #receiv
+          name="select"
+          id=""
+          formControlName="received"
+          [ngClass]="receiv.value == 'Yes' ? 'bg-green-100' : 'bg-red-100'"
+          class="rounded-lg p-2 border"
+        >
+          <option value="Yes" class="bg-green-100 rounded-lg">Yes</option>
+          <option value="No" class="bg-red-100 rounded-lg">No</option>
+        </select>
+      </div>
+      <div class="flex flex-col gap-1">
+        <label for="formFile">Gambar</label>
+        <input
+          (change)="changeReceived($event)"
+          class="form-control block border rounded-lg text-sm file:cursor-pointer text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100"
+          type="file"
+          id="formFile"
+        />
+      </div>
+      <div class="flex flex-col gap-1">
+        <label for="input">Keterangan</label>
+        <input
+          formControlName="note"
+          type="text"
+          id="input"
+          class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg text-sm focus:ring-blue-500 focus:border-blue-500 outline-none"
+        />
+      </div>
+      <div class="flex justify-center">
+        <button
+          type="submit"
+          class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
+        >
+          Submit
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

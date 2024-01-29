@@ -45,8 +45,8 @@ export class TransactionOutComponent {
     private apiService: ApiService,
     private spinner: NgxSpinnerService,
     private alertService: AlertService,
-    private deleteService:DeleteApiService,
-    private router:Router,
+    private deleteService: DeleteApiService,
+    private router: Router
   ) {
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
@@ -60,12 +60,12 @@ export class TransactionOutComponent {
       },
       (err) => {
         console.log(err);
-        
+
         this.alertService.onCallAlert(
           'Data cannot loaded, server error !',
           AlertType.Error
         ),
-        spinner.hide();
+          spinner.hide();
       }
     );
     this.changeSalesToArray();
@@ -226,22 +226,45 @@ export class TransactionOutComponent {
     this.exportBool = !this.exportBool;
   }
 
-  deleteSales(id:any){
-    this.apiService.salesDelete(id).subscribe(res=>{
-      this.alertService.onCallAlert('Delete Data ('+ id +') Success!', AlertType.Success)
-    }, err => {
-      this.alertService.onCallAlert('Delete Data ('+ id +') Failed!', AlertType.Error)
-    })
+  deleteSales(id: any) {
+    this.apiService.salesDelete(id).subscribe(
+      (res) => {
+        this.alertService.onCallAlert(
+          'Delete Data (' + id + ') Success!',
+          AlertType.Success
+        );
+      },
+      (err) => {
+        this.alertService.onCallAlert(
+          'Delete Data (' + id + ') Failed!',
+          AlertType.Error
+        );
+      }
+    );
   }
 
   deleteRow(data: any) {
-    const fun =
-      'this.apiService.salesDelete(' +
-      JSON.stringify(data.id) +
-      ')';
+    const fun = 'this.apiService.salesDelete(' + JSON.stringify(data.id) + ')';
     this.deleteService.onCallDelete({
-      dataName:  ' (' + data.date + ') ' + data.vendor,
+      dataName: ' (' + data.date + ') ' + data.vendor,
       func: fun,
     });
+  }
+
+  cetak(item: any) {
+    // Serialize the state data to URL parameters
+    console.log(item);
+
+    var stateString = encodeURIComponent(JSON.stringify(item));
+    var itemEncode = window.btoa(item);
+    var itemDoode = window.atob(itemEncode);
+    console.log(itemEncode);
+    console.log(itemDoode);
+
+    var parsedObject = new Function('return ' + itemDoode)();
+    console.log(parsedObject);
+
+    // Open a new tab with the current URL and the serialized state data as parameters
+    // window.open(`/transaction-in/print?${itemEncode}`, '_blank');
   }
 }
