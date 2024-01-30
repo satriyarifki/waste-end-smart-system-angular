@@ -33,11 +33,22 @@
       </div>
       <div>
         <a
-          [routerLink]="['/write-off/create']"
-          class="px-7 py-4 font-medium bg-blue-50 hover:bg-blue-100 hover:text-blue-600 text-blue-500 rounded-lg text-sm"
+          (click)="inputCsv.click()"
+          class="px-7 py-4 cursor-pointer font-medium bg-blue-50 hover:bg-blue-100 hover:text-blue-600 text-blue-500 rounded-lg text-sm"
         >
           Tambah Write Off
         </a>
+        <input
+          #inputCsv
+          (change)="changeCsv($event)"
+          class="hidden form-control border rounded-lg text-sm file:cursor-pointer text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100"
+          type="file"
+          id="csv"
+          name="csv"
+          
+          
+          
+        />
       </div>
     </header>
     <div class="px-8 py-6">
@@ -442,9 +453,13 @@
                           <button
                             (click)="uploadModal(item)"
                             type="button"
-                            class="text-sm bg-indigo-50 hover:bg-indigo-100 py-1 px-2 rounded-md"
+                            class="text-sm bg-yellow-50 hover:bg-yellow-100 text-yellow-800 p-2 rounded-xl"
                           >
-                            Edit
+                          <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
+                            <path
+                              d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"
+                            ></path>
+                          </svg>
                           </button>
                         </div>
                       </td>
@@ -683,7 +698,7 @@
   class="fixed flex items-center bg-slate-700 bg-opacity-25 top-0 z-40 w-screen h-screen"
 >
   <div
-    class="mx-auto my-auto w-2/3 h-fit bg-white rounded-md px-7 py-4 space-y-2"
+    class="mx-auto my-auto w-[85%] md:w-2/3 max-h-[85vh] bg-white rounded-md px-7 py-4 space-y-2"
   >
     <div class="font-semibold text-lg flex justify-between">
       <h1>Edit</h1>
@@ -695,9 +710,9 @@
     <form
       [formGroup]="receiveForm"
       (submit)="submitUpload()"
-      class="px-3 space-y-2 py-2"
+      class=" px-3 space-y-2 py-2"
     >
-      <div class="flex flex-col gap-1">
+      <div class="flex flex-col gap-1 overflow-y-auto">
         <label for="formFile">Diterima</label>
         <select
           #receiv
@@ -715,8 +730,8 @@
       <div class="flex flex-col gap-1">
         <label for="picture">Gambar</label>
         <input
-        
-          (change)="changeReceived($event)"
+          #inputPicture
+          (change)="changePicture($event)"
           class="form-control block border rounded-lg text-sm file:cursor-pointer text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100"
           type="file"
           id="picture"
@@ -724,7 +739,7 @@
           
           
         />
-        <img *ngIf="uploadBool" src="http://127.0.0.1:3881/api/write-off/picture/{{receiveForm.value.id}}" class="w-1/2 mx-auto" alt="">
+        <img *ngIf="uploadBool" [src]="imgSrc" class="max-h-[35vh] mx-auto" alt="">
       </div>
       <div class="flex flex-col gap-1">
         <label for="input">Keterangan</label>
@@ -746,3 +761,65 @@
     </form>
   </div>
 </div>
+<div
+  [ngClass]="csvRecords.length != 0 ? '' : 'hidden'"
+  class="fixed flex items-center bg-slate-700 bg-opacity-25 top-0 z-40 w-screen h-screen"
+>
+  <div
+    class="mx-auto my-auto w-[85%] md:w-[95%] max-h-[85vh] bg-white rounded-md px-7 py-4 space-y-3"
+  >
+    <div class="font-semibold text-lg flex justify-between">
+      <h1>Data Preview</h1>
+      <button (click)="closeCsvPreview()" class="p-1 rounded-full hover:bg-slate-50">
+        X
+      </button>
+    </div>
+    <div class="flex flex-col max-h-[60vh]">
+      <div class="-m-1.5 border rounded-md overflow-x-auto">
+        <div class="p-1.5 inline-block align-middle">
+          <div class="">
+            <table class=" divide-y divide-gray-200 table-auto ">
+              <thead class=" ">
+                <tr>
+                  <th scope="col" class="px-4 py-3 text-start text-xs font-medium text-gray-500 uppercase">DIC</th>
+                  <th scope="col" class="px-4 py-3 text-start text-xs font-medium text-gray-500 uppercase">Nama</th>
+                  <th scope="col" class="px-4 py-3 text-start text-xs font-medium text-gray-500 uppercase">Qty</th>
+                  <th scope="col" class="px-4 py-3 text-start text-xs font-medium text-gray-500 uppercase">Year</th>
+                  <th scope="col" class="px-4 py-3 text-end text-xs font-medium text-gray-500 uppercase">Quartal</th>
+                  <th scope="col" class="px-4 py-3 text-end text-xs font-medium text-gray-500 uppercase">Diterima</th>
+                  <th scope="col" class="px-4 py-3 text-end text-xs font-medium text-gray-500 uppercase">Gambar</th>
+                  <th scope="col" class="px-4 py-3 text-end text-xs font-medium text-gray-500 uppercase">Note</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-200   ">
+                <tr *ngFor="let item of csvRecords">
+                  <td class="px-3 py-2 whitespace-nowrap text-sm font-medium text-gray-800 ">{{ item?.dic }}</td>
+                  <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-800 ">{{ item?.asset }}</td>
+                  <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-800 ">{{ item?.qty }}</td>
+                  <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-800 ">{{ item?.year }}</td>
+                  <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-800 ">{{ item?.quartal }}</td>
+                  <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-800 ">{{ item?.received }}</td>
+                  <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-800 ">{{ item?.picture }}</td>
+                  <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-800 ">{{ item?.note }}</td>
+                  
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="flex justify-center py-2">
+      <button
+        type="submit"
+        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
+      >
+        Upload
+      </button>
+    </div>
+    
+  </div>
+</div>
+
+
+

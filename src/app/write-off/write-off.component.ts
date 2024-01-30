@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
@@ -8,6 +8,10 @@ import { forkJoin } from 'rxjs';
 import { AlertType } from '../services/alert/alert.model';
 import { AlertService } from '../services/alert/alert.service';
 import { ApiService } from '../services/api.service';
+import { createReadStream } from 'fs';
+import { CsvParser } from 'csv-parser';
+import { NgxCsvParser } from 'ngx-csv-parser';
+import { NgxCSVParserError } from 'ngx-csv-parser';
 
 @Component({
   selector: 'app-write-off',
@@ -20,6 +24,8 @@ export class WriteOffComponent {
     elementIdOrContent: 'writeOff', // the id of html/table element
   };
   @ViewChild('p', { static: true }) pa: PaginationControlsDirective | any;
+  @ViewChild('inputPicture') inputPicture!: ElementRef;
+  @ViewChild('inputCsv') inputCsv!: ElementRef;
 
   // Tools
   searchInput: any;
@@ -27,20 +33,22 @@ export class WriteOffComponent {
 
   // Api
   writeOffApi: any[] = [];
+  blobImage: any;
 
   // Boolean
   exportBool: Boolean = false;
   uploadBool: Boolean = false;
 
+  imgSrc: any;
+  csvRecords:any[] = [];
 
   // Form
   receiveForm = this.formBuilder.group({
     id: '0',
     received: null,
-    picture: null,
+    picture: [null as File | null],
     note: '',
   });
-  inputPicture:any
 
   config = {
     id: 'custom',
@@ -55,7 +63,8 @@ export class WriteOffComponent {
     private spinner: NgxSpinnerService,
     private alertService: AlertService,
     private formBuilder: FormBuilder,
-    private router:Router
+    private router: Router,
+    private ngxCsvParser: NgxCsvParser
   ) {
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
@@ -80,10 +89,50 @@ export class WriteOffComponent {
     // });
   }
 
-  changeReceived(data: any) {
-    this.receiveForm.patchValue({ picture: data.target.files[0] });
-    console.log(this.receiveForm.value);
+  changePicture(data: any) {
+    if (data.target.files[0]) {
+      this.receiveForm.patchValue({ picture: data.target.files[0] });
+      this.imgSrc = URL.createObjectURL(data.target.files[0]);
+    } else {
+      this.imgSrc = '';
+      console.log(this.imgSrc);
+    }
   }
+
+  changeCsv(data: any) {
+    console.log(data.target.files[0].text());
+    let reader: FileReader = new FileReader();
+    reader.readAsText(data.target.files[0]);
+    reader.onload = (e) => {
+      let csv = reader.result;
+      // console.log(csv);
+    };
+    let results:any[] = [];
+    // createReadStream(data.target.files[0]).pipe(CsvParser())
+    // .on('data', (data:any) => results.push(data))
+    // .on('end', () => {
+    //   console.log(results);
+    //   // [
+    //   //   { NAME: 'Daffy Duck', AGE: '24' },
+    //   //   { NAME: 'Bugs Bunny', AGE: '22' }
+    //   // ]
+    // });
+    this.ngxCsvParser.parse(data.target.files[0], { header: true, delimiter: ';' })
+      .pipe().subscribe((result: any) => {
+
+        console.log('Result', result);
+        this.csvRecords = result;
+      }, (error: NgxCSVParserError) => {
+        console.log('Error', error);
+      });
+  }
+
+  closeCsvPreview(){
+    const dataTransfer = new DataTransfer();
+    this.inputCsv.nativeElement.files = dataTransfer.files
+    this.csvRecords = []
+  }
+
   changeItemPerPageSelect(value: any) {
     this.config.itemsPerPage = value;
     // console.log(this.config.itemsPerPage);
@@ -93,15 +142,23 @@ export class WriteOffComponent {
   }
 
   uploadModal(data: any) {
-    console.log(data);
+    // console.log(data);
     if (data != null) {
       this.uploadBool = true;
       this.receiveForm.controls['id'].setValue(data.id);
       this.receiveForm.controls['received'].setValue(data.received);
-      
-      this.inputPicture = ('http://127.0.0.1:3881/api/write-off/picture/'+ data.id)
-      console.log(this.inputPicture);
-      
+      this.apiService.writeOffImage(data.id).subscribe((res: any) => {
+        this.blobImage = new Blob([res], { type: 'image/png' });
+        const filee = new File([this.blobImage], 'ímm.png', {
+          type: 'image/png',
+        });
+        // console.log(filee);
+        const dataTransfer = new DataTransfer();
+        dataTransfer.items.add(filee);
+        this.inputPicture.nativeElement.files = dataTransfer.files;
+        this.imgSrc = URL.createObjectURL(filee);
+        this.receiveForm.patchValue({ picture: filee });
+      });
     } else {
       this.uploadBool = false;
     }
@@ -117,13 +174,15 @@ export class WriteOffComponent {
     formData.append('note', this.receiveForm.value.note!);
     formData.append('picture', this.receiveForm.value.picture!);
     formData.append('received', this.receiveForm.value.received!);
-    console.log(formData.getAll('picture'));
     this.apiService.writeOffUpdate(formData).subscribe((res) => {
-      console.log(res);
-      this.alertService.onCallAlert('Update Write Off Success!', AlertType.Success)
+      // console.log(res);
+      this.alertService.onCallAlert(
+        'Update Write Off Success!',
+        AlertType.Success
+      );
       this.router.onSameUrlNavigation = 'reload';
-        this.router.navigateByUrl(this.router.url);
-      this.uploadModal(null)
+      this.router.navigateByUrl(this.router.url);
+      this.uploadModal(null);
     });
   }
 }
