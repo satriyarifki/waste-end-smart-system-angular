@@ -130,6 +130,9 @@ export class ApiService {
   writeOffGet(): Observable<any> {
     return this.http.get(this.baseUrl + 'write-off');
   }
+  writeOffPost(body:any): Observable<any> {
+    return this.http.post(this.baseUrl + 'write-off',body);
+  }
   writeOffUpdate(body:any): Observable<any> {
     return this.http.put(this.baseUrl + 'write-off',body);
   }

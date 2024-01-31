@@ -40,7 +40,7 @@ export class WriteOffComponent {
   uploadBool: Boolean = false;
 
   imgSrc: any;
-  csvRecords:any[] = [];
+  csvRecords: any[] = [];
 
   // Form
   receiveForm = this.formBuilder.group({
@@ -107,30 +107,24 @@ export class WriteOffComponent {
       let csv = reader.result;
       // console.log(csv);
     };
-    let results:any[] = [];
-    // createReadStream(data.target.files[0]).pipe(CsvParser())
-    // .on('data', (data:any) => results.push(data))
-    // .on('end', () => {
-    //   console.log(results);
-    //   // [
-    //   //   { NAME: 'Daffy Duck', AGE: '24' },
-    //   //   { NAME: 'Bugs Bunny', AGE: '22' }
-    //   // ]
-    // });
-    this.ngxCsvParser.parse(data.target.files[0], { header: true, delimiter: ';' })
-      .pipe().subscribe((result: any) => {
-
-        console.log('Result', result);
-        this.csvRecords = result;
-      }, (error: NgxCSVParserError) => {
-        console.log('Error', error);
-      });
+    this.ngxCsvParser
+      .parse(data.target.files[0], { header: true, delimiter: ';' })
+      .pipe()
+      .subscribe(
+        (result: any) => {
+          console.log('Result', result);
+          this.csvRecords = result;
+        },
+        (error: NgxCSVParserError) => {
+          console.log('Error', error);
+        }
+      );
   }
 
-  closeCsvPreview(){
+  closeCsvPreview() {
     const dataTransfer = new DataTransfer();
-    this.inputCsv.nativeElement.files = dataTransfer.files
-    this.csvRecords = []
+    this.inputCsv.nativeElement.files = dataTransfer.files;
+    this.csvRecords = [];
   }
 
   changeItemPerPageSelect(value: any) {
@@ -141,27 +135,33 @@ export class WriteOffComponent {
     this.exportBool = !this.exportBool;
   }
 
-  uploadModal(data: any) {
+  updateModal(data: any) {
     // console.log(data);
     if (data != null) {
       this.uploadBool = true;
       this.receiveForm.controls['id'].setValue(data.id);
       this.receiveForm.controls['received'].setValue(data.received);
-      this.apiService.writeOffImage(data.id).subscribe((res: any) => {
-        this.blobImage = new Blob([res], { type: 'image/png' });
-        const filee = new File([this.blobImage], 'ímm.png', {
-          type: 'image/png',
+      if (data.picture != null ) {
+        this.apiService.writeOffImage(data.id).subscribe((res: any) => {
+          this.blobImage = new Blob([res], { type: 'image/png' });
+          const filee = new File([this.blobImage], data.id + '.png', {
+            type: 'image/png',
+          });
+          // console.log(filee);
+          const dataTransfer = new DataTransfer();
+          dataTransfer.items.add(filee);
+          this.inputPicture.nativeElement.files = dataTransfer.files;
+          this.imgSrc = URL.createObjectURL(filee);
+          this.receiveForm.patchValue({ picture: filee });
         });
-        // console.log(filee);
-        const dataTransfer = new DataTransfer();
-        dataTransfer.items.add(filee);
-        this.inputPicture.nativeElement.files = dataTransfer.files;
-        this.imgSrc = URL.createObjectURL(filee);
-        this.receiveForm.patchValue({ picture: filee });
-      });
+      }
     } else {
       this.uploadBool = false;
+      const dataTransfer = new DataTransfer();
+      this.inputPicture.nativeElement.files = dataTransfer.files;
+      this.imgSrc = '';
     }
+    
   }
 
   onPageChange(event: any) {
@@ -182,7 +182,29 @@ export class WriteOffComponent {
       );
       this.router.onSameUrlNavigation = 'reload';
       this.router.navigateByUrl(this.router.url);
-      this.uploadModal(null);
+      this.updateModal(null);
     });
+  }
+
+  storeCsv() {
+    console.log(this.csvRecords);
+    if (this.csvRecords.length != 0) {
+      this.apiService.writeOffPost(this.csvRecords).subscribe(
+        (res) => {
+          console.log(res);
+          this.alertService.onCallAlert(
+            'Upload Csv Success!',
+            AlertType.Success
+          );
+          this.closeCsvPreview();
+        },
+        (err) => {
+          console.log(err);
+          this.alertService.onCallAlert('Upload Csv Error!', AlertType.Error);
+        }
+      );
+    } else {
+      this.alertService.onCallAlert('Csv row is null!', AlertType.Error);
+    }
   }
 }
