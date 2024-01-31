@@ -12,6 +12,8 @@ import { createReadStream } from 'fs';
 import { CsvParser } from 'csv-parser';
 import { NgxCsvParser } from 'ngx-csv-parser';
 import { NgxCSVParserError } from 'ngx-csv-parser';
+import { DeleteApiService } from '../services/delete-api/delete-api.service';
+import { SpinnerService } from '../services/spinner/spinner.service';
 
 @Component({
   selector: 'app-write-off',
@@ -60,17 +62,26 @@ export class WriteOffComponent {
     private exportAsService: ExportAsService,
     private apiService: ApiService,
     private actRouter: ActivatedRoute,
-    private spinner: NgxSpinnerService,
+    private spinnerService: SpinnerService,
     private alertService: AlertService,
     private formBuilder: FormBuilder,
     private router: Router,
-    private ngxCsvParser: NgxCsvParser
+    private ngxCsvParser: NgxCsvParser,
+    private deleteService:DeleteApiService
   ) {
+    spinnerService.onCallSpinner(true)
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
     };
     forkJoin(apiService.writeOffGet()).subscribe((res) => {
       this.writeOffApi = res[0];
+      spinnerService.onCallSpinner(false)
+    }, err=>{
+      this.alertService.onCallAlert(
+        'Data cannot loaded, server error !',
+        AlertType.Error
+      )
+      spinnerService.onCallSpinner(false)
     });
   }
   export(type: any) {
@@ -162,6 +173,14 @@ export class WriteOffComponent {
       this.imgSrc = '';
     }
     
+  }
+
+  deleteRow(data: any) {
+    const fun = 'this.apiService.writeOffDelete(' + JSON.stringify(data.id) + ')';
+    this.deleteService.onCallDelete({
+      dataName: '' + data.asset + ' (' + data.year + '~' + data.quartal +')',
+      func: fun,
+    });
   }
 
   onPageChange(event: any) {

@@ -4,7 +4,7 @@
     </div>
 
     <!-- Modal -->
-    <div class="relative w-full cursor-pointer pointer-events-none transition my-auto p-4">
+    <div class="relative w-full cursor-pointer pointer-events-none transition my-auto p-4 font-outfit">
         <div
             class="w-full py-2 bg-white cursor-default pointer-events-auto dark:bg-gray-800 relative rounded-xl mx-auto max-w-sm">
 
@@ -24,9 +24,12 @@
 
             <div class="space-y-2 p-2">
                 <div class="p-4 space-y-2 text-center dark:text-white">
-                    <h2 class="text-2xl font-semibold tracking-tight text-gray-700" id="page-action.heading">
-                        Delete <br> <span class="font-bold text-lg text-gray-900">{{dataName}}</span>
+                    <h2 class="text-lg font-semibold tracking-tight text-red-600 text-opacity-70" id="page-action.heading">
+                        Delete <br> 
                     </h2>
+                    <h1 class="font-bold text-lg text-gray-900">
+                        {{dataName}}
+                    </h1>
 
                     <p class="text-gray-500">
                         Are you sure you would like to do this?

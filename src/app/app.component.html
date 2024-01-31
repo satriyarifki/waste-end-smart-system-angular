@@ -1,6 +1,7 @@
 <app-navbar *ngIf="!router.url.includes('transaction-in/print')"></app-navbar>
 <app-sidebar *ngIf="!router.url.includes('transaction-in/print') && !router.url.includes('login')"></app-sidebar>
 <app-alert></app-alert>
+<app-spinner></app-spinner>
 <app-edit-report></app-edit-report>
 <app-delete-api></app-delete-api>
 

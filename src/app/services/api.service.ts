@@ -139,4 +139,7 @@ export class ApiService {
   writeOffImage(id:any): Observable<ArrayBuffer> {
     return this.http.get(this.baseUrl + 'write-off/picture/'+id, { responseType: 'arraybuffer' })
   }
+  writeOffDelete(id:any): Observable<any> {
+    return this.http.delete(this.baseUrl + 'write-off/'+id)
+  }
 }
