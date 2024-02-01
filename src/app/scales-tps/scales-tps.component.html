@@ -410,7 +410,6 @@
                         line: item.line_name,
                         product: item.product_name
                       }"
-                      
                     >
                       <td class="h-px w-px whitespace-nowrap py-2.5">
                         <h1 class="text-sm">
@@ -435,12 +434,15 @@
                       </td>
                       <td class="h-px w-px whitespace-nowrap">
                         <a
+                          
                           (click)="
-                            item.approval != 1
-                              ? changeModalApprove({
-                                  status: 'open',
-                                  lot: item.global_variable_2
-                                })
+                            authService.getUser().roleId < 2
+                              ? item.approval != 1
+                                ? changeModalApprove({
+                                    status: 'open',
+                                    lot: item.global_variable_2
+                                  })
+                                : ''
                               : '';
                             $event.stopPropagation()
                           "

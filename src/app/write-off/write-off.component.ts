@@ -14,6 +14,10 @@ import { NgxCsvParser } from 'ngx-csv-parser';
 import { NgxCSVParserError } from 'ngx-csv-parser';
 import { DeleteApiService } from '../services/delete-api/delete-api.service';
 import { SpinnerService } from '../services/spinner/spinner.service';
+import { AuthService } from '../services/auth.service';
+import { environment } from 'src/environments/environment.development';
+
+const baseApi = environment.baseApi;
 
 @Component({
   selector: 'app-write-off',
@@ -21,6 +25,7 @@ import { SpinnerService } from '../services/spinner/spinner.service';
   styleUrls: ['./write-off.component.css'],
 })
 export class WriteOffComponent {
+  baseApi = baseApi
   exportAsConfig: ExportAsConfig = {
     type: 'csv', // the type you want to download
     elementIdOrContent: 'writeOff', // the id of html/table element
@@ -67,7 +72,8 @@ export class WriteOffComponent {
     private formBuilder: FormBuilder,
     private router: Router,
     private ngxCsvParser: NgxCsvParser,
-    private deleteService:DeleteApiService
+    private deleteService:DeleteApiService,
+    public authService:AuthService
   ) {
     spinnerService.onCallSpinner(true)
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
@@ -111,7 +117,7 @@ export class WriteOffComponent {
   }
 
   changeCsv(data: any) {
-    console.log(data.target.files[0].text());
+    // console.log(data.target.files[0].text());
     let reader: FileReader = new FileReader();
     reader.readAsText(data.target.files[0]);
     reader.onload = (e) => {
@@ -123,7 +129,7 @@ export class WriteOffComponent {
       .pipe()
       .subscribe(
         (result: any) => {
-          console.log('Result', result);
+          // console.log('Result', result);
           this.csvRecords = result;
         },
         (error: NgxCSVParserError) => {
@@ -163,6 +169,7 @@ export class WriteOffComponent {
           dataTransfer.items.add(filee);
           this.inputPicture.nativeElement.files = dataTransfer.files;
           this.imgSrc = URL.createObjectURL(filee);
+          
           this.receiveForm.patchValue({ picture: filee });
         });
       }

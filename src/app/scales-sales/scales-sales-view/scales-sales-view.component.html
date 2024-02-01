@@ -332,7 +332,7 @@
                 >
                   <thead class="bg-gray-50 text-center">
                     <tr>
-                      <th scope="col" class="px-6 py-3 text-left">
+                      <th *ngIf="authService.getUser()?.roleId <= 2 " scope="col" class="px-6 py-3 text-left">
                         <div class="flex items-center justify-center gap-x-2">
                           <span
                             class="text-xs font-semibold uppercase text-center tracking-wide text-gray-800"
@@ -427,7 +427,7 @@
                       "
                       class="bg-white hover:bg-gray-50 text-center"
                     >
-                      <td class="h-px w-px whitespace-nowrap">
+                      <td *ngIf="authService.getUser()?.roleId <= 2 " class="h-px w-px whitespace-nowrap">
                         <button
                           (click)="
                             editModalChange(

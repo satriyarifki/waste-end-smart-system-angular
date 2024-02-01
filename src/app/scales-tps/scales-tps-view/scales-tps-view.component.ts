@@ -4,6 +4,7 @@ import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
 import { PaginationControlsDirective } from 'ngx-pagination';
 import { forkJoin } from 'rxjs';
 import { ApiService } from 'src/app/services/api.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { EditReportService } from 'src/app/services/edit-report/edit-report.service';
 
 @Component({
@@ -45,10 +46,10 @@ export class ScalesTpsViewComponent {
     private exportAsService: ExportAsService,
     private apiService: ApiService,
     private actRouter: ActivatedRoute,
-    private editReportService: EditReportService
+    private editReportService: EditReportService,
+    public authService:AuthService
   ) {
-    // console.log(this.dataParams.get('line'));
-    // console.log(this.dataParams.get('lot'));
+    
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
     };

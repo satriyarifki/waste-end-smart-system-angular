@@ -7,6 +7,7 @@ import { ActualAug, harga } from '../dashboard-sales/db_sales';
 import { AlertType } from '../services/alert/alert.model';
 import { AlertService } from '../services/alert/alert.service';
 import { ApiService } from '../services/api.service';
+import { AuthService } from '../services/auth.service';
 import { DeleteApiService } from '../services/delete-api/delete-api.service';
 
 @Component({
@@ -46,7 +47,8 @@ export class TransactionOutComponent {
     private spinner: NgxSpinnerService,
     private alertService: AlertService,
     private deleteService: DeleteApiService,
-    private router: Router
+    private router: Router,
+    public authService:AuthService
   ) {
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
@@ -253,18 +255,7 @@ export class TransactionOutComponent {
 
   cetak(item: any) {
     // Serialize the state data to URL parameters
-    console.log(item);
-
-    var stateString = encodeURIComponent(JSON.stringify(item));
-    var itemEncode = window.btoa(item);
-    var itemDoode = window.atob(itemEncode);
-    console.log(itemEncode);
-    console.log(itemDoode);
-
-    var parsedObject = new Function('return ' + itemDoode)();
-    console.log(parsedObject);
-
     // Open a new tab with the current URL and the serialized state data as parameters
-    // window.open(`/transaction-in/print?${itemEncode}`, '_blank');
+    window.open(`/transaction-in/print/` + item.id, '_blank');
   }
 }

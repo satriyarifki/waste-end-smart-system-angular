@@ -7,6 +7,7 @@ import { TooltipDirective } from '../directive/tooltip.directive';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AlertService } from '../services/alert/alert.service';
 import { AlertType } from '../services/alert/alert.model';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-scales-tps',
@@ -43,7 +44,8 @@ export class ScalesTpsComponent {
     private exportAsService: ExportAsService,
     private apiService: ApiService,
     private spinner: NgxSpinnerService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    public authService:AuthService
   ) {
     spinner.show();
   }

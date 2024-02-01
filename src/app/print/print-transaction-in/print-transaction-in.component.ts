@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { forkJoin, timeout } from 'rxjs';
 import { ActualAug } from 'src/app/dashboard-sales/db_sales';
 import { ApiService } from 'src/app/services/api.service';
@@ -34,9 +34,10 @@ export class PrintTransactionInComponent {
   dataRekap = data;
   dataSales = ActualAug;
   paramSales = history.state;
+  paramId = this.actRoute.snapshot.params['id']
   salesViewApi: any[] = [];
 
-  constructor(private router: Router, private apiService: ApiService) {
+  constructor(private router: Router, private actRoute:ActivatedRoute, private apiService: ApiService) {
     // console.log(history.state);
 
     // console.log(location.getState());
@@ -44,11 +45,11 @@ export class PrintTransactionInComponent {
     // console.log(this.filterSalesByDate(this.paramSales.date));
   }
   ngOnInit() {
-    // console.log(history.state);
-    // console.log(this.location.get);
-    // setTimeout(() => {
-    //   window.print();
-    // }, 500);
+    this.apiService.salesViewIdGet(this.paramId).subscribe(res=>{
+      // console.log(res);
+      this.paramSales = res
+      
+    })
   }
   ngAfterViewInit(): void {
     // this.makePdf()

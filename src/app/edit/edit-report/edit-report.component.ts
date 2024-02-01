@@ -75,7 +75,6 @@ export class EditReportComponent {
           if (params.data == undefined) {
             this.alertService.onCallAlert('Data '+ params.name +' Not Found!',AlertType.Error)
           } else {
-
             this.callModal(params);
           }
         }

@@ -4,6 +4,7 @@ import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
 import { PaginationControlsDirective } from 'ngx-pagination';
 import { forkJoin } from 'rxjs';
 import { ApiService } from 'src/app/services/api.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { EditReportService } from 'src/app/services/edit-report/edit-report.service';
 
 @Component({
@@ -40,7 +41,8 @@ export class ScalesSalesViewComponent {
     private apiService: ApiService,
     private actRouter: ActivatedRoute,
     private router: Router,
-    private editReportService: EditReportService
+    private editReportService: EditReportService,
+    public authService: AuthService
   ) {
     // console.log(this.dataParams.get('date'));
     // console.log(this.dataParams.get('lot'));

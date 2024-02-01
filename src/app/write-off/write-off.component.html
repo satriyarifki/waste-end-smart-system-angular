@@ -31,7 +31,7 @@
           <!-- <p class="mb-1 text-sm font-semibold text-blue-600">Pages</p> -->
         </div>
       </div>
-      <div>
+      <div *ngIf="authService.getUser()?.roleId <= 2 ">
         <a
           (click)="inputCsv.click()"
           class="px-7 py-4 cursor-pointer font-medium bg-blue-50 hover:bg-blue-100 hover:text-blue-600 text-blue-500 rounded-lg text-sm"
@@ -264,7 +264,7 @@
                 >
                   <thead class="bg-gray-50 text-center">
                     <tr>
-                      <th scope="col" class="px-6 py-3 text-left">
+                      <th *ngIf="authService.getUser()?.roleId <= 2 " scope="col" class="px-6 py-3 text-left">
                         <div class="flex items-center justify-center gap-x-2">
                           <span
                             class="text-xs font-semibold uppercase text-center tracking-wide text-gray-800"
@@ -380,7 +380,7 @@
                       "
                       class="bg-white hover:bg-gray-50 text-center"
                     >
-                      <td class="h-px w-px whitespace-nowrap px-2">
+                      <td *ngIf="authService.getUser()?.roleId <= 2 " class="h-px w-px whitespace-nowrap px-2">
                         <div >
                           <button
                             (click)="updateModal(item)"
@@ -463,19 +463,21 @@
                         </select> -->
                       </td>
                       <td class="h-px w-px whitespace-nowrap px-2">
-                        <div *ngIf="item.picture != null || item.picture != ''" class="hover:scale-125 transition-transform cursor-pointer hover:shadow-md">
+                        <div *ngIf="item.picture != null && item.picture != ''" class="hover:scale-125 transition-transform cursor-pointer hover:shadow-md">
 
                           <!-- <h1  class="text-sm py-2">
                             {{ item.picture }}
                           </h1> -->
-                          <img  [src]="item.picture != null ? 'http://127.0.0.1:3881/api/write-off/picture/'+item.id : ''" alt="">
+                          <img  [src]="item.picture != null && item.picture != '' ? baseApi+'api/write-off/picture/'+item.id : ''" alt="">
                           
                         </div>
+                        <h1 *ngIf="item.picture == null || item.picture == ''">-</h1>
                         
                         
                       </td>
                       <td class="h-px w-px whitespace-nowrap px-2">
-                        <h1 class="text-sm py-2">{{ item.note }}</h1>
+                        <h1 class="text-sm py-2">{{ item.note == ''? '-' : item.note }}</h1>
+
                       </td>
                     </tr>
                   </tbody>
@@ -690,6 +692,7 @@
           (change)="changePicture($event)"
           class="form-control block border rounded-lg text-sm file:cursor-pointer text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100"
           type="file"
+          accept="image/*"
           id="picture"
           name="picture"
           

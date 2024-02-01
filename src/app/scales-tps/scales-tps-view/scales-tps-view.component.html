@@ -363,7 +363,7 @@
                         </div>
                       </th> -->
 
-                      <th scope="col" class="px-6 py-3 text-left">
+                      <th *ngIf="authService.getUser()?.roleId <= 2 " scope="col" class="px-6 py-3 text-left">
                         <div class="flex items-center justify-center gap-x-2">
                           <span
                             class="text-xs font-semibold uppercase tracking-wide text-gray-800"
@@ -468,7 +468,7 @@
                           {{ item.line_name }}
                         </h1>
                       </td> -->
-                      <td class="h-px w-px whitespace-nowrap">
+                      <td *ngIf="authService.getUser()?.roleId <= 2 " class="h-px w-px whitespace-nowrap">
                         <button
                         (click)="editModalChange(filterTpsByBag(item.global_variable_1)[0])"
                           class="inline-flex items-center justify-center w-8 h-8 mr-2 text-gray-700 transition-colors duration-150 bg-yellow-50 rounded-full focus:shadow-outline hover:bg-yellow-100"

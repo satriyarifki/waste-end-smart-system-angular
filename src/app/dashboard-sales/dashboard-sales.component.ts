@@ -9,6 +9,7 @@ import {
 import { AlertType } from '../services/alert/alert.model';
 import { AlertService } from '../services/alert/alert.service';
 import { ApiService } from '../services/api.service';
+import { AuthService } from '../services/auth.service';
 import {
   ActualAug,
   harga,
@@ -175,59 +176,6 @@ export class DashboardSalesComponent {
       });
     //
   }
-
-  // sumActualByCategory() {
-  //   let data = [0, 0, 0, 0, 0, 0, 0, 0];
-
-  //   if (this.salesFiltered.length != 0) {
-  //     this.salesFiltered.forEach((element) => {
-  //       if (element.vendor.includes('Desa')) {
-  //         data[0] += element.preform * this.priceLimbah.desa.preform;
-  //         data[1] += element.botol * this.priceLimbah.desa.botol;
-  //         data[2] += element.karton * this.priceLimbah.desa.karton;
-  //         data[3] += element.balok * this.priceLimbah.desa.balok;
-  //         data[4] += element.sak_kecil * this.priceLimbah.desa.sak_kecil;
-  //         data[5] += element.sak_besar * this.priceLimbah.desa.sak_besar;
-  //         data[6] += element.resin * this.priceLimbah.desa.resin;
-  //         data[7] +=
-  //           element.palet_plastik * this.priceLimbah.desa.pallet_plastik;
-  //       } else {
-  //         // console.log(element.vendor);
-  //         data[0] += element.preform * this.priceLimbah.swasta.preform;
-  //         data[1] += element.botol * this.priceLimbah.swasta.botol;
-  //         data[2] += element.karton * this.priceLimbah.swasta.karton;
-  //         data[3] += element.balok * this.priceLimbah.swasta.balok;
-  //         data[4] += element.sak_kecil * this.priceLimbah.swasta.sak_kecil;
-  //         data[5] += element.sak_besar * this.priceLimbah.swasta.sak_besar;
-  //         data[6] += element.resin * this.priceLimbah.swasta.resin;
-  //         data[7] +=
-  //           element.palet_plastik * this.priceLimbah.swasta.pallet_plastik;
-  //       }
-  //     });
-  //   } else {
-  //     // console.log('else');
-
-  //     this.actual.forEach((element) => {
-  //       if (!element.vendor.includes('Desa')) {
-  //         data[0] += element.preform.qty * element.preform.price;
-  //         data[1] += element.botol.qty * element.botol.price;
-  //         data[2] += element.karton.qty * element.karton.price;
-  //         data[3] += element.balok.qty * element.balok.price;
-  //         data[4] += element.sak_kecil.qty * element.sak_kecil.price;
-  //         data[5] += element.sak_besar.qty * element.sak_besar.price;
-  //         data[6] += element.resin.qty * element.resin.price;
-  //         data[7] += element.palet_plastik.qty * element.palet_plastik.price;
-  //       }
-  //     });
-  //   }
-
-  //   // console.log(Math.max(...data));
-
-  //   // console.log(data);
-  //   this.sumSalesFiltered = data;
-
-  //   // return data;
-  // }
 
   toPercentCompare(first: any, sec: any) {
     return ((sec / first - 1) * 100).toFixed();
