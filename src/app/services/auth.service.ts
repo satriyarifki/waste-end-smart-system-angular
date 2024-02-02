@@ -64,6 +64,9 @@ export class AuthService {
 
   public getUser(): any {
     const user = localStorage.getItem(USER_KEY);
+    if (this.getToken() == null) {
+      localStorage.clear()
+    }
     if (user) {
       return JSON.parse(user)[0];
     }

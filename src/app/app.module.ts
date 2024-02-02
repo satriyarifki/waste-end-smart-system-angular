@@ -10,10 +10,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { NavbarComponent } from './layouts/navbar/navbar.component';
-import { StockBarangComponent } from './stock-barang/stock-barang.component';
 import { CustomFilterPipe } from './pipe/custom-filter.pipe';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { TransactionInComponent } from './transaction-in/transaction-in.component';
 import { TransactionOutComponent } from './transaction-out/transaction-out.component';
 import { CreateTransactionInComponent } from './create/create-transaction-in/create-transaction-in.component';
 import { CreateTransactionOutComponent } from './create/create-transaction-out/create-transaction-out.component';
@@ -47,9 +45,7 @@ import { SpinnerComponent } from './layouts/spinner/spinner.component';
     LoginComponent,
     DashboardComponent,
     NavbarComponent,
-    StockBarangComponent,
     CustomFilterPipe,
-    TransactionInComponent,
     TransactionOutComponent,
     CreateTransactionInComponent,
     CreateTransactionOutComponent,

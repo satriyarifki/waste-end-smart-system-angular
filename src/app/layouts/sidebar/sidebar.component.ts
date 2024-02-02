@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertType } from 'src/app/services/alert/alert.model';
 import { AlertService } from 'src/app/services/alert/alert.service';
@@ -8,8 +8,11 @@ import { AuthService } from 'src/app/services/auth.service';
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css'],
+  host: { '(document:click)': 'falseAll($event)' },
 })
 export class SidebarComponent {
+  @ViewChild('sidebar') sidebarElm!: ElementRef;
+  @ViewChild('toggleButton') toggleElm!: ElementRef;
   //Tools
   scalesBool = false;
   transactionBool = false;
@@ -28,7 +31,7 @@ export class SidebarComponent {
   }
   changeToggleSidebar() {
     this.toggleSidebar = !this.toggleSidebar;
-    console.log(this.toggleSidebar);
+    // console.log(this.toggleSidebar);
   }
 
   onAuthCheck() {
@@ -45,5 +48,22 @@ export class SidebarComponent {
     this.authService.signOut();
     this.alertService.onCallAlert('Log Out Sucessful!', AlertType.Success)
     this.router.navigate(['/login']);
+  }
+
+  falseAll(event: any) {
+    // console.log(this.sidebar.nativeElement);
+    // console.log(event.target);
+    // console.log(this.toggleSidebar);
+    
+    if (!this.sidebarElm.nativeElement.contains(event.target) && !this.toggleElm.nativeElement.contains(event.target) && this.toggleSidebar) {
+      this.toggleSidebar = false;
+    }
+    // if (
+    //   !this.onAuthCheck() &&
+    //   !this.inputList.nativeElement.contains(event.target) &&
+    //   this.dropdownInput
+    // ) {
+    //   this.dropdownInput = false;
+    // }
   }
 }

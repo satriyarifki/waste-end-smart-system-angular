@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AlertType } from 'src/app/services/alert/alert.model';
 import { AlertService } from 'src/app/services/alert/alert.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -12,10 +12,19 @@ import { AuthService } from 'src/app/services/auth.service';
 export class NavbarComponent {
   employee:any
   userBool = false
-  constructor(public router: Router, private authService:AuthService,private alertService:AlertService){
+  constructor(public router: Router, public authService:AuthService,private alertService:AlertService,private actRoute : ActivatedRoute){
     // console.log(authService.getUser());
     
-    this.employee = authService.getUser()
+    
+    router.events.subscribe(val=>{
+      this.ngOnInit()
+      
+    })
+  }
+  ngOnInit(): void {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+    this.employee = this.authService.getUser()
   }
   onAuthCheck() {
     if (this.authService.getToken() != null) {
