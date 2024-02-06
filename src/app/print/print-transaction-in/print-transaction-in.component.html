@@ -4,7 +4,7 @@
     <div class="text-center">
       <h1 class="text-2xl font-medium">Rekap Penjualan Limbah Eks Produksi</h1>
       <h1 class="text-xl font-medium">
-        CV {{ paramSales.vendor }} Tahun {{ dateNow.getFullYear() }}
+        <span *ngIf="!paramSales.vendor.includes('Desa')">CV</span> {{ paramSales.vendor }} Tahun {{ dateNow.getFullYear() }}
       </h1>
     </div>
     <div class="px-10">

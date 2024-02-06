@@ -9,6 +9,8 @@ import { AlertService } from '../services/alert/alert.service';
 import { ApiService } from '../services/api.service';
 import { AuthService } from '../services/auth.service';
 import { DeleteApiService } from '../services/delete-api/delete-api.service';
+import { environment } from 'src/environments/environment.development';
+const baseApi = environment.baseApi;
 
 @Component({
   selector: 'app-transaction-out',
@@ -256,6 +258,13 @@ export class TransactionOutComponent {
   cetak(item: any) {
     // Serialize the state data to URL parameters
     // Open a new tab with the current URL and the serialized state data as parameters
-    window.open(`/transaction-in/print/` + item.id, '_blank');
+    // console.log(baseApi.slice(0,-6) +  '/wess/transaction-out/print/' + item.id);
+    // console.log(baseApi.slice(0,-6) +  '/wess/transaction-out/print/' + item.id);
+    
+    if (baseApi.includes('192.168.9.47')) {
+      window.open(baseApi.slice(0,-6) +  '/wess/transaction-out/print/' + item.id, '_blank');
+    } else {
+      window.open('transaction-out/print/' + item.id, '_blank');
+    }
   }
 }
