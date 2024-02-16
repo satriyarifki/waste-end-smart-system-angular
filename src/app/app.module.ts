@@ -37,6 +37,7 @@ import { ScalesTpsEditComponent } from './scales-tps/scales-tps-view/scales-tps-
 import { EditReportComponent } from './edit/edit-report/edit-report.component';
 import { DeleteApiComponent } from './layouts/delete-api/delete-api.component';
 import { SpinnerComponent } from './layouts/spinner/spinner.component';
+import { NotFoundComponent } from './layouts/not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -68,6 +69,7 @@ import { SpinnerComponent } from './layouts/spinner/spinner.component';
     EditReportComponent,
     DeleteApiComponent,
     SpinnerComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,

@@ -6,6 +6,7 @@ import { CreateTransactionInComponent } from './create/create-transaction-in/cre
 import { CreateTransactionOutComponent } from './create/create-transaction-out/create-transaction-out.component';
 import { DashboardSalesComponent } from './dashboard-sales/dashboard-sales.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { NotFoundComponent } from './layouts/not-found/not-found.component';
 import { PrintTransactionInComponent } from './print/print-transaction-in/print-transaction-in.component';
 import { ScalesPassboxOc1Component } from './scales-passbox-oc1/scales-passbox-oc1.component';
 import { ScalesPassboxOc2Component } from './scales-passbox-oc2/scales-passbox-oc2.component';
@@ -39,6 +40,7 @@ const routes: Routes = [
   { path: 'scales-sales/view', component: ScalesSalesViewComponent },
   { path: 'write-off', component: WriteOffComponent },
   { path: 'system-flow', component: SystemFlowComponent },
+  { path: '**', component: NotFoundComponent },
 ];
 
 @NgModule({
